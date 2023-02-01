@@ -27,7 +27,14 @@ public class exampleAuto extends SequentialCommandGroup {
                 .setKinematics(Constants.Swerve.swerveKinematics);
 
         // An example trajectory to follow.  All units in meters.
-        Trajectory exampleTrajectory =
+        Trajectory exampleTrajectory = 
+        TrajectoryGenerator.generateTrajectory(List.of(
+                new Pose2d(0, 0, new Rotation2d(0)),
+                new Pose2d(Units.inchesToMeters(0), Units.inchesToMeters(0), new Rotation2d(90)),
+                new Pose2d(Units.inchesToMeters(0), Units.inchesToMeters(0), new Rotation2d(0)) 
+                //new Pose2d(Units.inchesToMeters(140), Units.inchesToMeters(40), new Rotation2d(0))
+            ), config);
+        /*Trajectory exampleTrajectory =
             TrajectoryGenerator.generateTrajectory(
                 // Start at the origin facing the +X direction
                 new Pose2d(0, 0, new Rotation2d(0)),
@@ -38,6 +45,7 @@ public class exampleAuto extends SequentialCommandGroup {
                 // End 3 meters straight ahead of where we started, facing forward
                 new Pose2d( Units.inchesToMeters(140), Units.inchesToMeters(40), new Rotation2d(90)),
                 config);
+                */
 
         var thetaController =
             new ProfiledPIDController(
