@@ -6,6 +6,8 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
 import frc.robot.autos.*;
 import frc.robot.commands.*;
@@ -33,9 +35,15 @@ public class RobotContainer {
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
 
+    /* Smartdashboard Chooser */
+    private SendableChooser<Integer> autoChooser;
+
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
+
+        autoChooser = new SendableChooser<>();
+
         s_Swerve.setDefaultCommand(
             new TeleopSwerve(
                 s_Swerve, 
@@ -68,6 +76,23 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
-        return new exampleAuto(s_Swerve);
+
+        /*autoChooser.setDefaultOption("exampleAuto", 2);
+        autoChooser.addOption("auto1", 1);
+        autoChooser.addOption("exampleAuto", 2);
+        switch(autoChooser.getSelected()) {
+            case 1:
+            //auto1 selectedAuto;
+            return new auto1(s_Swerve);
+            
+
+            case 2:
+            //exampleAuto selectedAuto;
+            return new exampleAuto(s_Swerve);
+            
+
+        }*/
+        return new auto1(s_Swerve);
+        //return selectedAuto;
     }
 }

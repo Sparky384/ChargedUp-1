@@ -30,9 +30,9 @@ public class exampleAuto extends SequentialCommandGroup {
         Trajectory exampleTrajectory = 
         TrajectoryGenerator.generateTrajectory(List.of(
                 new Pose2d(0, 0, new Rotation2d(0)),
-                new Pose2d(Units.inchesToMeters(0), Units.inchesToMeters(0), new Rotation2d(90)),
-                new Pose2d(Units.inchesToMeters(0), Units.inchesToMeters(0), new Rotation2d(0)) 
-                //new Pose2d(Units.inchesToMeters(140), Units.inchesToMeters(40), new Rotation2d(0))
+                new Pose2d(Units.inchesToMeters(70), Units.inchesToMeters(0), new Rotation2d(90)),
+                new Pose2d(Units.inchesToMeters(140), Units.inchesToMeters(0), new Rotation2d(0)), 
+                new Pose2d(Units.inchesToMeters(140), Units.inchesToMeters(40), new Rotation2d(45))
             ), config);
         /*Trajectory exampleTrajectory =
             TrajectoryGenerator.generateTrajectory(
