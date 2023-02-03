@@ -4,7 +4,9 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -22,6 +24,7 @@ import frc.robot.subsystems.*;
 public class RobotContainer {
     /* Controllers */
     private final Joystick driver = new Joystick(0);
+    CommandBase selectedAuto;
 
     /* Drive Controls */
     private final int translationAxis = XboxController.Axis.kLeftY.value;
@@ -35,14 +38,21 @@ public class RobotContainer {
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
 
-    /* Smartdashboard Chooser */
-    private SendableChooser<Integer> autoChooser;
-
+    /* Smartdashboard Choosers */
+    private SendableChooser<String> autoChooser;
+    
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
 
-        autoChooser = new SendableChooser<>();
+        /* Autonomous chooser */
+        autoChooser = new SendableChooser<String>();
+        SmartDashboard.putData("Autonomous Mode Chooser", autoChooser);
+        autoChooser.setDefaultOption("auto1", "1");
+        autoChooser.addOption("auto1", "1");
+        autoChooser.addOption("exampleAuto", "2");
+
+
 
         s_Swerve.setDefaultCommand(
             new TeleopSwerve(
@@ -75,24 +85,18 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        // An ExampleCommand will run in autonomous
+            // Chooser for different autonomous functions.
+            switch(autoChooser.getSelected()) {
+                case "1":
+                selectedAuto = new auto1(s_Swerve);
+                break;
+    
+                case "2":
+                selectedAuto = new exampleAuto(s_Swerve);
+                break;
+                
+            }
 
-        /*autoChooser.setDefaultOption("exampleAuto", 2);
-        autoChooser.addOption("auto1", 1);
-        autoChooser.addOption("exampleAuto", 2);
-        switch(autoChooser.getSelected()) {
-            case 1:
-            //auto1 selectedAuto;
-            return new auto1(s_Swerve);
-            
-
-            case 2:
-            //exampleAuto selectedAuto;
-            return new exampleAuto(s_Swerve);
-            
-
-        }*/
-        return new auto1(s_Swerve);
-        //return selectedAuto;
+        return selectedAuto;
     }
 }

@@ -9,6 +9,7 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 import frc.lib.util.COTSFalconSwerveConstants;
 import frc.lib.util.SwerveModuleConstants;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public final class Constants {
     public static final double stickDeadband = 0.1;
@@ -136,9 +137,13 @@ public final class Constants {
         public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
         public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
     
-        public static final double kPXController = 1;
-        public static final double kPYController = 1;
-        public static final double kPThetaController = 1;
+
+        /* Auto Controllers
+         * Have to feed fairly large values to see signfigant change.
+         */
+        public static final double kPXController = 1.0; //1.0 was default
+        public static final double kPYController = 20.9; //1.0 was default 
+        public static final double kPThetaController = 1.0; //1.0 was default
     
         /* Constraint for the motion profilied robot angle controller */
         public static final TrapezoidProfile.Constraints kThetaControllerConstraints =
