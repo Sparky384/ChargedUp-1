@@ -140,10 +140,11 @@ public final class Constants {
 
         /* Auto Controllers
          * Have to feed fairly large values to see signfigant change.
+         * Values appear to be affecting how quickly the motors can change. (maybe)
          */
         public static final double kPXController = 1.0; //1.0 was default
-        public static final double kPYController = 20.9; //1.0 was default 
-        public static final double kPThetaController = 1.0; //1.0 was default
+        public static final double kPYController = 0.27; //1.0 was default   0.3
+        public static final double kPThetaController = 0.38; //1.0 was default  0.6 0.4
     
         /* Constraint for the motion profilied robot angle controller */
         public static final TrapezoidProfile.Constraints kThetaControllerConstraints =
