@@ -2,17 +2,18 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.SparkMaxAbsoluteEncoder;
 
-import frc.robot.CANPorts;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-
-public class Elevator {
+//The method addRequirements(Subsystem...) in the type CommandBase is not applicable for the arguments (Elevator)Java(67108979)
+public class Elevator extends SubsystemBase{
     private CANSparkMax motorOne; 
     private CANSparkMax motorTwo; 
 
     public Elevator(){
-        motorOne = new CANSparkMax(CANPorts.elevatorOne, MotorType.kBrushless);
-        motorTwo = new CANSparkMax(CANPorts.elevatorTwo, MotorType.kBrushless); 
+        motorOne = new CANSparkMax(Constants.CANPorts.elevatorOne, MotorType.kBrushless);
+        motorTwo = new CANSparkMax(Constants.CANPorts.elevatorTwo, MotorType.kBrushless); 
         motorTwo.follow(motorOne);
         motorOne.getPIDController().setP(Constants.PIDValues.elevatorOneP); 
         motorOne.getPIDController().setI(Constants.PIDValues.elevatorOneI);
@@ -23,8 +24,14 @@ public class Elevator {
         motorOne.stopMotor(); 
     }
 
-    public void move(double distance){
-        distance = distance; //replace this with conversion function
-        motorOne.getPIDController().setReference(distance, CANSparkMax.ControlType.kPosition); 
+    public void move(double height){
+        height = height; //replace this with conversion function
+        motorOne.getPIDController().setReference(height, CANSparkMax.ControlType.kPosition); 
+    }
+
+    public double getHeight() {
+        double height = motorOne.getAbsoluteEncoder(SparkMaxAbsoluteEncoder.Type.kDutyCycle).getPosition();
+        height = height; //replace this with conversion function
+        return height;
     }
 }

@@ -7,11 +7,14 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.XboxController;
 import frc.lib.util.COTSFalconSwerveConstants;
 import frc.lib.util.SwerveModuleConstants;
 
 public final class Constants {
     public static final double stickDeadband = 0.1;
+    public static final double doubleThreshold = 0.1;
+    public static final double rampThreshold = 20.0; // in degrees
 
     public static final class Swerve {
         public static final int pigeonID = 1;
@@ -144,5 +147,75 @@ public final class Constants {
         public static final TrapezoidProfile.Constraints kThetaControllerConstraints =
             new TrapezoidProfile.Constraints(
                 kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
+    }
+    public static final class PIDValues {
+        public static final double frontRightTurnP = 0.0; 
+        public static final double frontRightTurnI = 0.0; 
+        public static final double frontRightTurnD = 0.0; 
+        public static final double frontRightDriveP = 0.0; 
+        public static final double frontRightDriveI = 0.0; 
+        public static final double frontRightDriveD = 0.0; 
+        public static final double backLeftTurnP = 0.0; 
+        public static final double backLeftTurnI = 0.0; 
+        public static final double backLeftTurnD = 0.0; 
+        public static final double backLeftDriveP = 0.0; 
+        public static final double backLeftDriveI = 0.0; 
+        public static final double backLeftDriveD = 0.0; 
+        public static final double elevatorOneP = 0.0;
+        public static final double elevatorOneI = 0.0;
+        public static final double elevatorOneD = 0.0;
+        public static final double elevatorTwoP = 0.0;
+        public static final double elevatorTwoI = 0.0;
+        public static final double elevatorTwoD = 0.0;
+        public static final double sliderP = 0.0;
+        public static final double sliderI = 0.0;
+        public static final double sliderD = 0.0;
+        public static final double wristP = 0.0; 
+        public static final double wristI = 0.0; 
+        public static final double wristD = 0.0; 
+        public static final double handP = 0.0;
+        public static final double handI = 0.0;
+        public static final double handD = 0.0;
+    }
+
+    public static class CANPorts{
+        public static final int frontRightTurn = 0;
+        public static final int frontRightDrive = 0;
+        public static final int frontLeftTurn = 0;
+        public static final int frontLeftDrive = 0;
+        public static final int backRightTurn = 0; 
+        public static final int backRightDrive = 0; 
+        public static final int backLeftTurn = 0; 
+        public static final int backLeftDrive = 0; 
+        public static final int elevatorOne = 0; 
+        public static final int elevatorTwo = 0;
+        public static final int slider = 0; 
+        public static final int wrist = 0; 
+        public static final int hand = 0; 
+    }
+
+    public static class ButtonMap{
+        public static class Pilot{
+            
+        }
+        public static class Copilot{
+          public static final int shoot = XboxController.Button.kA.value;
+          public static final int intake = XboxController.Button.kB.value;
+          public static final int elevatorLow = XboxController.Button.kLeftBumper.value;
+          public static final int elevatorMid = XboxController.Button.kBack.value;
+          public static final int elevatorHigh = XboxController.Button.kRightBumper.value;
+          public static final int gyro = XboxController.Button.kX.value;
+        }
+
+    }
+    public static class Subsys{
+        public static final double elevatorLow = 0.0;
+        public static final double elevatorMid = 10.0;
+        public static final double elevatorHigh = 20.0;
+    }
+
+    public static class RampConstants{
+        public static final double P = 0.0; // P as in PID
+        public static final double maxRampSpeed = 0.0; // percentage
     }
 }

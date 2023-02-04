@@ -1,39 +1,35 @@
 package frc.robot.subsystems;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+
 // No idea what imports go here but there needs to be some
 
 
 // Subsystem initializes hardware and methods that are then going to be used in commands
 public class Hand extends SubsystemBase
 {
-    
-    Pneumatic pneumatic;  
-    Motor motor; 
+    private CANSparkMax motor; 
 
-    public Grabber() 
+    public Hand() 
     {
-        pneumatic = new pneumatic(ID); // Initalize Pneumatic we need
-        motor = new motor(CANID); // Initialize Motor we need
-
-        // Is it always set to the same value bc we are only using that specific motor?
+        motor = new CANSparkMax(Constants.CANPorts.slider, MotorType.kBrushless);
     }
 
-    public void clamp() // Clamp down pneumatics
+    public void stop()
     {
-        pneumatic.setState(true);
+        motor.stopMotor();
     }
 
-    public void unClamp() // Unclamp pnemumatics
+    public void shoot()
     {
-        pneumatic.setState(false);
+        motor.set(0.5);
     }
-
-    public void moveShooter(int time) // move shooter
+    public void rollIn()
     {
-        motor.setSpeed(0.7, time);
+        motor.set(-0.5);
     }
-
-
-
-
 }
