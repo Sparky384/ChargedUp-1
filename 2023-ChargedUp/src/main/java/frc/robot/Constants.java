@@ -75,9 +75,10 @@ public final class Constants {
 
         /* Drive Motor Characterization Values 
          * Divide SYSID values by 12 to convert from volts to percent output for CTRE */
-        public static final double driveKS = (0.32 / 12); //TODO: This must be tuned to specific robot
-        public static final double driveKV = (1.51 / 12);
-        public static final double driveKA = (0.27 / 12);
+        //TODO: This must be tuned to specific robot
+        public static final double driveKS = (0.32 / 12); //original (0.32 /12) | grabbed 0.084401 from SISID
+        public static final double driveKV = (1.51 / 12); //original (1.51 /12) | grabbed 15.793 from SISID
+        public static final double driveKA = (0.27 / 12); //original (0.27 /12) | grabbed 1.2045 from SISID
 
         /* Swerve Profiling Values */
         /** Meters per Second */
@@ -144,7 +145,7 @@ public final class Constants {
          */
         public static final double kPXController = 1.0; //1.0 was default
         public static final double kPYController = 0.27; //1.0 was default   0.3
-        public static final double kPThetaController = 1.0; //1.0 was default  0.6 0.4 0.38
+        public static final double kPThetaController = 0.38; //1.0 was default  0.6 0.4 0.38
     
         /* Constraint for the motion profilied robot angle controller */
         public static final TrapezoidProfile.Constraints kThetaControllerConstraints =

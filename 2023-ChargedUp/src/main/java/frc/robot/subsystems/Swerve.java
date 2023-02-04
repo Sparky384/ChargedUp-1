@@ -29,23 +29,13 @@ public class Swerve extends SubsystemBase {
     public SwerveDriveOdometry swerveOdometry;
     public SwerveModule[] mSwerveMods;
 
-    private final Pigeon2 gyro1 = new Pigeon2(Constants.Swerve.pigeonID);
+    private final Pigeon2 gyro = new Pigeon2(Constants.Swerve.pigeonID);
     private GenericEntry gyroAngle;
 
-    private final AHRS gyro = new AHRS(SPI.Port.kMXP);
-
     public Swerve() {
-        new Thread(() -> {
-            try{
-                Thread.sleep(1000);
-                zeroGyro();
-            } catch (Exception e) {
-            }
-        }).start();
-
         /* Pigeon Startup code */
-        gyro1.configFactoryDefault();
-        zeroPigeon();
+        gyro.configFactoryDefault();
+        zeroGyro();
 
         /* Test code for Shuffle board - Not finished.*/
         ShuffleboardTab tab = Shuffleboard.getTab("PigeonFinal");
@@ -70,7 +60,7 @@ public class Swerve extends SubsystemBase {
         Timer.delay(1.0);
         resetModulesToAbsolute();
 
-        swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getPigeonYaw(), getModulePositions());
+        swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw(), getModulePositions());
     }
 
     public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
@@ -80,7 +70,7 @@ public class Swerve extends SubsystemBase {
                                     translation.getX(), 
                                     translation.getY(), 
                                     rotation, 
-                                    getPigeonYaw()
+                                    getYaw()
                                 )
                                 : new ChassisSpeeds(
                                     translation.getX(), 
@@ -108,7 +98,7 @@ public class Swerve extends SubsystemBase {
     }
 
     public void resetOdometry(Pose2d pose) {
-        swerveOdometry.resetPosition(getPigeonYaw(), getModulePositions(), pose);
+        swerveOdometry.resetPosition(getYaw(), getModulePositions(), pose);
     }
 
     public SwerveModuleState[] getModuleStates(){
@@ -127,28 +117,16 @@ public class Swerve extends SubsystemBase {
         return positions;
     }
 
-    public void zeroGyro(){
-        gyro.reset();
+    /* Sets Pigeon Angle to 0 */
+    public void zeroGyro() {
+        gyro.setYaw(0);
     }
-
-    public void zeroPigeon() {
-        gyro1.setYaw(0);
-    }
-
-    public Rotation2d getPigeonYaw() {
-        return (Constants.Swerve.invertGyro)
-        ? Rotation2d.fromDegrees(360 - gyro1.getYaw())
-        : Rotation2d.fromDegrees(gyro1.getYaw());
-    }
-
+    
+    /* Gets pigeon angle in degrees */
     public Rotation2d getYaw() {
-        // return (Constants.Swerve.invertGyro) ? Rotation2d.fromDegrees(360 + -gyro.getYaw()) : Rotation2d.fromDegrees(gyro.getYaw());
-        double degY = -gyro.getYaw();
-        if (degY < 0) {
-            degY += 360;
-        }
-
-        return Rotation2d.fromDegrees(degY);
+        return (Constants.Swerve.invertGyro)
+        ? Rotation2d.fromDegrees((360 - gyro.getYaw()) % 360)
+        : Rotation2d.fromDegrees(gyro.getYaw());
     }
 
     public void resetModulesToAbsolute(){
@@ -159,10 +137,10 @@ public class Swerve extends SubsystemBase {
 
     @Override
     public void periodic(){
-        swerveOdometry.update(getPigeonYaw(), getModulePositions());  
+        swerveOdometry.update(getYaw(), getModulePositions());  
 
-        SmartDashboard.putNumber("Robot Header ", getPigeonYaw().getDegrees());
-        gyroAngle.setDouble(gyro1.getYaw());
+        SmartDashboard.putNumber("Robot Header ", getYaw().getDegrees());
+        gyroAngle.setDouble(gyro.getYaw());
 
         for(SwerveModule mod : mSwerveMods){
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
