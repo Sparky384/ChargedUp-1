@@ -16,7 +16,11 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.SPI;
@@ -24,6 +28,10 @@ import edu.wpi.first.wpilibj.SPI;
 public class Swerve extends SubsystemBase {
     public SwerveDriveOdometry swerveOdometry;
     public SwerveModule[] mSwerveMods;
+
+    private final Pigeon2 gyro1 = new Pigeon2(Constants.Swerve.pigeonID);
+    private GenericEntry gyroAngle;
+
     private final AHRS gyro = new AHRS(SPI.Port.kMXP);
 
     public Swerve() {
@@ -34,6 +42,20 @@ public class Swerve extends SubsystemBase {
             } catch (Exception e) {
             }
         }).start();
+
+        /* Pigeon Startup code */
+        gyro1.configFactoryDefault();
+        zeroPigeon();
+
+        /* Test code for Shuffle board - Not finished.*/
+        ShuffleboardTab tab = Shuffleboard.getTab("PigeonFinal");
+        gyroAngle = 
+            tab
+                .add("GyroDegrees", 0)
+                .withPosition(1, 1)
+                .withWidget(BuiltInWidgets.kGyro)
+                .getEntry();
+        
 
         mSwerveMods = new SwerveModule[] {
             new SwerveModule(0, Constants.Swerve.Mod0.constants),
@@ -48,7 +70,7 @@ public class Swerve extends SubsystemBase {
         Timer.delay(1.0);
         resetModulesToAbsolute();
 
-        swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw(), getModulePositions());
+        swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getPigeonYaw(), getModulePositions());
     }
 
     public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
@@ -58,7 +80,7 @@ public class Swerve extends SubsystemBase {
                                     translation.getX(), 
                                     translation.getY(), 
                                     rotation, 
-                                    getYaw()
+                                    getPigeonYaw()
                                 )
                                 : new ChassisSpeeds(
                                     translation.getX(), 
@@ -86,7 +108,7 @@ public class Swerve extends SubsystemBase {
     }
 
     public void resetOdometry(Pose2d pose) {
-        swerveOdometry.resetPosition(getYaw(), getModulePositions(), pose);
+        swerveOdometry.resetPosition(getPigeonYaw(), getModulePositions(), pose);
     }
 
     public SwerveModuleState[] getModuleStates(){
@@ -109,6 +131,16 @@ public class Swerve extends SubsystemBase {
         gyro.reset();
     }
 
+    public void zeroPigeon() {
+        gyro1.setYaw(0);
+    }
+
+    public Rotation2d getPigeonYaw() {
+        return (Constants.Swerve.invertGyro)
+        ? Rotation2d.fromDegrees(360 - gyro1.getYaw())
+        : Rotation2d.fromDegrees(gyro1.getYaw());
+    }
+
     public Rotation2d getYaw() {
         // return (Constants.Swerve.invertGyro) ? Rotation2d.fromDegrees(360 + -gyro.getYaw()) : Rotation2d.fromDegrees(gyro.getYaw());
         double degY = -gyro.getYaw();
@@ -127,9 +159,10 @@ public class Swerve extends SubsystemBase {
 
     @Override
     public void periodic(){
-        swerveOdometry.update(getYaw(), getModulePositions());  
+        swerveOdometry.update(getPigeonYaw(), getModulePositions());  
 
-        SmartDashboard.putNumber("Robot Header ", getYaw().getDegrees());
+        SmartDashboard.putNumber("Robot Header ", getPigeonYaw().getDegrees());
+        gyroAngle.setDouble(gyro1.getYaw());
 
         for(SwerveModule mod : mSwerveMods){
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());

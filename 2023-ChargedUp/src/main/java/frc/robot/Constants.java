@@ -15,7 +15,7 @@ public final class Constants {
     public static final double stickDeadband = 0.1;
 
     public static final class Swerve {
-        public static final int pigeonID = 1;
+        public static final int pigeonID = 0;
         public static final boolean invertGyro = true; // Always ensure Gyro is CCW+ CW-
 
         public static final COTSFalconSwerveConstants chosenModule =
@@ -144,7 +144,7 @@ public final class Constants {
          */
         public static final double kPXController = 1.0; //1.0 was default
         public static final double kPYController = 0.27; //1.0 was default   0.3
-        public static final double kPThetaController = 0.38; //1.0 was default  0.6 0.4
+        public static final double kPThetaController = 1.0; //1.0 was default  0.6 0.4 0.38
     
         /* Constraint for the motion profilied robot angle controller */
         public static final TrapezoidProfile.Constraints kThetaControllerConstraints =
