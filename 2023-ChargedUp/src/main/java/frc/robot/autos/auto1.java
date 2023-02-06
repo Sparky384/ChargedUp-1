@@ -36,9 +36,10 @@ public class auto1 extends SequentialCommandGroup{
                 new Pose2d(Units.inchesToMeters(40), Units.inchesToMeters(0), new Rotation2d(0)),
                 //new Pose2d(Units.inchesToMeters(60), Units.inchesToMeters(0), new Rotation2d(0)),
                 //new Pose2d(Units.inchesToMeters(80), Units.inchesToMeters(0), new Rotation2d(0)),
-                new Pose2d(Units.inchesToMeters(100), Units.inchesToMeters(0), new Rotation2d(0)),
+                new Pose2d(Units.inchesToMeters(100), Units.inchesToMeters(0), new Rotation2d(90)),
                 //new Pose2d(Units.inchesToMeters(120), Units.inchesToMeters(0), new Rotation2d(0)),
-                new Pose2d(Units.inchesToMeters(140), Units.inchesToMeters(0), new Rotation2d(90))
+                new Pose2d(Units.inchesToMeters(140), Units.inchesToMeters(0), new Rotation2d(0)),
+                new Pose2d(Units.inchesToMeters(140), Units.inchesToMeters(40), new Rotation2d(170))
             ), config);
 
         var thetaController =
