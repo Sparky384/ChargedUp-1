@@ -27,25 +27,26 @@ public class exampleAuto extends SequentialCommandGroup {
                 .setKinematics(Constants.Swerve.swerveKinematics);
 
         // An example trajectory to follow.  All units in meters.
-        Trajectory exampleTrajectory = 
+        Trajectory exampleTrajectory2 = 
         TrajectoryGenerator.generateTrajectory(List.of(
-                new Pose2d(0, 0, new Rotation2d(0)),
-                new Pose2d(Units.inchesToMeters(70), Units.inchesToMeters(0), new Rotation2d(90)),
-                new Pose2d(Units.inchesToMeters(140), Units.inchesToMeters(0), new Rotation2d(0)), 
-                new Pose2d(Units.inchesToMeters(140), Units.inchesToMeters(40), new Rotation2d(45))
+                new Pose2d(Units.inchesToMeters(70), 0, new Rotation2d(0)),
+                //new Pose2d(Units.inchesToMeters(0), Units.inchesToMeters(0), new Rotation2d(0)),
+                //new Pose2d(Units.inchesToMeters(0), Units.inchesToMeters(0), new Rotation2d(0)), 
+                new Pose2d(Units.inchesToMeters(140), Units.inchesToMeters(0), new Rotation2d(0))
             ), config);
-        /*Trajectory exampleTrajectory =
+
+        Trajectory exampleTrajectory =
             TrajectoryGenerator.generateTrajectory(
                 // Start at the origin facing the +X direction
-                new Pose2d(0, 0, new Rotation2d(0)),
+                List.of(new Pose2d(0, 0, new Rotation2d(0)),
                 // Pass through these two interior waypoints, making an 's' curve path
-                List.of(new Translation2d(Units.inchesToMeters(60), Units.inchesToMeters(0)),
-                new Translation2d(Units.inchesToMeters(100), Units.inchesToMeters(0)),
-                new Translation2d(Units.inchesToMeters(140), Units.inchesToMeters(0))),
+                //List.of(new Translation2d(Units.inchesToMeters(0), Units.inchesToMeters(0)),
+                //new Translation2d(Units.inchesToMeters(0), Units.inchesToMeters(0)),
+                //new Translation2d(Units.inchesToMeters(0), Units.inchesToMeters(0))),
                 // End 3 meters straight ahead of where we started, facing forward
-                new Pose2d( Units.inchesToMeters(140), Units.inchesToMeters(40), new Rotation2d(90)),
+                new Pose2d(Units.inchesToMeters(70), Units.inchesToMeters(0), new Rotation2d(0))),
                 config);
-                */
+                
 
         var thetaController =
             new ProfiledPIDController(
@@ -63,10 +64,22 @@ public class exampleAuto extends SequentialCommandGroup {
                 s_Swerve::setModuleStates,
                 s_Swerve);
 
+                SwerveControllerCommand swerveControllerCommand2 =
+                new SwerveControllerCommand(
+                    exampleTrajectory2,
+                    s_Swerve::getPose,
+                    Constants.Swerve.swerveKinematics,
+                    new PIDController(Constants.AutoConstants.kPXController, 0, 0),
+                    new PIDController(Constants.AutoConstants.kPYController, 0, 0),
+                    thetaController,
+                    s_Swerve::setModuleStates,
+                    s_Swerve);
+
 
         addCommands(
             new InstantCommand(() -> s_Swerve.resetOdometry(exampleTrajectory.getInitialPose())),
-            swerveControllerCommand
+            swerveControllerCommand,
+            swerveControllerCommand2
         );
     }
 }
