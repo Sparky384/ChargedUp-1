@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
 import frc.robot.autos.*;
 import frc.robot.commands.*;
+import frc.robot.paths.ExamplePath;
 import frc.robot.subsystems.*;
 
 /**
@@ -51,6 +52,7 @@ public class RobotContainer {
         autoChooser.setDefaultOption("auto1", "1");
         autoChooser.addOption("auto1", "1");
         autoChooser.addOption("exampleAuto", "2");
+        autoChooser.addOption("examplePath", "3");
 
 
 
@@ -93,6 +95,10 @@ public class RobotContainer {
     
                 case "2":
                 selectedAuto = new exampleAuto(s_Swerve);
+                break;
+
+                case "3":
+                selectedAuto = new ExamplePath();
                 break;
                 
             }
