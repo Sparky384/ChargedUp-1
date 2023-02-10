@@ -98,7 +98,7 @@ public class RobotContainer {
                 break;
 
                 case "3":
-                selectedAuto = new ExamplePath();
+                selectedAuto = new ExamplePath(s_Swerve);
                 break;
                 
             }
