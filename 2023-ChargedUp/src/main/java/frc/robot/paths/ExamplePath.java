@@ -1,9 +1,7 @@
 package frc.robot.paths;
 
-import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
-import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -14,7 +12,7 @@ import frc.robot.subsystems.Swerve;
 import frc.robot.Constants;
 
 public class ExamplePath extends SequentialCommandGroup { //might extend CommandGroupBase
-
+/* 
     private Swerve s_Swerve;
 
     PathPlannerTrajectory exampleTrajectory = PathPlanner.loadPath("Example Path.path", new PathConstraints(1, 1));
@@ -42,5 +40,5 @@ public class ExamplePath extends SequentialCommandGroup { //might extend Command
                 s_Swerve // Requires this drive subsystem
             )
         );
-    }
+    }*/
 }
