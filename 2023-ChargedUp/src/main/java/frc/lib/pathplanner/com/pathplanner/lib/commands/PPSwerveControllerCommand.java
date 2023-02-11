@@ -1,9 +1,9 @@
 package frc.lib.pathplanner.com.pathplanner.lib.commands;
 
-import com.pathplanner.lib.PathPlannerTrajectory;
-import com.pathplanner.lib.PathPlannerTrajectory.PathPlannerState;
-import com.pathplanner.lib.controllers.PPHolonomicDriveController;
-import com.pathplanner.lib.server.PathPlannerServer;
+import frc.lib.pathplanner.com.pathplanner.lib.PathPlannerTrajectory;
+import frc.lib.pathplanner.com.pathplanner.lib.PathPlannerTrajectory.PathPlannerState;
+import frc.lib.pathplanner.com.pathplanner.lib.controllers.PPHolonomicDriveController;
+import frc.lib.pathplanner.com.pathplanner.lib.server.PathPlannerServer;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;

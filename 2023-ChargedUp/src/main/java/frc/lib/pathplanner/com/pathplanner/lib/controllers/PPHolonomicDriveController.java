@@ -1,6 +1,6 @@
 package frc.lib.pathplanner.com.pathplanner.lib.controllers;
 
-import com.pathplanner.lib.PathPlannerTrajectory.PathPlannerState;
+import frc.lib.pathplanner.com.pathplanner.lib.PathPlannerTrajectory.PathPlannerState;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;

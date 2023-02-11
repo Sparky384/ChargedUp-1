@@ -13,11 +13,11 @@ import frc.robot.subsystems.Swerve;
 import frc.lib.pathplanner.com.pathplanner.lib.PathConstraints;
 import frc.robot.Constants;
 
-public class ExamplePath extends SequentialCommandGroup { //might extend CommandGroupBase
+public class AApath extends SequentialCommandGroup { //might extend CommandGroupBase
  
     private static Swerve s_Swerve;
 
-    static PathPlannerTrajectory exampleTrajectory = PathPlanner.loadPath("New Path", new PathConstraints(1, 1));
+    static PathPlannerTrajectory exampleTrajectory = PathPlanner.loadPath("AApath", new PathConstraints(0.2, 0.2));
 
         // Assuming this method is part of a drivetrain subsystem that provides the necessary methods
     public static CommandBase followTrajectoryCommand(boolean isFirstPath, Swerve s) {

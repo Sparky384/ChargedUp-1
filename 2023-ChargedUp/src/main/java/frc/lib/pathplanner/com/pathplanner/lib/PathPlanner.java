@@ -7,6 +7,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.Filesystem;
 import java.io.*;
+import java.nio.file.FileSystem;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -14,7 +15,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-public class PathPlanner {
+public class PathPlanner { // Velocity, acceleration: meters per second; x and y in meters
   protected static double resolution = 0.004;
 
   /**
@@ -27,10 +28,11 @@ public class PathPlanner {
    */
   public static PathPlannerTrajectory loadPath(
       String name, PathConstraints constraints, boolean reversed) {
-    try (BufferedReader br =
+          try (BufferedReader br =
         new BufferedReader(
             new FileReader(
-                new File(Filesystem.getDeployDirectory(), "pathplanner/" + name + ".path")))) {
+                new File(Filesystem.getDeployDirectory(), "pathplanner/" + name + ".path"))))
+                {
       StringBuilder fileContentBuilder = new StringBuilder();
       String line;
       while ((line = br.readLine()) != null) {

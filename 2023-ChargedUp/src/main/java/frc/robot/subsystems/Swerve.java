@@ -81,6 +81,7 @@ public class Swerve extends SubsystemBase {
 
         for(SwerveModule mod : mSwerveMods){
             mod.setDesiredState(swerveModuleStates[mod.moduleNumber], isOpenLoop);
+            SmartDashboard.putString("drive " + mod.moduleNumber, mod.getPosition().toString());
         }
     }    
 
