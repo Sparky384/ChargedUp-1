@@ -13,11 +13,11 @@ import frc.robot.subsystems.Swerve;
 import frc.lib.pathplanner.com.pathplanner.lib.PathConstraints;
 import frc.robot.Constants;
 
-public class AApath extends SequentialCommandGroup { //might extend CommandGroupBase
+public class AApath extends SequentialCommandGroup {
  
     private static Swerve s_Swerve;
 
-    static PathPlannerTrajectory exampleTrajectory = PathPlanner.loadPath("AApath", new PathConstraints(0.2, 0.2));
+    static PathPlannerTrajectory exampleTrajectory = PathPlanner.loadPath("AApath", new PathConstraints(4, 4));
 
         // Assuming this method is part of a drivetrain subsystem that provides the necessary methods
     public static CommandBase followTrajectoryCommand(boolean isFirstPath, Swerve s) {
@@ -34,9 +34,9 @@ public class AApath extends SequentialCommandGroup { //might extend CommandGroup
                 exampleTrajectory, 
                 s_Swerve::getPose, // Pose supplier
                 Constants.Swerve.swerveKinematics, // SwerveDriveKinematics
-                new PIDController(Constants.AutoConstants.kPXController, 0, 0), // X controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
-                new PIDController(Constants.AutoConstants.kPYController, 0, 0), // Y controller (usually the same values as X controller)
-                new PIDController(Constants.AutoConstants.kPThetaController, Constants.AutoConstants.kIThetaController, 0), // Rotation controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
+                new PIDController(Constants.AutoConstants.kPPathXController, 0, 0), // X controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
+                new PIDController(Constants.AutoConstants.kPPathYController, 0, 0), // Y controller (usually the same values as X controller)
+                new PIDController(Constants.AutoConstants.kPPathThetaController, Constants.AutoConstants.kIPathThetaController, 0), // Rotation controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
                 s_Swerve::setModuleStates, // Module states consumer
                 true, // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
                 s_Swerve // Requires this drive subsystem
