@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.*;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
@@ -233,6 +234,7 @@ public class PPSwerveControllerCommand extends CommandBase {
         new Pose2d(desiredState.poseMeters.getTranslation(), desiredState.holonomicRotation),
         currentPose);
 
+    /* SmartDashboards in path planner
     SmartDashboard.putNumber(
         "PPSwerveControllerCommand_xError", currentPose.getX() - desiredState.poseMeters.getX());
     SmartDashboard.putNumber(
@@ -240,8 +242,15 @@ public class PPSwerveControllerCommand extends CommandBase {
     SmartDashboard.putNumber(
         "PPSwerveControllerCommand_rotationError",
         currentPose.getRotation().getRadians() - desiredState.holonomicRotation.getRadians());
-
+    */
+    
+    /* Made by Sparky. */
     ChassisSpeeds targetChassisSpeeds = this.controller.calculate(currentPose, desiredState);
+    SmartDashboard.putNumber("currentPose", currentPose.getX());
+    SmartDashboard.putNumber("desiredPose", desiredState.poseMeters.getX());
+    SmartDashboard.putNumber("chassis", targetChassisSpeeds.vxMetersPerSecond);
+
+
 
     if (this.useKinematics) {
       SwerveModuleState[] targetModuleStates =

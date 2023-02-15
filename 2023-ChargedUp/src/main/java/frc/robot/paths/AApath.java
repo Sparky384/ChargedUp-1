@@ -17,7 +17,7 @@ public class AApath extends SequentialCommandGroup {
  
     private static Swerve s_Swerve;
 
-    static PathPlannerTrajectory exampleTrajectory = PathPlanner.loadPath("AApath", new PathConstraints(4, 4));
+    static PathPlannerTrajectory exampleTrajectory = PathPlanner.loadPath("AApath", new PathConstraints(Constants.AutoConstants.kPathMaxVelocity, Constants.AutoConstants.kPathMaxAcceleration));
 
         // Assuming this method is part of a drivetrain subsystem that provides the necessary methods
     public static CommandBase followTrajectoryCommand(boolean isFirstPath, Swerve s) {
