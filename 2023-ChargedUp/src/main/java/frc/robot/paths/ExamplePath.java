@@ -13,7 +13,7 @@ import frc.robot.subsystems.Swerve;
 import frc.lib.pathplanner.com.pathplanner.lib.PathConstraints;
 import frc.robot.Constants;
 
-public class ExamplePath extends SequentialCommandGroup {
+public class ExamplePath extends SequentialCommandGroup { //might extend CommandGroupBase
  
     private static Swerve s_Swerve;
 

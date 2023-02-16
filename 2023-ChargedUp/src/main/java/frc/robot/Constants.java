@@ -84,7 +84,7 @@ public final class Constants {
         /** Meters per Second */
         public static final double maxSpeed = 0.3; //was 4.5
         /** Radians per Second */
-        public static final double maxAngularVelocity = 1.0; //was 10.0
+        public static final double maxAngularVelocity = 3.0; //was 10.0
 
         /* Neutral Modes */
         public static final NeutralMode angleNeutralMode = NeutralMode.Coast;
@@ -145,17 +145,9 @@ public final class Constants {
          */
         public static final double kPXController = 1.0; //1.0 was default
         public static final double kPYController = 0.27; //1.0 was default   0.3
-        
-        /* pathplanner controller PIDs */
-        public static final double kPPathXController = 0.0;
-        public static final double kPPathYController = 0.0;
-        public static final double kPPathThetaController = 0.0;
-        public static final double kIPathThetaController = 0.0;
-        
         // theta controller constants
         public static final double kIThetaController = 0.0; // 0.0 is default
         public static final double kPThetaController = 0.25; //1.0 was default  0.25 - looks good.
-        
     
         /* Constraint for the motion profilied robot angle controller */
         public static final TrapezoidProfile.Constraints kThetaControllerConstraints =

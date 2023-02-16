@@ -54,7 +54,7 @@ public class RobotContainer {
         autoChooser.addOption("auto1", "1");
         autoChooser.addOption("exampleAuto", "2");
         autoChooser.addOption("examplePath", "3");
-        autoChooser.addOption("AApath", "4");
+        autoChooser.addOption("AAPath", "4");
 
 
 
