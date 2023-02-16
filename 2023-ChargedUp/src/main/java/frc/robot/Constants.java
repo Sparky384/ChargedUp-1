@@ -179,19 +179,21 @@ public final class Constants {
     }
 
     public static class CANPorts{
-        public static final int frontRightTurn = 0;
-        public static final int frontRightDrive = 0;
-        public static final int frontLeftTurn = 0;
-        public static final int frontLeftDrive = 0;
+        public static final int frontRightTurn = 1;
+        public static final int frontRightDrive = 23;
+        public static final int frontLeftTurn = 14;
+        public static final int frontLeftDrive = 15;
         public static final int backRightTurn = 0; 
-        public static final int backRightDrive = 0; 
-        public static final int backLeftTurn = 0; 
+        public static final int backRightDrive = 0;
+        public static final int backLeftTurn = 0;
         public static final int backLeftDrive = 0; 
-        public static final int elevatorOne = 0; 
-        public static final int elevatorTwo = 0;
-        public static final int slider = 0; 
-        public static final int wrist = 0; 
+        public static final int elevatorOne = 2; // Front of elevator on the right
+        public static final int elevatorTwo = 13; // Front of elevator on the left
+        public static final int slider = 12; // Top left of indexer
+        public static final int wrist = 4; // Horizontal sparkmax on the right of the elevator 
         public static final int hand = 0; 
+
+
     }
 
     public static class ButtonMap{

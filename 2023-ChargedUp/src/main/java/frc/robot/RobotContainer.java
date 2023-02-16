@@ -53,8 +53,8 @@ public class RobotContainer {
             new TeleopSwerve(
                 s_Swerve, 
                 () -> -driver.getRawAxis(translationAxis), 
-                () -> -driver.getRawAxis(strafeAxis), 
-                () -> -driver.getRawAxis(rotationAxis), 
+                () -> {return 0;}, 
+                () -> {return 0;}, 
                 () -> robotCentric.getAsBoolean()
             )
         );
