@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.*;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
@@ -69,7 +70,7 @@ public class PPSwerveControllerCommand extends CommandBase {
     this.useAllianceColor = useAllianceColor;
 
     addRequirements(requirements);
-
+    
     if (useAllianceColor && trajectory.fromGUI && trajectory.getInitialPose().getX() > 8.27) {
       DriverStation.reportWarning(
           "You have constructed a path following command that will automatically transform path states depending"
@@ -220,7 +221,7 @@ public class PPSwerveControllerCommand extends CommandBase {
   public void execute() {
     double currentTime = this.timer.get();
     PathPlannerState desiredState = (PathPlannerState) this.trajectory.sample(currentTime);
-
+    
     if (useAllianceColor && trajectory.fromGUI) {
       desiredState =
           PathPlannerTrajectory.transformStateForAlliance(
@@ -233,6 +234,7 @@ public class PPSwerveControllerCommand extends CommandBase {
         new Pose2d(desiredState.poseMeters.getTranslation(), desiredState.holonomicRotation),
         currentPose);
 
+    /* SmartDashboards in path planner
     SmartDashboard.putNumber(
         "PPSwerveControllerCommand_xError", currentPose.getX() - desiredState.poseMeters.getX());
     SmartDashboard.putNumber(
@@ -240,8 +242,18 @@ public class PPSwerveControllerCommand extends CommandBase {
     SmartDashboard.putNumber(
         "PPSwerveControllerCommand_rotationError",
         currentPose.getRotation().getRadians() - desiredState.holonomicRotation.getRadians());
-
+    */
+    
+    /* Made by Sparky. */
     ChassisSpeeds targetChassisSpeeds = this.controller.calculate(currentPose, desiredState);
+    SmartDashboard.putNumber("currentPoseX", currentPose.getX());
+    SmartDashboard.putNumber("currentPoseY", currentPose.getY());
+    SmartDashboard.putNumber("desiredPoseX", desiredState.poseMeters.getX());
+    SmartDashboard.putNumber("desiredPoseY", desiredState.poseMeters.getY());
+    SmartDashboard.putNumber("chassis", targetChassisSpeeds.vxMetersPerSecond);
+   
+
+
 
     if (this.useKinematics) {
       SwerveModuleState[] targetModuleStates =

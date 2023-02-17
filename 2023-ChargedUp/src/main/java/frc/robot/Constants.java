@@ -137,6 +137,10 @@ public final class Constants {
         public static final double kMaxAccelerationMetersPerSecondSquared = 1;
         public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
         public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
+
+        /* Pathplanner Speed Constants */
+        public static final double kPathMaxAcceleration = 1.0; //1.0 was default
+        public static final double kPathMaxVelocity = 1.0; //1.0 was default   0.3
     
 
         /* Auto Controllers
@@ -145,9 +149,17 @@ public final class Constants {
          */
         public static final double kPXController = 1.0; //1.0 was default
         public static final double kPYController = 0.27; //1.0 was default   0.3
+        
         // theta controller constants
         public static final double kIThetaController = 0.0; // 0.0 is default
         public static final double kPThetaController = 0.25; //1.0 was default  0.25 - looks good.
+
+        /* pathplanner controller PIDs */
+        public static final double kPPathXController = 0.0; //0.05
+        public static final double kPPathYController = 0.0;
+        public static final double kPPathThetaController = 0.0;
+        public static final double kIPathThetaController = 0.0;        
+        
     
         /* Constraint for the motion profilied robot angle controller */
         public static final TrapezoidProfile.Constraints kThetaControllerConstraints =

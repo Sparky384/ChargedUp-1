@@ -15,6 +15,8 @@ import frc.robot.autos.*;
 import frc.robot.commands.*;
 import frc.robot.paths.AApath;
 import frc.robot.paths.ExamplePath;
+import frc.robot.paths.OutandInPath;
+import frc.robot.paths.snakePath;
 import frc.robot.subsystems.*;
 
 /**
@@ -55,6 +57,8 @@ public class RobotContainer {
         autoChooser.addOption("exampleAuto", "2");
         autoChooser.addOption("examplePath", "3");
         autoChooser.addOption("AAPath", "4");
+        autoChooser.addOption("snakePath", "5");
+        autoChooser.addOption("OutandInPath", "6");
 
 
 
@@ -92,10 +96,10 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
             // Chooser for different autonomous functions.
             switch(autoChooser.getSelected()) {
-                case "1":
+                /*case "1":
                 selectedAuto = new auto1(s_Swerve);
                 break;
-    
+                */
                 case "2":
                 selectedAuto = new exampleAuto(s_Swerve);
                 break;
@@ -104,8 +108,17 @@ public class RobotContainer {
                 selectedAuto = ExamplePath.followTrajectoryCommand(true, s_Swerve);
                 break;
 
+                case "1":
                 case "4":
                 selectedAuto = AApath.followTrajectoryCommand(true, s_Swerve);
+                break;
+
+                case "5":
+                selectedAuto = snakePath.followTrajectoryCommand(true, s_Swerve);
+                break;
+
+                case "6":
+                selectedAuto = OutandInPath.followTrajectoryCommand(true, s_Swerve);
                 break;
             }
 
