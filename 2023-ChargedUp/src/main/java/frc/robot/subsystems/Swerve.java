@@ -86,7 +86,7 @@ public class Swerve extends SubsystemBase {
 
     /* Used by SwerveControllerCommand in Auto */
     public void setModuleStates(SwerveModuleState[] desiredStates) {
-        SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.Swerve.maxSpeed);
+        SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.AutoConstants.kPathMaxVelocity);
         
         for(SwerveModule mod : mSwerveMods){
             mod.setDesiredState(desiredStates[mod.moduleNumber], false);
@@ -143,12 +143,13 @@ public class Swerve extends SubsystemBase {
         gyroAngle.setDouble(gyro.getYaw());
 
         for(SwerveModule mod : mSwerveMods){
-            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
+            //SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
             //SmartDashboard.putNumber("Mod " + mod.moduleNumber + " TM Position", mod.getPosition().angle.getDegrees()); //used "integrated" as last string
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);
             //SmartDashboard.putNumber("Mod " + mod.moduleNumber + " DM Position M", mod.getPosition().distanceMeters); //gives distance traveled for drive motors in meters
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " DM Position I", Units.metersToInches(mod.getPosition().distanceMeters)); //gives distance traveled for drive motors in inches
             SmartDashboard.putString("Odometry Rotation ", getPose().getRotation().toString() + getPose().getTranslation().toString());
+            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " DesiredSpd", mod.desiredSpeed);
         }
     }
 }
