@@ -82,7 +82,9 @@ public final class Constants {
 
         /* Swerve Profiling Values */
         /** Meters per Second */
-        public static final double maxSpeed = 0.3; //was 4.5
+        public static final double maxSpeed = 0.3; //was 4.5 meters per second
+        public static final double desiredAccelerationTime = 2; //in seconds
+        public static final double maxAcceleration = 0; //meters per second
         /** Radians per Second */
         public static final double maxAngularVelocity = 3.0; //was 10.0
 

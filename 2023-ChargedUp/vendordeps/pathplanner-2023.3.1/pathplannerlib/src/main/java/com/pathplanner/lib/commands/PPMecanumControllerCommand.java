@@ -239,7 +239,7 @@ public class PPMecanumControllerCommand extends CommandBase {
     PathPlannerServer.sendPathFollowingData(
         new Pose2d(desiredState.poseMeters.getTranslation(), desiredState.holonomicRotation),
         currentPose);
-
+    /*
     SmartDashboard.putNumber(
         "PPMecanumControllerCommand_xError", currentPose.getX() - desiredState.poseMeters.getX());
     SmartDashboard.putNumber(
@@ -247,7 +247,7 @@ public class PPMecanumControllerCommand extends CommandBase {
     SmartDashboard.putNumber(
         "PPMecanumControllerCommand_rotationError",
         currentPose.getRotation().getRadians() - desiredState.holonomicRotation.getRadians());
-
+      */
     ChassisSpeeds targetChassisSpeeds = this.controller.calculate(currentPose, desiredState);
 
     if (this.useKinematics) {

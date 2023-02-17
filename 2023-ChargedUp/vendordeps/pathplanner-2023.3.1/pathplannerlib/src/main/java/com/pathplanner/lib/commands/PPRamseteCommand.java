@@ -274,7 +274,7 @@ public class PPRamseteCommand extends CommandBase {
     }
     this.field.setRobotPose(currentPose);
     PathPlannerServer.sendPathFollowingData(desiredState.poseMeters, currentPose);
-
+    /*
     SmartDashboard.putNumber(
         "PPRamseteCommand_xError", currentPose.getX() - desiredState.poseMeters.getX());
     SmartDashboard.putNumber(
@@ -283,7 +283,7 @@ public class PPRamseteCommand extends CommandBase {
         "PPRamseteCommand_rotationError",
         currentPose.getRotation().getRadians()
             - desiredState.poseMeters.getRotation().getRadians());
-
+    */
     DifferentialDriveWheelSpeeds targetWheelSpeeds =
         this.kinematics.toWheelSpeeds(this.controller.calculate(currentPose, desiredState));
 
