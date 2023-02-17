@@ -59,7 +59,7 @@ public class SwerveModule {
             double percentOutput = desiredState.speedMetersPerSecond / Constants.Swerve.maxSpeed;
             mDriveMotor.set(ControlMode.PercentOutput, percentOutput);
             SmartDashboard.putNumber("desiredSpeed", desiredState.speedMetersPerSecond);
-            desiredSpeed = percentOutput;
+            desiredSpeed = desiredState.speedMetersPerSecond;
         }
         else {
             double velocity = Conversions.MPSToFalcon(desiredState.speedMetersPerSecond, Constants.Swerve.wheelCircumference, Constants.Swerve.driveGearRatio);
