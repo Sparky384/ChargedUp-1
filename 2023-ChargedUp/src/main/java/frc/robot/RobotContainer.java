@@ -4,14 +4,21 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.Constants.Subsys;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+
 import frc.robot.autos.*;
 import frc.robot.commands.*;
 import frc.robot.commands.ElevatorFunctionality.MoveElevator;
 import frc.robot.commands.WristFunctionality.Intake;
+import frc.robot.paths.AApath;
+import frc.robot.paths.ExamplePath;
+import frc.robot.paths.OutandInPath;
+import frc.robot.paths.snakePath;
 import frc.robot.subsystems.*;
 
 /**
@@ -27,6 +34,7 @@ public class RobotContainer {
     private Hand hand = new Hand();
     private Slider slider = new Slider();
     private Wrist wrist = new Wrist();
+    CommandBase selectedAuto;
 
     /* Drive Controls */
     private final int translationAxis = XboxController.Axis.kLeftY.value;
@@ -46,9 +54,27 @@ public class RobotContainer {
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
 
+    /* Smartdashboard Choosers */
+    private SendableChooser<String> autoChooser;
+    
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
+
+        /* Autonomous chooser */
+        autoChooser = new SendableChooser<String>();
+        SmartDashboard.putData("Autonomous Mode Chooser", autoChooser);
+        autoChooser.setDefaultOption("auto1", "1");
+        autoChooser.addOption("auto1", "1");
+        autoChooser.addOption("exampleAuto", "2");
+        autoChooser.addOption("examplePath", "3");
+        autoChooser.addOption("AAPath", "4");
+        autoChooser.addOption("snakePath", "5");
+        autoChooser.addOption("OutandInPath", "6");
+
+
+
+
         s_Swerve.setDefaultCommand(
             new TeleopSwerve(
                 s_Swerve, 
@@ -97,7 +123,34 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        // An ExampleCommand will run in autonomous
-        return new exampleAuto(s_Swerve);
+            // Chooser for different autonomous functions.
+            switch(autoChooser.getSelected()) {
+                /*case "1":
+                selectedAuto = new auto1(s_Swerve);
+                break;
+                */
+                case "2":
+                selectedAuto = new exampleAuto(s_Swerve);
+                break;
+
+                case "3":
+                selectedAuto = ExamplePath.followTrajectoryCommand(true, s_Swerve);
+                break;
+
+                case "1":
+                case "4":
+                selectedAuto = AApath.followTrajectoryCommand(true, s_Swerve);
+                break;
+
+                case "5":
+                selectedAuto = snakePath.followTrajectoryCommand(true, s_Swerve);
+                break;
+
+                case "6":
+                selectedAuto = OutandInPath.followTrajectoryCommand(true, s_Swerve);
+                break;
+            }
+
+        return selectedAuto;
     }
 }

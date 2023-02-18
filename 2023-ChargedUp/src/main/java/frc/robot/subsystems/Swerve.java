@@ -15,7 +15,12 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.SPI;
@@ -23,16 +28,24 @@ import edu.wpi.first.wpilibj.SPI;
 public class Swerve extends SubsystemBase {
     public SwerveDriveOdometry swerveOdometry;
     public SwerveModule[] mSwerveMods;
-    private final AHRS gyro = new AHRS(SPI.Port.kMXP);
+
+    private final Pigeon2 gyro = new Pigeon2(Constants.Swerve.pigeonID);
+    private GenericEntry gyroAngle;
 
     public Swerve() {
-        new Thread(() -> {
-            try{
-                Thread.sleep(1000);
-                zeroGyro();
-            } catch (Exception e) {
-            }
-        }).start();
+        /* Pigeon Startup code */
+        gyro.configFactoryDefault();
+        zeroGyro();
+
+        /* Test code for Shuffle board - Not finished.*/
+        ShuffleboardTab tab = Shuffleboard.getTab("PigeonFinal");
+        gyroAngle = 
+            tab
+                .add("GyroDegrees", 0)
+                .withPosition(1, 1)
+                .withWidget(BuiltInWidgets.kGyro)
+                .getEntry();
+        
 
         mSwerveMods = new SwerveModule[] {
             new SwerveModule(0, Constants.Swerve.Mod0.constants),
@@ -73,7 +86,7 @@ public class Swerve extends SubsystemBase {
 
     /* Used by SwerveControllerCommand in Auto */
     public void setModuleStates(SwerveModuleState[] desiredStates) {
-        SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.Swerve.maxSpeed);
+        SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.AutoConstants.kPathMaxVelocity);
         
         for(SwerveModule mod : mSwerveMods){
             mod.setDesiredState(desiredStates[mod.moduleNumber], false);
@@ -104,18 +117,16 @@ public class Swerve extends SubsystemBase {
         return positions;
     }
 
-    public void zeroGyro(){
-        gyro.reset();
+    /* Sets Pigeon Angle to 0 */
+    public void zeroGyro() {
+        gyro.setYaw(0);
     }
-
+    
+    /* Gets pigeon angle in degrees */
     public Rotation2d getYaw() {
-        // return (Constants.Swerve.invertGyro) ? Rotation2d.fromDegrees(360 + -gyro.getYaw()) : Rotation2d.fromDegrees(gyro.getYaw());
-        double degY = -gyro.getYaw();
-        if (degY < 0) {
-            degY += 360;
-        }
-
-        return Rotation2d.fromDegrees(degY);
+        return (Constants.Swerve.invertGyro)
+        ? Rotation2d.fromDegrees((360 - gyro.getYaw()) % 360)
+        : Rotation2d.fromDegrees(gyro.getYaw());
     }
 
     public double getPitch() {
@@ -133,11 +144,16 @@ public class Swerve extends SubsystemBase {
         swerveOdometry.update(getYaw(), getModulePositions());  
 
         SmartDashboard.putNumber("Robot Header ", getYaw().getDegrees());
+        gyroAngle.setDouble(gyro.getYaw());
 
         for(SwerveModule mod : mSwerveMods){
-            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
-            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Integrated", mod.getPosition().angle.getDegrees());
-            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);    
+            //SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
+            //SmartDashboard.putNumber("Mod " + mod.moduleNumber + " TM Position", mod.getPosition().angle.getDegrees()); //used "integrated" as last string
+            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);
+            //SmartDashboard.putNumber("Mod " + mod.moduleNumber + " DM Position M", mod.getPosition().distanceMeters); //gives distance traveled for drive motors in meters
+            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " DM Position I", Units.metersToInches(mod.getPosition().distanceMeters)); //gives distance traveled for drive motors in inches
+            SmartDashboard.putString("Odometry Rotation ", getPose().getRotation().toString() + getPose().getTranslation().toString());
+            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " DesiredSpd", mod.desiredSpeed);
         }
     }
 }
