@@ -10,6 +10,7 @@ import edu.wpi.first.math.util.Units;
 import frc.lib.util.COTSFalconSwerveConstants;
 import frc.lib.util.SwerveModuleConstants;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.smartdashboard.*;
 
 public final class Constants {
     public static final double stickDeadband = 0.1;
@@ -73,6 +74,19 @@ public final class Constants {
         public static final double driveKD = 0.0;
         public static final double driveKF = 0.0;
 
+        // for changing PIDs for Drive with Smartdashboard. remove "final" from variable. Comment ones not being used.
+        /*public static void smartDashboardDrivePIDs() {
+            SmartDashboard.putNumber("DriveKP", driveKP);
+            SmartDashboard.putNumber("DriveKI", driveKI);
+            SmartDashboard.putNumber("DriveKD", driveKD);
+            SmartDashboard.putNumber("DriveKF", driveKF);
+    
+            driveKP = SmartDashboard.getNumber("DriveKP", driveKP);
+            driveKI = SmartDashboard.getNumber("DriveKI", driveKI);
+            driveKD = SmartDashboard.getNumber("DriveKD", driveKD);
+            driveKF = SmartDashboard.getNumber("DriveKF", driveKF);
+        }*/
+
         /* Drive Motor Characterization Values 
          * Divide SYSID values by 12 to convert from volts to percent output for CTRE */
         //TODO: This must be tuned to specific robot
@@ -86,7 +100,7 @@ public final class Constants {
         public static final double desiredAccelerationTime = 2; //in seconds
         public static final double maxAcceleration = 0; //meters per second
         /** Radians per Second */
-        public static final double maxAngularVelocity = 3.0; //was 10.0
+        public static final double maxAngularVelocity = 1.0; //original 10.0 was 3.0
 
         /* Neutral Modes */
         public static final NeutralMode angleNeutralMode = NeutralMode.Coast;
@@ -149,19 +163,25 @@ public final class Constants {
          * Have to feed fairly large values to see signfigant change.
          * Values appear to be affecting how quickly the motors can change. (maybe)
          */
-        public static final double kPXController = 1.0; //1.0 was default
-        public static final double kPYController = 0.27; //1.0 was default   0.3
-        
-        // theta controller constants
-        public static final double kIThetaController = 0.0; // 0.0 is default
-        public static final double kPThetaController = 0.25; //1.0 was default  0.25 - looks good.
+        /* pathplanner controller PIDs. Make sure these have "final" in them when not tuning. */
+        public static final double kPPathXController = 1.0; //0.05
+        public static final double kPPathYController = 0.27;
 
-        /* pathplanner controller PIDs */
-        public static final double kPPathXController = 0.0; //0.05
-        public static final double kPPathYController = 0.0;
-        public static final double kPPathThetaController = 0.0;
-        public static final double kIPathThetaController = 0.0;        
-        
+        public static final double kPPathThetaController = 0.9; //.9 looked good on swerveboard bot.
+        public static final double kIPathThetaController = 0.0;
+
+        // for changing PIDs for Auto with Smartdashboard. remove "final" from variable. Comment ones not being used.
+        /*public static void smartDashboardAutoPIDs() {
+            SmartDashboard.putNumber("Theta P", kPPathThetaController);
+            SmartDashboard.putNumber("Theta I", kIPathThetaController);
+            SmartDashboard.putNumber("Path X", kPPathXController);
+            SmartDashboard.putNumber("Path Y", kPPathYController);
+    
+            kPPathThetaController = SmartDashboard.getNumber("Theta P", kPPathThetaController);
+            kIPathThetaController = SmartDashboard.getNumber("Theta I", kIPathThetaController);
+            kPPathXController = SmartDashboard.getNumber("Path X", kPPathXController);
+            kPPathYController = SmartDashboard.getNumber("Path Y", kPPathYController);
+        }*/
     
         /* Constraint for the motion profilied robot angle controller */
         public static final TrapezoidProfile.Constraints kThetaControllerConstraints =

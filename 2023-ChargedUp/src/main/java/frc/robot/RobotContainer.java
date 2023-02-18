@@ -3,21 +3,18 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-
-import frc.robot.autos.*;
-import frc.robot.commands.*;
+import frc.robot.commands.TeleopSwerve;
 import frc.robot.paths.AApath;
 import frc.robot.paths.ExamplePath;
 import frc.robot.paths.OutandInPath;
 import frc.robot.paths.snakePath;
-import frc.robot.subsystems.*;
+import frc.robot.subsystems.Swerve;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -47,18 +44,19 @@ public class RobotContainer {
     
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
-    public RobotContainer() {
+    public RobotContainer() {        
+
+        //Constants.AutoConstants.smartDashboardAutoPIDs();
+        //Constants.Swerve.smartDashboardDrivePIDs();
 
         /* Autonomous chooser */
         autoChooser = new SendableChooser<String>();
         SmartDashboard.putData("Autonomous Mode Chooser", autoChooser);
-        autoChooser.setDefaultOption("auto1", "1");
-        autoChooser.addOption("auto1", "1");
-        autoChooser.addOption("exampleAuto", "2");
-        autoChooser.addOption("examplePath", "3");
-        autoChooser.addOption("AAPath", "4");
-        autoChooser.addOption("snakePath", "5");
-        autoChooser.addOption("OutandInPath", "6");
+        autoChooser.setDefaultOption("auto1", "3");
+        autoChooser.addOption("examplePath", "1");
+        autoChooser.addOption("AAPath", "2");
+        autoChooser.addOption("snakePath", "3");
+        autoChooser.addOption("OutandInPath", "4");
 
 
 
@@ -94,30 +92,22 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
+
             // Chooser for different autonomous functions.
             switch(autoChooser.getSelected()) {
-                /*case "1":
-                selectedAuto = new auto1(s_Swerve);
-                break;
-                */
-                case "2":
-                selectedAuto = new exampleAuto(s_Swerve);
-                break;
-
-                case "3":
+                case "1":
                 selectedAuto = ExamplePath.followTrajectoryCommand(true, s_Swerve);
                 break;
 
-                case "1":
-                case "4":
+                case "2":
                 selectedAuto = AApath.followTrajectoryCommand(true, s_Swerve);
                 break;
 
-                case "5":
+                case "3":
                 selectedAuto = snakePath.followTrajectoryCommand(true, s_Swerve);
                 break;
 
-                case "6":
+                case "4":
                 selectedAuto = OutandInPath.followTrajectoryCommand(true, s_Swerve);
                 break;
             }

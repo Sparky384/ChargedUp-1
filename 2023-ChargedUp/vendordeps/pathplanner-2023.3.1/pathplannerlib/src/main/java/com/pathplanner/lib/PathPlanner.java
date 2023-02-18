@@ -131,6 +131,7 @@ public class PathPlanner {
         currentPath.add(w);
         if (w.isStopPoint || i == waypoints.size() - 1) {
           // Get the markers that should be part of this path and correct their positions
+          //markers are saying there are errors. There aren't.
           List<EventMarker> currentMarkers = new ArrayList<>();
           for (EventMarker marker : markers) {
             if (marker.waypointRelativePos >= waypoints.indexOf(currentPath.get(0))
