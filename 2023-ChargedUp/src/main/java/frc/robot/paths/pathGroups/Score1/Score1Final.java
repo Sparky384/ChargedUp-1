@@ -1,4 +1,4 @@
-package frc.robot.paths;
+package frc.robot.paths.pathGroups.Score1;
 
 import frc.lib.pathplanner.com.pathplanner.lib.PathPlanner;
 import frc.lib.pathplanner.com.pathplanner.lib.PathPlannerTrajectory;
@@ -13,23 +13,15 @@ import frc.robot.subsystems.Swerve;
 import frc.lib.pathplanner.com.pathplanner.lib.PathConstraints;
 import frc.robot.Constants;
 
-public class ExamplePath extends SequentialCommandGroup {
- 
+public class Score1Final extends SequentialCommandGroup{
     private static Swerve s_Swerve;
-
-    static PathPlannerTrajectory exampleTrajectory = PathPlanner.loadPath("New Path", new PathConstraints(1, 1));
-
         // Assuming this method is part of a drivetrain subsystem that provides the necessary methods
-    public static CommandBase followTrajectoryCommand(boolean isFirstPath, Swerve s) {
-
+    public static CommandBase followTrajectoryCommand(Swerve s) {
         s_Swerve = s;
+
         return new SequentialCommandGroup(
-            new InstantCommand(() -> {
-            // Reset odometry for the first path you run during auto
-                if(isFirstPath){
-                    s_Swerve.resetOdometry(exampleTrajectory.getInitialHolonomicPose());
-                }
-            })
+        Score1_1.followTrajectoryCommand(true, s_Swerve),
+        Score1_2.followTrajectoryCommand(false, s_Swerve)
         );
     }
 }

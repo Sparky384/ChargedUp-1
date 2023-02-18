@@ -1,5 +1,7 @@
 package frc.robot;
 
+import com.ctre.phoenix.platform.can.AutocacheState;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -12,8 +14,11 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.paths.AApath;
 import frc.robot.paths.ExamplePath;
+import frc.robot.paths.JustDriveAuto;
+import frc.robot.paths.JustRamp;
 import frc.robot.paths.OutandInPath;
 import frc.robot.paths.snakePath;
+import frc.robot.paths.pathGroups.Score1.Score1Final;
 import frc.robot.subsystems.Swerve;
 
 /**
@@ -58,6 +63,11 @@ public class RobotContainer {
         autoChooser.addOption("snakePath", "3");
         autoChooser.addOption("OutandInPath", "4");
 
+        // auto chooser final
+        autoChooser.addOption("Do Nothing", "0");
+        autoChooser.addOption("Just Drive", "5"); //make it case 1 on final
+        autoChooser.addOption("Score 1", "6"); //make it case 2 on final
+        autoChooser.addOption("Go on Ramp", "7"); //make it case 3 on final.
 
 
 
@@ -95,6 +105,10 @@ public class RobotContainer {
 
             // Chooser for different autonomous functions.
             switch(autoChooser.getSelected()) {
+                case "0":
+                selectedAuto = null;
+                break;
+
                 case "1":
                 selectedAuto = ExamplePath.followTrajectoryCommand(true, s_Swerve);
                 break;
@@ -109,6 +123,18 @@ public class RobotContainer {
 
                 case "4":
                 selectedAuto = OutandInPath.followTrajectoryCommand(true, s_Swerve);
+                break;
+
+                case "5":
+                selectedAuto = JustDriveAuto.followTrajectoryCommand(true, s_Swerve);
+                break;
+
+                case "6":
+                selectedAuto = Score1Final.followTrajectoryCommand(s_Swerve);
+                break;
+
+                case "7":
+                selectedAuto = JustRamp.followTrajectoryCommand(true, s_Swerve);
                 break;
             }
 
