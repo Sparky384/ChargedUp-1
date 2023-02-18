@@ -12,8 +12,8 @@ public class Elevator extends SubsystemBase{
     private CANSparkMax motorTwo; 
 
     public Elevator(){
-        motorOne = new CANSparkMax(Constants.CANPorts.elevatorOne, MotorType.kBrushless);
-        motorTwo = new CANSparkMax(Constants.CANPorts.elevatorTwo, MotorType.kBrushless); 
+        motorOne = new CANSparkMax(Constants.CANPorts.elevatorLeft, MotorType.kBrushless);
+        motorTwo = new CANSparkMax(Constants.CANPorts.elevatorRight, MotorType.kBrushless); 
         motorTwo.follow(motorOne);
         motorOne.getPIDController().setP(Constants.PIDValues.elevatorOneP); 
         motorOne.getPIDController().setI(Constants.PIDValues.elevatorOneI);

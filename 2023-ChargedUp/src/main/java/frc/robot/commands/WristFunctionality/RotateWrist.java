@@ -5,12 +5,12 @@ import frc.robot.Constants;
 import frc.robot.subsystems.Wrist;
 
 
-public class MoveWrist extends CommandBase {
+public class RotateWrist extends CommandBase {
 
     private Wrist wristSubsystem; 
     private double wristAngle;
 
-    public MoveWrist (Wrist wrist, double initangle) {
+    public RotateWrist (Wrist wrist, double initangle) {
 
         wristAngle = initangle;
         wristSubsystem = wrist; 

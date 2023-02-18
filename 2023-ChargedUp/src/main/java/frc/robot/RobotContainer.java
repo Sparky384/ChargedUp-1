@@ -34,6 +34,7 @@ public class RobotContainer {
     private Hand hand = new Hand();
     private Slider slider = new Slider();
     private Wrist wrist = new Wrist();
+    private DriveTrain driveTrain = new DriveTrain();
     CommandBase selectedAuto;
 
     /* Drive Controls */
@@ -52,7 +53,7 @@ public class RobotContainer {
     private final JoystickButton gyrJoystickButton = new JoystickButton(driver, Constants.ButtonMap.Copilot.gyro);
 
     /* Subsystems */
-    private final Swerve s_Swerve = new Swerve();
+    // private final Swerve s_Swerve = new Swerve();
 
     /* Smartdashboard Choosers */
     private SendableChooser<String> autoChooser;
@@ -72,10 +73,18 @@ public class RobotContainer {
         autoChooser.addOption("snakePath", "5");
         autoChooser.addOption("OutandInPath", "6");
 
+        driveTrain.setDefaultCommand(
+            new Arcade(
+                driveTrain, 
+                () -> driver.getRawAxis(translationAxis), 
+                () -> driver.getRawAxis(strafeAxis)
+            )
+        ); 
 
 
 
-        s_Swerve.setDefaultCommand(
+
+        /* s_Swerve.setDefaultCommand(
             new TeleopSwerve(
                 s_Swerve, 
                 () -> -driver.getRawAxis(translationAxis), 
@@ -83,7 +92,7 @@ public class RobotContainer {
                 () -> -driver.getRawAxis(rotationAxis), 
                 () -> robotCentric.getAsBoolean()
             )
-        );
+        ); */
 
         // Configure the button bindings
         configureButtonBindings();
@@ -97,16 +106,16 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         /* Driver Buttons */
-        zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
+        // zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
         shoot.whileTrue(new Shoot(hand));
         intake.whileTrue(new Intake(hand));
         elevatorLow.onTrue(new MoveElevator(elevator, Constants.Subsys.elevatorLow));
         elevatorMid.onTrue(new MoveElevator(elevator, Constants.Subsys.elevatorMid));
         elevatorHigh.onTrue(new MoveElevator(elevator, Constants.Subsys.elevatorHigh));
         // run DriveOnRamp THEN run GyroStabalize
-        gyrJoystickButton.toggleOnTrue(new SequentialCommandGroup(
-            new DriveOnRamp(s_Swerve),
-            new GyroStabalize(s_Swerve)));
+        // gyrJoystickButton.toggleOnTrue(new SequentialCommandGroup(
+            // new DriveOnRamp(s_Swerve),
+            // new GyroStabalize(s_Swerve)));
         
         /*
          * This is example command group, each command will run at the same time
@@ -124,11 +133,11 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
             // Chooser for different autonomous functions.
-            switch(autoChooser.getSelected()) {
+            /* switch(autoChooser.getSelected()) {
                 /*case "1":
                 selectedAuto = new auto1(s_Swerve);
                 break;
-                */
+                
                 case "2":
                 selectedAuto = new exampleAuto(s_Swerve);
                 break;
@@ -149,8 +158,8 @@ public class RobotContainer {
                 case "6":
                 selectedAuto = OutandInPath.followTrajectoryCommand(true, s_Swerve);
                 break;
-            }
+            } */
 
-        return selectedAuto;
+        return null;
     }
 }
