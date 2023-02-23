@@ -1,4 +1,4 @@
-package frc.robot.paths.pathGroups.Score2Pickup;
+package frc.robot.paths;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -11,14 +11,13 @@ import frc.lib.pathplanner.com.pathplanner.lib.commands.PPSwerveControllerComman
 import frc.robot.Constants;
 import frc.robot.subsystems.Swerve;
 
-public class Score2Pickup_2 extends SequentialCommandGroup {
+public class Pickup2nd extends SequentialCommandGroup {
     private static Swerve s_Swerve;
 
-    static PathPlannerTrajectory exampleTrajectory = PathPlanner.loadPath("Auto10_2", new PathConstraints(Constants.AutoConstants.kPathMaxVelocity, Constants.AutoConstants.kPathMaxAcceleration));
+    static PathPlannerTrajectory exampleTrajectory = PathPlanner.loadPath("Pickup2nd", new PathConstraints(Constants.AutoConstants.kPathMaxVelocity, Constants.AutoConstants.kPathMaxAcceleration));
 
         // Assuming this method is part of a drivetrain subsystem that provides the necessary methods
     public static CommandBase followTrajectoryCommand(boolean isFirstPath, Swerve s) {
-
         s_Swerve = s;
         return new SequentialCommandGroup(
             new InstantCommand(() -> {

@@ -12,6 +12,9 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.Swerve;
 import frc.lib.pathplanner.com.pathplanner.lib.PathConstraints;
 import frc.robot.Constants;
+import frc.robot.paths.Pickup1st;
+import frc.robot.paths.Pickup2nd;
+import frc.robot.paths.ReturnFromPickup1st;
 
 // Right Side Of The Arena
 
@@ -22,9 +25,9 @@ public class Score2PickupRampFinal extends SequentialCommandGroup {
         s_Swerve = s;
 
         return new SequentialCommandGroup(
-        Score2PickupRamp_1.followTrajectoryCommand(true, s_Swerve),
-        Score2PickupRamp_2.followTrajectoryCommand(false, s_Swerve),
-        Score2PickupRamp_3.followTrajectoryCommand(false, s_Swerve),
+        Pickup1st.followTrajectoryCommand(true, s_Swerve),
+        ReturnFromPickup1st.followTrajectoryCommand(false, s_Swerve),
+        Pickup2nd.followTrajectoryCommand(false, s_Swerve),
         Score2PickupRamp_4.followTrajectoryCommand(false, s_Swerve)
         );
     }

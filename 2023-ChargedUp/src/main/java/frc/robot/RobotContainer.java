@@ -18,9 +18,9 @@ import frc.robot.paths.JustDriveAuto;
 import frc.robot.paths.JustRamp;
 import frc.robot.paths.OutandInPath;
 import frc.robot.paths.snakePath;
-import frc.robot.paths.pathGroups.Score1.Score1Final;
-import frc.robot.paths.pathGroups.Score2.Score2final;
-import frc.robot.paths.pathGroups.Score1Ramp.Score1RampFinal;
+import frc.robot.paths.pathGroups.Score1Final;
+import frc.robot.paths.pathGroups.Score1RampFinal;
+import frc.robot.paths.pathGroups.Score2Final;
 import frc.robot.subsystems.Swerve;
 
 /**
@@ -142,7 +142,7 @@ public class RobotContainer {
                 break;
 
                 case "8":
-                selectedAuto = Score2final.followTrajectoryCommand(s_Swerve);
+                selectedAuto = Score2Final.followTrajectoryCommand(s_Swerve);
                 break;
 
                 case "9":
