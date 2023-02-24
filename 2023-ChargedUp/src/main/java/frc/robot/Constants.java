@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public final class Constants {
     public static final double stickDeadband = 0.1;
-    public static final double doubleThreshold = 0.1;
+    public static final double doubleThreshold = 1.0;
     public static final double rampThreshold = 20.0; // in degrees
 
     public static final class Swerve {
@@ -184,10 +184,10 @@ public final class Constants {
         public static final double backLeftDriveP = 0.0; 
         public static final double backLeftDriveI = 0.0; 
         public static final double backLeftDriveD = 0.0; 
-        public static final double elevatorOneP = 0.0;
+        public static final double elevatorOneP = 0.02;
         public static final double elevatorOneI = 0.0;
         public static final double elevatorOneD = 0.0;
-        public static final double elevatorTwoP = 0.0;
+        public static final double elevatorTwoP = 0.5;
         public static final double elevatorTwoI = 0.0;
         public static final double elevatorTwoD = 0.0;
         public static final double sliderP = 0.0;
@@ -237,8 +237,8 @@ public final class Constants {
     }
     public static class Subsys{
         public static final double elevatorLow = 0.0;
-        public static final double elevatorMid = 10.0;
-        public static final double elevatorHigh = 20.0;
+        public static final double elevatorMid = 20.0;
+        public static final double elevatorHigh = 40.0;
     }
 
     public static class RampConstants{

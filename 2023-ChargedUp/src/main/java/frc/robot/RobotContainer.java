@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.autos.*;
 import frc.robot.commands.*;
 import frc.robot.commands.ElevatorFunctionality.MoveElevator;
+import frc.robot.commands.SliderFunctionality.MoveSlider;
 import frc.robot.commands.WristFunctionality.Intake;
 import frc.robot.paths.AApath;
 import frc.robot.paths.ExamplePath;
@@ -51,6 +52,7 @@ public class RobotContainer {
     private final JoystickButton elevatorHigh = new JoystickButton(driver, Constants.ButtonMap.Copilot.elevatorHigh);
     private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
     private final JoystickButton gyrJoystickButton = new JoystickButton(driver, Constants.ButtonMap.Copilot.gyro);
+    private final JoystickButton sliderButton = new JoystickButton(driver, XboxController.Button.kX.value);
 
     /* Subsystems */
     // private final Swerve s_Swerve = new Swerve();
@@ -112,6 +114,7 @@ public class RobotContainer {
         elevatorLow.onTrue(new MoveElevator(elevator, Constants.Subsys.elevatorLow));
         elevatorMid.onTrue(new MoveElevator(elevator, Constants.Subsys.elevatorMid));
         elevatorHigh.onTrue(new MoveElevator(elevator, Constants.Subsys.elevatorHigh));
+        sliderButton.onTrue(new MoveSlider(slider, 0));
         // run DriveOnRamp THEN run GyroStabalize
         // gyrJoystickButton.toggleOnTrue(new SequentialCommandGroup(
             // new DriveOnRamp(s_Swerve),
