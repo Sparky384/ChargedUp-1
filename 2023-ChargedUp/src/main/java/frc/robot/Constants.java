@@ -190,10 +190,10 @@ public final class Constants {
         public static final double elevatorTwoP = 0.5;
         public static final double elevatorTwoI = 0.0;
         public static final double elevatorTwoD = 0.0;
-        public static final double sliderP = 0.0;
+        public static final double sliderP = 0.02;
         public static final double sliderI = 0.0;
         public static final double sliderD = 0.0;
-        public static final double wristP = 0.0; 
+        public static final double wristP = 0.02; 
         public static final double wristI = 0.0; 
         public static final double wristD = 0.0; 
         public static final double handP = 0.0;
@@ -216,7 +216,7 @@ public final class Constants {
         public static final int rearRightDrive = 1;
         public static final int frontLeftDrive = 15;
         public static final int rearLeftDrive = 14;
-        public static final int slider = 35; 
+        public static final int slider = 30; 
         public static final int wrist = 4; 
         public static final int hand = 12; 
     }
@@ -226,12 +226,15 @@ public final class Constants {
             
         }
         public static class Copilot{
-          public static final int shoot = XboxController.Button.kA.value;
-          public static final int intake = XboxController.Button.kB.value;
+        //   public static final int shoot = XboxController.Button.kA.value;
+        //   public static final int intake = XboxController.Button.kB.value;
           public static final int elevatorLow = XboxController.Button.kLeftBumper.value;
           public static final int elevatorMid = XboxController.Button.kBack.value;
           public static final int elevatorHigh = XboxController.Button.kRightBumper.value;
           public static final int gyro = XboxController.Button.kX.value;
+          public static final int zeroGyro = XboxController.Button.kX.value;
+          public static final int sliderIn = XboxController.Button.kStart.value;
+          public static final int sliderOut = XboxController.Button.kB.value;
         }
 
     }
@@ -239,6 +242,10 @@ public final class Constants {
         public static final double elevatorLow = 0.0;
         public static final double elevatorMid = 20.0;
         public static final double elevatorHigh = 40.0;
+        public static final double sliderIn = 0.0;
+        public static final double sliderOut = 150.0;
+        public static final double wristLow = 0.0;
+        public static final double wristHigh = 20.0;
     }
 
     public static class RampConstants{

@@ -16,6 +16,8 @@ import frc.robot.commands.*;
 import frc.robot.commands.ElevatorFunctionality.MoveElevator;
 import frc.robot.commands.SliderFunctionality.MoveSlider;
 import frc.robot.commands.WristFunctionality.Intake;
+import frc.robot.commands.WristFunctionality.Outtake;
+import frc.robot.commands.WristFunctionality.RotateWrist;
 import frc.robot.paths.AApath;
 import frc.robot.paths.ExamplePath;
 import frc.robot.paths.OutandInPath;
@@ -44,15 +46,16 @@ public class RobotContainer {
     private final int rotationAxis = XboxController.Axis.kRightX.value;
 
     /* Driver Buttons */
-    private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
-    private final JoystickButton shoot = new JoystickButton(driver, Constants.ButtonMap.Copilot.shoot);
-    private final JoystickButton intake = new JoystickButton(driver, Constants.ButtonMap.Copilot.intake);
+    private final JoystickButton zeroGyro = new JoystickButton(driver, Constants.ButtonMap.Copilot.zeroGyro);
+    // private final JoystickButton shoot = new JoystickButton(driver, Constants.ButtonMap.Copilot.shoot);
+    // private final JoystickButton intake = new JoystickButton(driver, Constants.ButtonMap.Copilot.intake);
     private final JoystickButton elevatorLow = new JoystickButton(driver, Constants.ButtonMap.Copilot.elevatorLow);
     private final JoystickButton elevatorMid = new JoystickButton(driver, Constants.ButtonMap.Copilot.elevatorMid);
     private final JoystickButton elevatorHigh = new JoystickButton(driver, Constants.ButtonMap.Copilot.elevatorHigh);
     private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
     private final JoystickButton gyrJoystickButton = new JoystickButton(driver, Constants.ButtonMap.Copilot.gyro);
-    private final JoystickButton sliderButton = new JoystickButton(driver, XboxController.Button.kX.value);
+    private final JoystickButton sliderIn = new JoystickButton(driver, Constants.ButtonMap.Copilot.sliderIn);
+    private final JoystickButton sliderOut = new JoystickButton(driver, Constants.ButtonMap.Copilot.sliderOut);
 
     /* Subsystems */
     // private final Swerve s_Swerve = new Swerve();
@@ -109,12 +112,17 @@ public class RobotContainer {
     private void configureButtonBindings() {
         /* Driver Buttons */
         // zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
-        shoot.whileTrue(new Shoot(hand));
-        intake.whileTrue(new Intake(hand));
+        // shoot.whileTrue(new Shoot(hand));
+        // intake.whileTrue(new Intake(hand));
         elevatorLow.onTrue(new MoveElevator(elevator, Constants.Subsys.elevatorLow));
         elevatorMid.onTrue(new MoveElevator(elevator, Constants.Subsys.elevatorMid));
         elevatorHigh.onTrue(new MoveElevator(elevator, Constants.Subsys.elevatorHigh));
-        sliderButton.onTrue(new MoveSlider(slider, 0));
+        //sliderIn.onTrue(new MoveSlider(slider, Constants.Subsys.sliderIn));
+        //sliderOut.onTrue(new MoveSlider(slider, Constants.Subsys.sliderOut));
+        //sliderIn.onTrue(new RotateWrist(wrist, Constants.Subsys.wristLow));
+        //sliderOut.onTrue(new RotateWrist(wrist, Constants.Subsys.wristHigh));
+        sliderIn.whileTrue(new Intake(hand));
+        sliderOut.whileTrue(new Outtake(hand));
         // run DriveOnRamp THEN run GyroStabalize
         // gyrJoystickButton.toggleOnTrue(new SequentialCommandGroup(
             // new DriveOnRamp(s_Swerve),

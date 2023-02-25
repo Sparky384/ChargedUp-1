@@ -13,7 +13,6 @@ import frc.robot.Constants;
 
 public class Slider extends SubsystemBase{
     private CANSparkMax motorOne; 
-    private CANSparkMax motorTwo; 
     private RelativeEncoder m_encoder;
     private SparkMaxPIDController m_pidController;
 
@@ -22,9 +21,9 @@ public class Slider extends SubsystemBase{
         //motorTwo = new CANSparkMax(Constants.CANPorts.elevatorRight, MotorType.kBrushless); 
 
         m_pidController = motorOne.getPIDController();
-        m_pidController.setP(Constants.PIDValues.elevatorOneP);
-        m_pidController.setI(Constants.PIDValues.elevatorOneI);
-        m_pidController.setD(Constants.PIDValues.elevatorOneD);
+        m_pidController.setP(Constants.PIDValues.sliderP);
+        m_pidController.setI(Constants.PIDValues.sliderI);
+        m_pidController.setD(Constants.PIDValues.sliderD);
         m_pidController.setOutputRange(-0.1, 0.1);
         // initialize SPARK MAX with CAN ID
         m_encoder = motorOne.getEncoder();
@@ -39,12 +38,12 @@ public class Slider extends SubsystemBase{
 
     public void move(double distance){
         distance = distance; //replace this with conversion function
-        motorOne.getPIDController().setReference(distance, CANSparkMax.ControlType.kPosition);
-        //motorTwo.set(-motorOne.get());
+        m_pidController.setReference(distance, CANSparkMax.ControlType.kPosition);
+
     }
 
     public double getDistance() {
-        double distance = motorOne.getAbsoluteEncoder(SparkMaxAbsoluteEncoder.Type.kDutyCycle).getPosition();
+        double distance = m_encoder.getPosition();
         distance = distance; //replace this with conversion function
         return distance;
     }

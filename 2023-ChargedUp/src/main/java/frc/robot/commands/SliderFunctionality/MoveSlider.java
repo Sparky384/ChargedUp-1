@@ -14,7 +14,6 @@ public class MoveSlider extends CommandBase {
         sliderDistance = initDistance;
         sliderSubsystem = slider;
         addRequirements(sliderSubsystem);
-
     }
 
     public void execute() {
