@@ -161,7 +161,7 @@ public final class Constants {
         public static final double backLeftDriveP = 0.0; 
         public static final double backLeftDriveI = 0.0; 
         public static final double backLeftDriveD = 0.0; 
-        public static final double elevatorOneP = 0.0;
+        public static final double elevatorOneP = 0.02;
         public static final double elevatorOneI = 0.0;
         public static final double elevatorOneD = 0.0;
         public static final double elevatorTwoP = 0.0;
