@@ -18,7 +18,9 @@ import frc.robot.paths.JustDriveAuto;
 import frc.robot.paths.JustRamp;
 import frc.robot.paths.OutandInPath;
 import frc.robot.paths.snakePath;
-import frc.robot.paths.pathGroups.Score1.Score1Final;
+import frc.robot.paths.pathGroups.Score1Final;
+import frc.robot.paths.pathGroups.Score1RampFinal;
+import frc.robot.paths.pathGroups.Score2Final;
 import frc.robot.subsystems.Swerve;
 
 /**
@@ -68,6 +70,8 @@ public class RobotContainer {
         autoChooser.addOption("Just Drive", "5"); //make it case 1 on final
         autoChooser.addOption("Score 1", "6"); //make it case 2 on final
         autoChooser.addOption("Go on Ramp", "7"); //make it case 3 on final.
+        autoChooser.addOption("Score 2", "8");
+        autoChooser.addOption("Score 1, Get on Ramp", "9");
 
 
 
@@ -135,6 +139,14 @@ public class RobotContainer {
 
                 case "7":
                 selectedAuto = JustRamp.followTrajectoryCommand(true, s_Swerve);
+                break;
+
+                case "8":
+                selectedAuto = Score2Final.followTrajectoryCommand(s_Swerve);
+                break;
+
+                case "9":
+                selectedAuto = Score1RampFinal.followTrajectoryCommand(s_Swerve);
                 break;
             }
 
