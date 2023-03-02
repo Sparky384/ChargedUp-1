@@ -14,7 +14,7 @@ import frc.robot.subsystems.Swerve;
 public class Pickup2nd extends SequentialCommandGroup {
     private static Swerve s_Swerve;
 
-    static PathPlannerTrajectory exampleTrajectory = PathPlanner.loadPath("Pickup2nd", new PathConstraints(Constants.AutoConstants.kPathMaxVelocity, Constants.AutoConstants.kPathMaxAcceleration));
+    static PathPlannerTrajectory exampleTrajectory = PathPlanner.loadPath("RPickup2nd", new PathConstraints(Constants.AutoConstants.kPathMaxVelocity, Constants.AutoConstants.kPathMaxAcceleration));
 
         // Assuming this method is part of a drivetrain subsystem that provides the necessary methods
     public static CommandBase followTrajectoryCommand(boolean isFirstPath, Swerve s) {
