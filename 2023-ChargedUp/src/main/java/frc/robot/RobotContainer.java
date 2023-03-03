@@ -17,6 +17,16 @@ import frc.robot.paths.pathGroups.Score1Ramp;
 import frc.robot.paths.pathGroups.rightGroups.*;
 import frc.robot.paths.pathGroups.leftGroups.*;
 import frc.robot.subsystems.Swerve;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+
+import frc.robot.commands.*;
+import frc.robot.commands.ElevatorFunctionality.MoveElevator;
+import frc.robot.commands.SliderFunctionality.MoveSlider;
+import frc.robot.commands.WristFunctionality.Intake;
+import frc.robot.commands.WristFunctionality.Outtake;
+import frc.robot.commands.WristFunctionality.RotateWrist;
+import frc.robot.subsystems.*;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -27,6 +37,10 @@ import frc.robot.subsystems.Swerve;
 public class RobotContainer {
     /* Controllers */
     private final Joystick driver = new Joystick(0);
+    private Elevator elevator = new Elevator();
+    private Hand hand = new Hand();
+    private Slider slider = new Slider();
+    private Wrist wrist = new Wrist();
     CommandBase selectedAuto;
 
     /* Drive Controls */
@@ -35,8 +49,16 @@ public class RobotContainer {
     private final int rotationAxis = XboxController.Axis.kRightX.value;
 
     /* Driver Buttons */
-    private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
+    private final JoystickButton zeroGyro = new JoystickButton(driver, Constants.ButtonMap.Copilot.zeroGyro);
+    // private final JoystickButton shoot = new JoystickButton(driver, Constants.ButtonMap.Copilot.shoot);
+    // private final JoystickButton intake = new JoystickButton(driver, Constants.ButtonMap.Copilot.intake);
+    private final JoystickButton elevatorLow = new JoystickButton(driver, Constants.ButtonMap.Copilot.elevatorLow);
+    private final JoystickButton elevatorMid = new JoystickButton(driver, Constants.ButtonMap.Copilot.elevatorMid);
+    private final JoystickButton elevatorHigh = new JoystickButton(driver, Constants.ButtonMap.Copilot.elevatorHigh);
     private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+    private final JoystickButton gyrJoystickButton = new JoystickButton(driver, Constants.ButtonMap.Copilot.gyro);
+    private final JoystickButton sliderIn = new JoystickButton(driver, Constants.ButtonMap.Copilot.sliderIn);
+    private final JoystickButton sliderOut = new JoystickButton(driver, Constants.ButtonMap.Copilot.sliderOut);
 
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
@@ -73,6 +95,8 @@ public class RobotContainer {
 
 
 
+
+
         s_Swerve.setDefaultCommand(
             new TeleopSwerve(
                 s_Swerve, 
@@ -95,7 +119,30 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         /* Driver Buttons */
-        zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
+        // zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
+        // shoot.whileTrue(new Shoot(hand));
+        // intake.whileTrue(new Intake(hand));
+        elevatorLow.onTrue(new MoveElevator(elevator, Constants.Subsys.elevatorLow));
+        elevatorMid.onTrue(new MoveElevator(elevator, Constants.Subsys.elevatorMid));
+        elevatorHigh.onTrue(new MoveElevator(elevator, Constants.Subsys.elevatorHigh));
+        //sliderIn.onTrue(new MoveSlider(slider, Constants.Subsys.sliderIn));
+        //sliderOut.onTrue(new MoveSlider(slider, Constants.Subsys.sliderOut));
+        //sliderIn.onTrue(new RotateWrist(wrist, Constants.Subsys.wristLow));
+        //sliderOut.onTrue(new RotateWrist(wrist, Constants.Subsys.wristHigh));
+        sliderIn.whileTrue(new Intake(hand));
+        sliderOut.whileTrue(new Outtake(hand));
+        // run DriveOnRamp THEN run GyroStabalize
+        // gyrJoystickButton.toggleOnTrue(new SequentialCommandGroup(
+            // new DriveOnRamp(s_Swerve),
+            // new GyroStabalize(s_Swerve)));
+        
+        /*
+         * This is example command group, each command will run at the same time
+         * Button.onTrue(new ParallelCommandGroup(new MoveElevator(elevator, 0),
+         * new MoveSlider(slider, 0),
+         * new MoveWrist(wrist, 0)));
+         * 0 in this case references parameter i.e. elevatorLow
+         */
     }
 
     /**
@@ -107,9 +154,7 @@ public class RobotContainer {
 
             // Chooser for different autonomous functions.
             switch(autoChooser.getSelected()) {
-                case "0":
-                selectedAuto = null;
-                break;
+
 
                 case "1":
                 selectedAuto = JustDriveAuto.followTrajectoryCommand(true, s_Swerve);
@@ -160,6 +205,6 @@ public class RobotContainer {
                 break;
             }
 
-        return selectedAuto;
+        return null;
     }
 }
