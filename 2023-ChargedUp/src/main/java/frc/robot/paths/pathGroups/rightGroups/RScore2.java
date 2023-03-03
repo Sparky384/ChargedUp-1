@@ -1,5 +1,4 @@
-package frc.robot.paths.pathGroups;
-
+package frc.robot.paths.pathGroups.rightGroups;
 import frc.lib.pathplanner.com.pathplanner.lib.PathPlanner;
 import frc.lib.pathplanner.com.pathplanner.lib.PathPlannerTrajectory;
 import frc.lib.pathplanner.com.pathplanner.lib.commands.PPSwerveControllerCommand;
@@ -12,23 +11,22 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.Swerve;
 import frc.lib.pathplanner.com.pathplanner.lib.PathConstraints;
 import frc.robot.Constants;
-import frc.robot.paths.Pickup1st;
-import frc.robot.paths.RStartToRamp;
-import frc.robot.paths.ReturnFromPickup1st;
+import frc.robot.paths.rightPaths.RPickup2nd;
+import frc.robot.paths.rightPaths.RScore2nd;
 
-// Right Side Of The Arena
-
-public class Score2RampFinal extends SequentialCommandGroup {
+public class RScore2 extends SequentialCommandGroup {
     private static Swerve s_Swerve;
         // Assuming this method is part of a drivetrain subsystem that provides the necessary methods
     public static CommandBase followTrajectoryCommand(Swerve s) {
         s_Swerve = s;
 
         return new SequentialCommandGroup(
-        // Assume that we already turned 180 degrees and scored the initial piece
-        Pickup1st.followTrajectoryCommand(true, s_Swerve),
-        ReturnFromPickup1st.followTrajectoryCommand(false, s_Swerve),
-        RStartToRamp.followTrajectoryCommand(false, s_Swerve)
+        RScore1.followTrajectoryCommand(s_Swerve), //if we decide to move after score 1 this cannot be called here.
+        //Parallel Command Group: move, sometime later bring elevator to height
+        RScore2nd.followTrajectoryCommand(false, s_Swerve)
+        //deploy slider
+        //drop piece
+        //retract slider
         );
     }
 }

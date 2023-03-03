@@ -1,4 +1,4 @@
-package frc.robot.paths.pathGroups;
+package frc.robot.paths.pathGroups.leftGroups;
 
 import frc.lib.pathplanner.com.pathplanner.lib.PathPlanner;
 import frc.lib.pathplanner.com.pathplanner.lib.PathPlannerTrajectory;
@@ -12,26 +12,23 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.Swerve;
 import frc.lib.pathplanner.com.pathplanner.lib.PathConstraints;
 import frc.robot.Constants;
-import frc.robot.paths.Pickup1st;
-import frc.robot.paths.Pickup2nd;
-import frc.robot.paths.RStartToRamp;
-import frc.robot.paths.ReturnFromPickup1st;
-import frc.robot.paths.ReturnFromPickup2nd;
+import frc.robot.paths.leftPaths.LPickup2nd;
 
-
-public class UltimateFinal extends SequentialCommandGroup{
+public class LScore1 extends SequentialCommandGroup{
     private static Swerve s_Swerve;
         // Assuming this method is part of a drivetrain subsystem that provides the necessary methods
     public static CommandBase followTrajectoryCommand(Swerve s) {
         s_Swerve = s;
 
         return new SequentialCommandGroup(
-        // Assume that we already turned 180 degrees and scored the initial piece
-        Pickup1st.followTrajectoryCommand(true, s_Swerve),
-        ReturnFromPickup1st.followTrajectoryCommand(false, s_Swerve),
-        Pickup2nd.followTrajectoryCommand(false, s_Swerve),
-        ReturnFromPickup2nd.followTrajectoryCommand(false, s_Swerve),
-        RStartToRamp.followTrajectoryCommand(false, s_Swerve)
+        //limelight center target - maybe
+        //may already have elevator to height. otherwise bring up elevator.
+        //deploy slider
+        //drop piece
+        //retract slider
+
+        //parallel command group: first: drive, then drop elevator before finishing point.
+        LPickup2nd.followTrajectoryCommand(true, s_Swerve)
         );
     }
 }

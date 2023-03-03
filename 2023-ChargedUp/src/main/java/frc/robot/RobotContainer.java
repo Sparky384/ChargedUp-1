@@ -12,15 +12,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.TeleopSwerve;
-import frc.robot.paths.AApath;
-import frc.robot.paths.ExamplePath;
 import frc.robot.paths.JustDriveAuto;
-import frc.robot.paths.JustRamp;
-import frc.robot.paths.OutandInPath;
-import frc.robot.paths.snakePath;
-import frc.robot.paths.pathGroups.Score1Final;
-import frc.robot.paths.pathGroups.Score1RampFinal;
-import frc.robot.paths.pathGroups.Score2Final;
+import frc.robot.paths.pathGroups.Score1Ramp;
+import frc.robot.paths.pathGroups.rightGroups.*;
+import frc.robot.paths.pathGroups.leftGroups.*;
 import frc.robot.subsystems.Swerve;
 
 /**
@@ -59,19 +54,22 @@ public class RobotContainer {
         /* Autonomous chooser */
         autoChooser = new SendableChooser<String>();
         SmartDashboard.putData("Autonomous Mode Chooser", autoChooser);
-        autoChooser.setDefaultOption("auto1", "3");
-        autoChooser.addOption("examplePath", "1");
-        autoChooser.addOption("AAPath", "2");
-        autoChooser.addOption("snakePath", "3");
-        autoChooser.addOption("OutandInPath", "4");
 
         // auto chooser final
+        autoChooser.setDefaultOption("Do Nothing", "0");
         autoChooser.addOption("Do Nothing", "0");
-        autoChooser.addOption("Just Drive", "5"); //make it case 1 on final
-        autoChooser.addOption("Score 1", "6"); //make it case 2 on final
-        autoChooser.addOption("Go on Ramp", "7"); //make it case 3 on final.
-        autoChooser.addOption("Score 2", "8");
-        autoChooser.addOption("Score 1, Get on Ramp", "9");
+        autoChooser.addOption("Just Drive", "1");
+        autoChooser.addOption("RScore 1", "2");
+        autoChooser.addOption("LScore 1", "3");
+        autoChooser.addOption("Score 1 Ramp", "4");
+        autoChooser.addOption("RScore 2", "5");
+        autoChooser.addOption("LScore 2", "6");
+        autoChooser.addOption("RScore 2 Ramp", "7");
+        autoChooser.addOption("LScore 2 Ramp", "8");
+        autoChooser.addOption("RScore 3", "9");
+        autoChooser.addOption("LScore 3", "10");
+        autoChooser.addOption("RScore 3 Ramp", "11");
+        autoChooser.addOption("LScore 3 Ramp", "12");
 
 
 
@@ -114,39 +112,51 @@ public class RobotContainer {
                 break;
 
                 case "1":
-                selectedAuto = ExamplePath.followTrajectoryCommand(true, s_Swerve);
-                break;
-
-                case "2":
-                selectedAuto = AApath.followTrajectoryCommand(true, s_Swerve);
-                break;
-
-                case "3":
-                selectedAuto = snakePath.followTrajectoryCommand(true, s_Swerve);
-                break;
-
-                case "4":
-                selectedAuto = OutandInPath.followTrajectoryCommand(true, s_Swerve);
-                break;
-
-                case "5":
                 selectedAuto = JustDriveAuto.followTrajectoryCommand(true, s_Swerve);
                 break;
 
-                case "6":
-                selectedAuto = Score1Final.followTrajectoryCommand(s_Swerve);
+                case "2":
+                selectedAuto = RScore1.followTrajectoryCommand(s_Swerve);
                 break;
 
+                case "3":
+                selectedAuto = LScore1.followTrajectoryCommand(s_Swerve); 
+                break;
+
+                case "4":
+                selectedAuto = Score1Ramp.followTrajectoryCommand(s_Swerve);
+                break;
+
+                case "5":
+                selectedAuto = RScore2.followTrajectoryCommand(s_Swerve);
+                break;
+
+                case "6":
+                selectedAuto = LScore2.followTrajectoryCommand(s_Swerve);
+                break;
+                
                 case "7":
-                selectedAuto = JustRamp.followTrajectoryCommand(true, s_Swerve);
+                selectedAuto = RScore2Ramp.followTrajectoryCommand(s_Swerve);
                 break;
 
                 case "8":
-                selectedAuto = Score2Final.followTrajectoryCommand(s_Swerve);
+                selectedAuto = LScore2Ramp.followTrajectoryCommand(s_Swerve);
                 break;
 
                 case "9":
-                selectedAuto = Score1RampFinal.followTrajectoryCommand(s_Swerve);
+                selectedAuto = RScore3.followTrajectoryCommand(s_Swerve);
+                break;
+
+                case "10":
+                selectedAuto = LScore3.followTrajectoryCommand(s_Swerve);
+                break;
+
+                case "11":
+                selectedAuto = RUltimate.followTrajectoryCommand(s_Swerve);
+                break;
+
+                case "12":
+                selectedAuto = LUltimate.followTrajectoryCommand(s_Swerve);
                 break;
             }
 

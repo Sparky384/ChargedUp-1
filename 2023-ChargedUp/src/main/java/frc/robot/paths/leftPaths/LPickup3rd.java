@@ -1,4 +1,4 @@
-package frc.robot.paths.pathGroups.Score2PickupRamp;
+package frc.robot.paths.leftPaths;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -11,24 +11,23 @@ import frc.lib.pathplanner.com.pathplanner.lib.commands.PPSwerveControllerComman
 import frc.robot.Constants;
 import frc.robot.subsystems.Swerve;
 
-public class Score2PickupRamp_4 extends SequentialCommandGroup {
+public class LPickup3rd extends SequentialCommandGroup {
     private static Swerve s_Swerve;
 
-    static PathPlannerTrajectory exampleTrajectory = PathPlanner.loadPath("Auto9_4", new PathConstraints(Constants.AutoConstants.kPathMaxVelocity, Constants.AutoConstants.kPathMaxAcceleration));
+    static PathPlannerTrajectory trajectory = PathPlanner.loadPath("LPickup3rd", new PathConstraints(Constants.AutoConstants.kPathMaxVelocity, Constants.AutoConstants.kPathMaxAcceleration));
 
         // Assuming this method is part of a drivetrain subsystem that provides the necessary methods
     public static CommandBase followTrajectoryCommand(boolean isFirstPath, Swerve s) {
-
         s_Swerve = s;
         return new SequentialCommandGroup(
             new InstantCommand(() -> {
             // Reset odometry for the first path you run during auto
             if(isFirstPath){
-                s_Swerve.resetOdometry(exampleTrajectory.getInitialHolonomicPose());
+                s_Swerve.resetOdometry(trajectory.getInitialHolonomicPose());
             }
             }),
             new PPSwerveControllerCommand(
-                exampleTrajectory, 
+                trajectory, 
                 s_Swerve::getPose, // Pose supplier
                 Constants.Swerve.swerveKinematics, // SwerveDriveKinematics
                 new PIDController(Constants.AutoConstants.kPPathXController, 0, 0), // X controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.

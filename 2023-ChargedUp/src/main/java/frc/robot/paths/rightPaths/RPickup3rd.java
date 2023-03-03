@@ -1,27 +1,23 @@
-package frc.robot.paths;
+package frc.robot.paths.rightPaths;
 
-import frc.lib.pathplanner.com.pathplanner.lib.PathPlanner;
-import frc.lib.pathplanner.com.pathplanner.lib.PathPlannerTrajectory;
-import frc.lib.pathplanner.com.pathplanner.lib.commands.PPSwerveControllerCommand;
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-
-import frc.robot.subsystems.Swerve;
 import frc.lib.pathplanner.com.pathplanner.lib.PathConstraints;
+import frc.lib.pathplanner.com.pathplanner.lib.PathPlanner;
+import frc.lib.pathplanner.com.pathplanner.lib.PathPlannerTrajectory;
+import frc.lib.pathplanner.com.pathplanner.lib.commands.PPSwerveControllerCommand;
 import frc.robot.Constants;
+import frc.robot.subsystems.Swerve;
 
-public class JustDriveAuto extends SequentialCommandGroup {
-    
+public class RPickup3rd extends SequentialCommandGroup {
     private static Swerve s_Swerve;
 
-    static PathPlannerTrajectory trajectory = PathPlanner.loadPath("justDrive", new PathConstraints(Constants.AutoConstants.kPathMaxVelocity, Constants.AutoConstants.kPathMaxAcceleration));
+    static PathPlannerTrajectory trajectory = PathPlanner.loadPath("RPickup3rd", new PathConstraints(Constants.AutoConstants.kPathMaxVelocity, Constants.AutoConstants.kPathMaxAcceleration));
 
         // Assuming this method is part of a drivetrain subsystem that provides the necessary methods
     public static CommandBase followTrajectoryCommand(boolean isFirstPath, Swerve s) {
-
         s_Swerve = s;
         return new SequentialCommandGroup(
             new InstantCommand(() -> {

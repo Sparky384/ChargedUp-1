@@ -1,4 +1,4 @@
-package frc.robot.paths.pathGroups.Score2PickupRamp;
+package frc.robot.paths.pathGroups.rightGroups;
 
 import frc.lib.pathplanner.com.pathplanner.lib.PathPlanner;
 import frc.lib.pathplanner.com.pathplanner.lib.PathPlannerTrajectory;
@@ -12,23 +12,23 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.Swerve;
 import frc.lib.pathplanner.com.pathplanner.lib.PathConstraints;
 import frc.robot.Constants;
-import frc.robot.paths.Pickup1st;
-import frc.robot.paths.Pickup2nd;
-import frc.robot.paths.ReturnFromPickup1st;
+import frc.robot.paths.rightPaths.RPickup2nd;
 
-// Right Side Of The Arena
-
-public class Score2PickupRampFinal extends SequentialCommandGroup {
+public class RScore1 extends SequentialCommandGroup{
     private static Swerve s_Swerve;
         // Assuming this method is part of a drivetrain subsystem that provides the necessary methods
     public static CommandBase followTrajectoryCommand(Swerve s) {
         s_Swerve = s;
 
         return new SequentialCommandGroup(
-        Pickup1st.followTrajectoryCommand(true, s_Swerve),
-        ReturnFromPickup1st.followTrajectoryCommand(false, s_Swerve),
-        Pickup2nd.followTrajectoryCommand(false, s_Swerve),
-        Score2PickupRamp_4.followTrajectoryCommand(false, s_Swerve)
+        //limelight center target - maybe
+        //may already have elevator to height. otherwise bring up elevator.
+        //deploy slider
+        //drop piece
+        //retract slider
+
+        //parallel command group: first: drive, then drop elevator before finishing point.
+        RPickup2nd.followTrajectoryCommand(true, s_Swerve)
         );
     }
 }

@@ -15,7 +15,7 @@ public class JustRamp extends SequentialCommandGroup {
      
     private static Swerve s_Swerve;
 
-    static PathPlannerTrajectory exampleTrajectory = PathPlanner.loadPath("JustRamp", new PathConstraints(Constants.AutoConstants.kPathMaxVelocity, Constants.AutoConstants.kPathMaxAcceleration));
+    static PathPlannerTrajectory trajectory = PathPlanner.loadPath("JustRamp", new PathConstraints(Constants.AutoConstants.kPathMaxVelocity, Constants.AutoConstants.kPathMaxAcceleration));
 
         // Assuming this method is part of a drivetrain subsystem that provides the necessary methods
     public static CommandBase followTrajectoryCommand(boolean isFirstPath, Swerve s) {
@@ -25,11 +25,11 @@ public class JustRamp extends SequentialCommandGroup {
             new InstantCommand(() -> {
             // Reset odometry for the first path you run during auto
             if(isFirstPath){
-                s_Swerve.resetOdometry(exampleTrajectory.getInitialHolonomicPose());
+                s_Swerve.resetOdometry(trajectory.getInitialHolonomicPose());
             }
             }),
             new PPSwerveControllerCommand(
-                exampleTrajectory, 
+                trajectory, 
                 s_Swerve::getPose, // Pose supplier
                 Constants.Swerve.swerveKinematics, // SwerveDriveKinematics
                 new PIDController(Constants.AutoConstants.kPPathXController, 0, 0), // X controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.

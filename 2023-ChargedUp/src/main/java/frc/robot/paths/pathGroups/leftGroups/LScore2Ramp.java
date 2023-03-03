@@ -1,4 +1,5 @@
-package frc.robot.paths.pathGroups;
+package frc.robot.paths.pathGroups.leftGroups;
+
 import frc.lib.pathplanner.com.pathplanner.lib.PathPlanner;
 import frc.lib.pathplanner.com.pathplanner.lib.PathPlannerTrajectory;
 import frc.lib.pathplanner.com.pathplanner.lib.commands.PPSwerveControllerCommand;
@@ -11,19 +12,20 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.Swerve;
 import frc.lib.pathplanner.com.pathplanner.lib.PathConstraints;
 import frc.robot.Constants;
-import frc.robot.paths.Pickup1st;
-import frc.robot.paths.ReturnFromPickup1st;
+import frc.robot.paths.leftPaths.LRampFrom2nd;
 
-public class Score2Final extends SequentialCommandGroup {
+public class LScore2Ramp extends SequentialCommandGroup {
     private static Swerve s_Swerve;
         // Assuming this method is part of a drivetrain subsystem that provides the necessary methods
     public static CommandBase followTrajectoryCommand(Swerve s) {
         s_Swerve = s;
 
         return new SequentialCommandGroup(
-        // Assume that we already turned 180 degrees and scored the initial piece
-        Pickup1st.followTrajectoryCommand(true, s_Swerve),
-        ReturnFromPickup1st.followTrajectoryCommand(false, s_Swerve)
+            LScore2.followTrajectoryCommand(s_Swerve), //if we decide to move out of the goal after this auto we will not be able to call it here.
+            //drop elevator. maybe parallel command?
+            LRampFrom2nd.followTrajectoryCommand(false, s_Swerve)
+            //drive up ramp
+            //balance
         );
     }
 }
