@@ -21,6 +21,7 @@ import frc.robot.paths.snakePath;
 import frc.robot.paths.pathGroups.Score1Final;
 import frc.robot.paths.pathGroups.Score1RampFinal;
 import frc.robot.paths.pathGroups.Score2Final;
+import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Swerve;
 
 /**
@@ -45,6 +46,7 @@ public class RobotContainer {
 
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
+    private final Limelight s_Limelight = new Limelight();
 
     /* Smartdashboard Choosers */
     private SendableChooser<String> autoChooser;
