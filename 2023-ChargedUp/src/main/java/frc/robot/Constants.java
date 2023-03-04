@@ -283,4 +283,14 @@ public final class Constants {
         public static final double P = 0.0; // P as in PID
         public static final double maxRampSpeed = 0.0; // percentage
     }
+
+    public enum LimelightPipelines
+    {
+        HI_GOAL,
+        LOW_GOAL,
+        CONE, 
+        CUBE
+    }
+
+    public static final double limelightDeadband = 0.8;
 }

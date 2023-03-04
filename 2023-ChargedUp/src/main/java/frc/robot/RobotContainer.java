@@ -12,11 +12,14 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.AutoCenter;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.paths.JustDriveAuto;
 import frc.robot.paths.pathGroups.Score1Ramp;
 import frc.robot.paths.pathGroups.rightGroups.*;
 import frc.robot.paths.pathGroups.leftGroups.*;
+import frc.robot.paths.JustRamp;
+import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Swerve;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -42,6 +45,7 @@ public class RobotContainer {
     /* Subsystems */
     private final Swerve swerve = new Swerve();
     private Elevator elevator = new Elevator();
+    private Limelight s_Limelight = new Limelight();
     private Hand hand = new Hand();
     private Slider slider = new Slider();
     private Wrist wrist = new Wrist();
@@ -164,6 +168,8 @@ public class RobotContainer {
          * new MoveWrist(wrist, 0)));
          * 0 in this case references parameter i.e. elevatorLow
          */
+        autoTrackLeft.whileTrue(new AutoCenter(swerve, s_Limelight, false));
+        autoTrackRight.whileTrue(new AutoCenter(swerve, s_Limelight, true));
     }
 
     /**
