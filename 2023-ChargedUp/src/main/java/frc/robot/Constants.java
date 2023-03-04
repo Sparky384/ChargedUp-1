@@ -249,18 +249,23 @@ public final class Constants {
 
     public static class ButtonMap{
         public static class Pilot{
-            
+            public static final int toggleLED = XboxController.Button.kBack.value;
+            public static final int driveOnRampSequence = XboxController.Button.kStart.value;
+            public static final int pickupObject = XboxController.Button.kA.value;
+            public static final int dropObject = XboxController.Button.kB.value;
+            public static final int slowDrive = 1; //this will obviously turn into our RT value once it's made if we even put it here.
+            public static final int autoTrackLeft = XboxController.Button.kLeftBumper.value;
+            public static final int autoTrackRight = XboxController.Button.kRightBumper.value;
         }
         public static class Copilot{
-        //   public static final int shoot = XboxController.Button.kA.value;
-        //   public static final int intake = XboxController.Button.kB.value;
-          public static final int elevatorLow = XboxController.Button.kLeftBumper.value;
-          public static final int elevatorMid = XboxController.Button.kBack.value;
-          public static final int elevatorHigh = XboxController.Button.kRightBumper.value;
-          public static final int gyro = XboxController.Button.kX.value;
-          public static final int zeroGyro = XboxController.Button.kX.value;
-          public static final int sliderIn = XboxController.Button.kStart.value;
-          public static final int sliderOut = XboxController.Button.kB.value;
+            //public static final int zeroGyro = XboxController.Button.kX.value;
+
+            /* finalized button values. */
+            public static final int sliderIn = XboxController.Button.kBack.value;
+            public static final int sliderOut = XboxController.Button.kStart.value;
+            public static final int elevatorLow = XboxController.Button.kB.value;
+            public static final int elevatorMid = XboxController.Button.kX.value;
+            public static final int elevatorHigh = XboxController.Button.kY.value;
         }
 
     }

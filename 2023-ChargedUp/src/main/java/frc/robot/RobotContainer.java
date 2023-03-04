@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.paths.JustDriveAuto;
@@ -36,7 +37,8 @@ import frc.robot.subsystems.*;
  */
 public class RobotContainer {
     /* Controllers */
-    private final Joystick driver = new Joystick(0);
+    private final Joystick pilot = new Joystick(0);
+    private final Joystick copilot = new Joystick(1);
     /* Subsystems */
     private final Swerve swerve = new Swerve();
     private Elevator elevator = new Elevator();
@@ -45,23 +47,36 @@ public class RobotContainer {
     private Wrist wrist = new Wrist();
     CommandBase selectedAuto;
 
-    /* Drive Controls */
+    /* Pilot Joystick Controls */
     private final int translationAxis = XboxController.Axis.kLeftY.value;
     private final int strafeAxis = XboxController.Axis.kLeftX.value;
     private final int rotationAxis = XboxController.Axis.kRightX.value;
 
-    /* Driver Buttons */
-    private final JoystickButton zeroGyro = new JoystickButton(driver, Constants.ButtonMap.Copilot.zeroGyro);
-    // private final JoystickButton shoot = new JoystickButton(driver, Constants.ButtonMap.Copilot.shoot);
-    // private final JoystickButton intake = new JoystickButton(driver, Constants.ButtonMap.Copilot.intake);
-    private final JoystickButton elevatorLow = new JoystickButton(driver, Constants.ButtonMap.Copilot.elevatorLow);
-    private final JoystickButton elevatorMid = new JoystickButton(driver, Constants.ButtonMap.Copilot.elevatorMid);
-    private final JoystickButton elevatorHigh = new JoystickButton(driver, Constants.ButtonMap.Copilot.elevatorHigh);
-    private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
-    private final JoystickButton gyrJoystickButton = new JoystickButton(driver, Constants.ButtonMap.Copilot.gyro);
-    private final JoystickButton sliderIn = new JoystickButton(driver, Constants.ButtonMap.Copilot.sliderIn);
-    private final JoystickButton sliderOut = new JoystickButton(driver, Constants.ButtonMap.Copilot.sliderOut);
+    /* Copilot Joystick Controls */
+    private final int elevatorJoystick = XboxController.Axis.kLeftY.value;
 
+    /* Pilot Buttons */
+    // private final JoystickButton shoot = new JoystickButton(pilot, Constants.ButtonMap.Copilot.shoot);
+    // private final JoystickButton intake = new JoystickButton(pilot, Constants.ButtonMap.Copilot.intake);
+    private final JoystickButton elevatorLow = new JoystickButton(pilot, Constants.ButtonMap.Copilot.elevatorLow);
+    private final JoystickButton elevatorMid = new JoystickButton(pilot, Constants.ButtonMap.Copilot.elevatorMid);
+    private final JoystickButton elevatorHigh = new JoystickButton(pilot, Constants.ButtonMap.Copilot.elevatorHigh);
+    private final JoystickButton robotCentric = new JoystickButton(pilot, XboxController.Button.kLeftBumper.value);
+    private final JoystickButton gyrJoystickButton = new JoystickButton(pilot, Constants.ButtonMap.Pilot.driveOnRampSequence);
+    private final JoystickButton sliderIn = new JoystickButton(pilot, Constants.ButtonMap.Copilot.sliderIn);
+    private final JoystickButton sliderOut = new JoystickButton(pilot, Constants.ButtonMap.Copilot.sliderOut);
+
+    /* Final Robot Buttons */
+    //Pilot
+    //private final JoystickButton toggleLED = new JoystickButton(pilot, ); changes LED don't have limelight on this version yet
+    private final JoystickButton driveOnRampSequence = new JoystickButton(pilot, Constants.ButtonMap.Pilot.driveOnRampSequence);
+    private final JoystickButton pickupObject = new JoystickButton(pilot, Constants.ButtonMap.Pilot.pickupObject);
+    private final JoystickButton dropObject = new JoystickButton(pilot, Constants.ButtonMap.Pilot.dropObject);
+    private final JoystickButton slowDrive = new JoystickButton(pilot, Constants.ButtonMap.Pilot.slowDrive);
+    private final JoystickButton autoTrackLeft = new JoystickButton(pilot, Constants.ButtonMap.Pilot.pickupObject);
+    private final JoystickButton autoTrackRight = new JoystickButton(pilot, Constants.ButtonMap.Pilot.pickupObject);
+    //copilot
+    //private final JoystickButton lowGoalLimelight = new J
 
     /* Smartdashboard Choosers */
     private SendableChooser<String> autoChooser;
@@ -96,13 +111,13 @@ public class RobotContainer {
 
 
 
-
+        //pilot controlling swerve
         swerve.setDefaultCommand(
             new TeleopSwerve(
                 swerve, 
-                () -> -driver.getRawAxis(translationAxis), 
-                () -> -driver.getRawAxis(strafeAxis), 
-                () -> -driver.getRawAxis(rotationAxis), 
+                () -> -pilot.getRawAxis(translationAxis), 
+                () -> -pilot.getRawAxis(strafeAxis), 
+                () -> -pilot.getRawAxis(rotationAxis), 
                 () -> robotCentric.getAsBoolean()
             )
         );
@@ -118,6 +133,12 @@ public class RobotContainer {
      * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private void configureButtonBindings() {
+        /* final configurations */
+        // run DriveOnRamp THEN run GyroStabalize
+        //driveOnRampSequence.toggleOnTrue(new SequentialCommandGroup(
+            // new DriveOnRamp(swerve, false),
+            // new GyroStabalize(swerve)));
+        
         /* Driver Buttons */
         // zeroGyro.onTrue(new InstantCommand(() -> swerve.zeroGyro()));
         // shoot.whileTrue(new Shoot(hand));
@@ -132,9 +153,9 @@ public class RobotContainer {
         sliderIn.whileTrue(new Intake(hand));
         sliderOut.whileTrue(new Outtake(hand));
         // run DriveOnRamp THEN run GyroStabalize
-        // gyrJoystickButton.toggleOnTrue(new SequentialCommandGroup(
-            // new DriveOnRamp(swerve, false),
-            // new GyroStabalize(swerve)));
+        driveOnRampSequence.toggleOnTrue(new SequentialCommandGroup(
+            new DriveOnRamp(swerve, false),
+            new GyroStabalize(swerve)));
         
         /*
          * This is example command group, each command will run at the same time
