@@ -188,4 +188,14 @@ public final class Constants {
             new TrapezoidProfile.Constraints(
                 kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
     }
+
+    public enum LimelightPipelines
+    {
+        HI_GOAL,
+        LOW_GOAL,
+        CONE, 
+        CUBE
+    }
+
+    public static final double limelightDeadband = 0.8;
 }

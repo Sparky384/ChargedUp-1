@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.AutoCenter;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.paths.AApath;
 import frc.robot.paths.ExamplePath;
@@ -42,7 +43,9 @@ public class RobotContainer {
 
     /* Driver Buttons */
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
-    private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+    //private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+    private final JoystickButton autoTrackLeft = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+    private final JoystickButton autoTrackRight = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
 
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
@@ -100,6 +103,8 @@ public class RobotContainer {
     private void configureButtonBindings() {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
+        autoTrackLeft.whileTrue(new AutoCenter(s_Swerve, s_Limelight, false));
+        autoTrackRight.whileTrue(new AutoCenter(s_Swerve, s_Limelight, true));
     }
 
     /**
