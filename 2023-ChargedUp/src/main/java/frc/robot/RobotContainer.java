@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.AutoCenter;
@@ -62,25 +63,37 @@ public class RobotContainer {
     /* Pilot Buttons */
     // private final JoystickButton shoot = new JoystickButton(pilot, Constants.ButtonMap.Copilot.shoot);
     // private final JoystickButton intake = new JoystickButton(pilot, Constants.ButtonMap.Copilot.intake);
-    private final JoystickButton elevatorLow = new JoystickButton(pilot, Constants.ButtonMap.Copilot.elevatorLow);
-    private final JoystickButton elevatorMid = new JoystickButton(pilot, Constants.ButtonMap.Copilot.elevatorMid);
-    private final JoystickButton elevatorHigh = new JoystickButton(pilot, Constants.ButtonMap.Copilot.elevatorHigh);
-    private final JoystickButton robotCentric = new JoystickButton(pilot, XboxController.Button.kLeftBumper.value);
-    private final JoystickButton gyrJoystickButton = new JoystickButton(pilot, Constants.ButtonMap.Pilot.driveOnRampSequence);
-    private final JoystickButton sliderIn = new JoystickButton(pilot, Constants.ButtonMap.Copilot.sliderIn);
-    private final JoystickButton sliderOut = new JoystickButton(pilot, Constants.ButtonMap.Copilot.sliderOut);
+    //private final JoystickButton elevatorLow = new JoystickButton(pilot, Constants.ButtonMap.Copilot.elevatorLow);
+    //private final JoystickButton elevatorMid = new JoystickButton(pilot, Constants.ButtonMap.Copilot.elevatorMid);
+    //private final JoystickButton elevatorHigh = new JoystickButton(pilot, Constants.ButtonMap.Copilot.elevatorHigh);
+    private final JoystickButton robotCentric = new JoystickButton(pilot, XboxController.Button.kLeftBumper.value); //may get rid of this as a button.
+    //private final JoystickButton sliderIn = new JoystickButton(pilot, Constants.ButtonMap.Copilot.sliderIn);
+    //private final JoystickButton sliderOut = new JoystickButton(pilot, Constants.ButtonMap.Copilot.sliderOut);
 
     /* Final Robot Buttons */
     //Pilot
-    //private final JoystickButton toggleLED = new JoystickButton(pilot, ); changes LED don't have limelight on this version yet
+    private final JoystickButton toggleLED = new JoystickButton(pilot, Constants.ButtonMap.Pilot.toggleLED); //changes LED don't have limelight on this version yet
     private final JoystickButton driveOnRampSequence = new JoystickButton(pilot, Constants.ButtonMap.Pilot.driveOnRampSequence);
     private final JoystickButton pickupObject = new JoystickButton(pilot, Constants.ButtonMap.Pilot.pickupObject);
     private final JoystickButton dropObject = new JoystickButton(pilot, Constants.ButtonMap.Pilot.dropObject);
     private final JoystickButton slowDrive = new JoystickButton(pilot, Constants.ButtonMap.Pilot.slowDrive);
     private final JoystickButton autoTrackLeft = new JoystickButton(pilot, Constants.ButtonMap.Pilot.pickupObject);
     private final JoystickButton autoTrackRight = new JoystickButton(pilot, Constants.ButtonMap.Pilot.pickupObject);
+    
     //copilot
-    //private final JoystickButton lowGoalLimelight = new J
+    private final JoystickButton lowGoalLimelight = new JoystickButton(copilot, Constants.ButtonMap.Copilot.lowGoalLimelight);
+    private final JoystickButton highGoalLimelight = new JoystickButton(copilot, Constants.ButtonMap.Copilot.lowGoalLimelight);
+    private final JoystickButton sliderIn = new JoystickButton(copilot, Constants.ButtonMap.Copilot.sliderIn);
+    private final JoystickButton sliderOut = new JoystickButton(copilot, Constants.ButtonMap.Copilot.sliderOut);
+    private final JoystickButton elevatorHigh = new JoystickButton(copilot, Constants.ButtonMap.Copilot.elevatorHigh);
+    private final JoystickButton elevatorMid = new JoystickButton(copilot, Constants.ButtonMap.Copilot.elevatorMid);
+    private final JoystickButton elevatorLow = new JoystickButton(copilot, Constants.ButtonMap.Copilot.elevatorLow);
+    private final JoystickButton handIntake = new JoystickButton(copilot, Constants.ButtonMap.Copilot.handIntake);
+    private final JoystickButton handOuttake = new JoystickButton(copilot, Constants.ButtonMap.Copilot.handOuttake);
+    private final JoystickButton wristHigh = new JoystickButton(copilot, Constants.ButtonMap.Copilot.wristHigh);
+    private final JoystickButton wristMid = new JoystickButton(copilot, Constants.ButtonMap.Copilot.wristMid);
+    private final JoystickButton wristLow = new JoystickButton(copilot, Constants.ButtonMap.Copilot.wristLow);
+    private final JoystickButton wristGround = new JoystickButton(copilot, Constants.ButtonMap.Copilot.wristGround);
 
     /* Smartdashboard Choosers */
     private SendableChooser<String> autoChooser;
@@ -138,10 +151,17 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         /* final configurations */
+        //pilot
+        toggleLED.onTrue(new InstantCommand(() -> s_Limelight.toggleLED()));
+        pickupObject.onTrue(new ParallelCommandGroup(new Intake(hand), new RotateWrist(wrist, Constants.Subsys.wristLow))); //will change to Constants.Subsys.wristGround later
+        dropObject.onTrue(new ParallelCommandGroup(new Outtake(hand), new RotateWrist(wrist, Constants.Subsys.wristLow))); //will likely have to change the height based on which node we're dropping the game piece in.
         // run DriveOnRamp THEN run GyroStabalize
-        //driveOnRampSequence.toggleOnTrue(new SequentialCommandGroup(
-            // new DriveOnRamp(swerve, false),
-            // new GyroStabalize(swerve)));
+        driveOnRampSequence.toggleOnTrue(new SequentialCommandGroup(
+            new DriveOnRamp(swerve, false),
+            new GyroStabalize(swerve)));
+        
+        //copilot
+            
         
         /* Driver Buttons */
         // zeroGyro.onTrue(new InstantCommand(() -> swerve.zeroGyro()));
@@ -156,10 +176,6 @@ public class RobotContainer {
         //sliderOut.onTrue(new RotateWrist(wrist, Constants.Subsys.wristHigh));
         sliderIn.whileTrue(new Intake(hand));
         sliderOut.whileTrue(new Outtake(hand));
-        // run DriveOnRamp THEN run GyroStabalize
-        driveOnRampSequence.toggleOnTrue(new SequentialCommandGroup(
-            new DriveOnRamp(swerve, false),
-            new GyroStabalize(swerve)));
         
         /*
          * This is example command group, each command will run at the same time

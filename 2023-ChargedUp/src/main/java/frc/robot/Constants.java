@@ -266,6 +266,17 @@ public final class Constants {
             public static final int elevatorLow = XboxController.Button.kB.value;
             public static final int elevatorMid = XboxController.Button.kX.value;
             public static final int elevatorHigh = XboxController.Button.kY.value;
+            public static final int lowGoalLimelight = XboxController.Button.kLeftStick.value;
+            public static final int highGoalLimelight = XboxController.Button.kB.value;
+            public static final int coneLimelight = 1; //turn to LT once made
+            public static final int cubeLimelight = 1; //turn to RT once made
+            public static final int handIntake = XboxController.Button.kLeftBumper.value;
+            public static final int handOuttake = XboxController.Button.kRightBumper.value;
+            //replace button values with dPad values in this order: Up, Right, Left, Down
+            public static final int wristHigh = 1;
+            public static final int wristMid = 1;
+            public static final int wristLow = 1;
+            public static final int wristGround = 1;
         }
 
     }
