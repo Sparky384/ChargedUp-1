@@ -7,17 +7,26 @@ import frc.robot.subsystems.Swerve;
 
 public class DriveOnRamp extends CommandBase{
     private Swerve s_swerve;
+    private boolean backward;
 
-    public DriveOnRamp(Swerve swerve) {
+    public DriveOnRamp(Swerve swerve, Boolean backward) {
         s_swerve = swerve;
         addRequirements(s_swerve);
     }
 
     public void execute() {
-        s_swerve.drive(new Translation2d(0.5, 0).times(Constants.Swerve.maxSpeed), 
-        0, 
-        false, 
-        true);
+        if (backward == true) { //if we're going onto the ramp while facing backward.
+            s_swerve.drive(new Translation2d(0.5, 0).times(Constants.Swerve.maxSpeed).times(-1),
+            0, 
+            false, 
+            true);
+        }
+        else { //if we're going onto the ramp while facing forward/towards it.
+            s_swerve.drive(new Translation2d(0.5, 0).times(Constants.Swerve.maxSpeed),
+            0, 
+            false, 
+            true);
+        }
     }
 
     public boolean isFinished() {

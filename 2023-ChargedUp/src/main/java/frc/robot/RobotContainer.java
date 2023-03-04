@@ -37,6 +37,8 @@ import frc.robot.subsystems.*;
 public class RobotContainer {
     /* Controllers */
     private final Joystick driver = new Joystick(0);
+    /* Subsystems */
+    private final Swerve swerve = new Swerve();
     private Elevator elevator = new Elevator();
     private Hand hand = new Hand();
     private Slider slider = new Slider();
@@ -60,8 +62,6 @@ public class RobotContainer {
     private final JoystickButton sliderIn = new JoystickButton(driver, Constants.ButtonMap.Copilot.sliderIn);
     private final JoystickButton sliderOut = new JoystickButton(driver, Constants.ButtonMap.Copilot.sliderOut);
 
-    /* Subsystems */
-    private final Swerve s_Swerve = new Swerve();
 
     /* Smartdashboard Choosers */
     private SendableChooser<String> autoChooser;
@@ -97,9 +97,9 @@ public class RobotContainer {
 
 
 
-        s_Swerve.setDefaultCommand(
+        swerve.setDefaultCommand(
             new TeleopSwerve(
-                s_Swerve, 
+                swerve, 
                 () -> -driver.getRawAxis(translationAxis), 
                 () -> -driver.getRawAxis(strafeAxis), 
                 () -> -driver.getRawAxis(rotationAxis), 
@@ -119,7 +119,7 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         /* Driver Buttons */
-        // zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
+        // zeroGyro.onTrue(new InstantCommand(() -> swerve.zeroGyro()));
         // shoot.whileTrue(new Shoot(hand));
         // intake.whileTrue(new Intake(hand));
         elevatorLow.onTrue(new MoveElevator(elevator, Constants.Subsys.elevatorLow));
@@ -133,8 +133,8 @@ public class RobotContainer {
         sliderOut.whileTrue(new Outtake(hand));
         // run DriveOnRamp THEN run GyroStabalize
         // gyrJoystickButton.toggleOnTrue(new SequentialCommandGroup(
-            // new DriveOnRamp(s_Swerve),
-            // new GyroStabalize(s_Swerve)));
+            // new DriveOnRamp(swerve, false),
+            // new GyroStabalize(swerve)));
         
         /*
          * This is example command group, each command will run at the same time
@@ -157,51 +157,51 @@ public class RobotContainer {
 
 
                 case "1":
-                selectedAuto = JustDriveAuto.followTrajectoryCommand(true, s_Swerve);
+                selectedAuto = JustDriveAuto.followTrajectoryCommand(true, swerve);
                 break;
 
                 case "2":
-                selectedAuto = RScore1.followTrajectoryCommand(s_Swerve);
+                selectedAuto = RScore1.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
                 break;
 
                 case "3":
-                selectedAuto = LScore1.followTrajectoryCommand(s_Swerve); 
+                selectedAuto = LScore1.followTrajectoryCommand(swerve, elevator, slider, wrist, hand); 
                 break;
 
                 case "4":
-                selectedAuto = Score1Ramp.followTrajectoryCommand(s_Swerve);
+                selectedAuto = Score1Ramp.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
                 break;
 
                 case "5":
-                selectedAuto = RScore2.followTrajectoryCommand(s_Swerve);
+                selectedAuto = RScore2.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
                 break;
 
                 case "6":
-                selectedAuto = LScore2.followTrajectoryCommand(s_Swerve);
+                selectedAuto = LScore2.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
                 break;
                 
                 case "7":
-                selectedAuto = RScore2Ramp.followTrajectoryCommand(s_Swerve);
+                selectedAuto = RScore2Ramp.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
                 break;
 
                 case "8":
-                selectedAuto = LScore2Ramp.followTrajectoryCommand(s_Swerve);
+                selectedAuto = LScore2Ramp.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
                 break;
 
                 case "9":
-                selectedAuto = RScore3.followTrajectoryCommand(s_Swerve);
+                selectedAuto = RScore3.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
                 break;
 
                 case "10":
-                selectedAuto = LScore3.followTrajectoryCommand(s_Swerve);
+                selectedAuto = LScore3.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
                 break;
 
                 case "11":
-                selectedAuto = RUltimate.followTrajectoryCommand(s_Swerve);
+                selectedAuto = RUltimate.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
                 break;
 
                 case "12":
-                selectedAuto = LUltimate.followTrajectoryCommand(s_Swerve);
+                selectedAuto = LUltimate.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
                 break;
             }
 

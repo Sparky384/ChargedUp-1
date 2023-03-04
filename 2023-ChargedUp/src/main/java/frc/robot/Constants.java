@@ -160,6 +160,12 @@ public final class Constants {
         /* Pathplanner Speed Constants */
         public static final double kPathMaxAcceleration = 1.0; //1.0 was default
         public static final double kPathMaxVelocity = 1.0; //1.0 was default   0.3
+
+        /* Intake and Outtake timers. */
+        public static final double kAutoShootTimer = 0.0; //timer in seconds
+        public static final double kAutoIntakeTimer = 0.0; //timer in seconds
+
+
     
 
         /* Auto Controllers

@@ -25,7 +25,7 @@ public class RotateWrist extends CommandBase {
 
     }
 
-    public boolean isFinished(){
+    public boolean isFinished() {
         if (Math.abs(wristSubsystem.getAngle() - wristAngle) < Constants.doubleThreshold){
             return true; 
         } else {
@@ -33,7 +33,7 @@ public class RotateWrist extends CommandBase {
         }
     }
     @Override
-    public void end(boolean interruped){
+    public void end(boolean interruped) {
         wristSubsystem.stop();
         SmartDashboard.putBoolean("wristRunner", false);
     }

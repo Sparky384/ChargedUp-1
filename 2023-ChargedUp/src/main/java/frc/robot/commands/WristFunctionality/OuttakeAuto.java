@@ -1,15 +1,25 @@
 package frc.robot.commands.WristFunctionality;
 
+import edu.wpi.first.wpilibj.Timer;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.Hand;
 
-public class Outtake extends CommandBase{
+public class OuttakeAuto extends CommandBase{
+    
+    Timer timer = new Timer();
 
     private Hand handSubsystem; 
 
-    public Outtake(Hand hand) {
+    public OuttakeAuto(Hand hand) {
         handSubsystem = hand;
         addRequirements(handSubsystem);
+    }
+
+    public void initialize() {
+        timer.reset();
+        timer.start();
     }
 
     public void execute() {
@@ -17,10 +27,14 @@ public class Outtake extends CommandBase{
     }
 
     public boolean isFinished() {
-      return false;
+      if (timer.hasElapsed(Constants.AutoConstants.kAutoShootTimer))
+        return true;
+      else
+        return false;
     }
 
     public void end(boolean interrupted) {
         handSubsystem.stop();   
+        timer.stop();
     }
 }
