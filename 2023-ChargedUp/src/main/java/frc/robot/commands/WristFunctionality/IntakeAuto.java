@@ -17,15 +17,18 @@ public class IntakeAuto extends CommandBase{
         addRequirements(handSubsystem);
     }
 
+    @Override
     public void initialize() {
         timer.reset();
         timer.start();
     }
 
+    @Override
     public void execute() {
         handSubsystem.rollIn(); 
     }
 
+    @Override
     public boolean isFinished() {
       if (timer.hasElapsed(Constants.AutoConstants.kAutoIntakeTimer))
         return true;
@@ -33,6 +36,7 @@ public class IntakeAuto extends CommandBase{
         return false;
     }
 
+    @Override
     public void end(boolean interrupted) {
         handSubsystem.stop();   
         timer.stop();

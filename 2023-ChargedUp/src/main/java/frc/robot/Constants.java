@@ -299,7 +299,7 @@ public final class Constants {
         public static final double maxRampSpeed = 0.0; // percentage
     }
 
-    public enum LimelightPipelines
+    public static enum LimelightPipelines
     {
         HI_GOAL,
         LOW_GOAL,
