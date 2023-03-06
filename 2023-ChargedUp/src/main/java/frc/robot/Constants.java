@@ -230,7 +230,7 @@ public final class Constants {
         //   public static final int intake = XboxController.Button.kB.value;
           public static final int elevatorLow = XboxController.Button.kLeftBumper.value;
           public static final int elevatorMid = XboxController.Button.kBack.value;
-          public static final int elevatorHigh = XboxController.Button.kRightBumper.value;
+          public static final int elevatorHigh = XboxController.Button.kRightBumper.value; // in == up
           public static final int gyro = XboxController.Button.kX.value;
           public static final int zeroGyro = XboxController.Button.kX.value;
           public static final int sliderIn = XboxController.Button.kStart.value;
