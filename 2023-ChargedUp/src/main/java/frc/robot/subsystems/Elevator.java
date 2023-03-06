@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 //The method addRequirements(Subsystem...) in the type CommandBase is not applicable for the arguments (Elevator)Java(67108979)
-public class Elevator extends SubsystemBase{
+public class Elevator extends SubsystemBase {
     private CANSparkMax motorOne; 
     private CANSparkMax motorTwo; 
     private RelativeEncoder m_encoder;

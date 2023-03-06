@@ -12,7 +12,8 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.AutoCenter;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.paths.JustDriveAuto;
@@ -20,8 +21,6 @@ import frc.robot.paths.pathGroups.Score1Ramp;
 import frc.robot.paths.pathGroups.rightGroups.*;
 import frc.robot.paths.pathGroups.leftGroups.*;
 import frc.robot.paths.JustRamp;
-import frc.robot.subsystems.Limelight;
-import frc.robot.subsystems.Swerve;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
@@ -41,8 +40,8 @@ import frc.robot.subsystems.*;
  */
 public class RobotContainer {
     /* Controllers */
-    private final Joystick pilot = new Joystick(0);
-    private final Joystick copilot = new Joystick(1);
+    private final CommandXboxController pilot = new CommandXboxController(0);
+    private final CommandXboxController copilot = new CommandXboxController(1);
     /* Subsystems */
     private final Swerve swerve = new Swerve();
     private Elevator elevator = new Elevator();
@@ -53,47 +52,40 @@ public class RobotContainer {
     CommandBase selectedAuto;
 
     /* Pilot Joystick Controls */
-    private final int translationAxis = XboxController.Axis.kLeftY.value;
-    private final int strafeAxis = XboxController.Axis.kLeftX.value;
-    private final int rotationAxis = XboxController.Axis.kRightX.value;
-
-    /* Copilot Joystick Controls */
-    private final int elevatorJoystick = XboxController.Axis.kLeftY.value;
-
-    /* Pilot Buttons */
-    // private final JoystickButton shoot = new JoystickButton(pilot, Constants.ButtonMap.Copilot.shoot);
-    // private final JoystickButton intake = new JoystickButton(pilot, Constants.ButtonMap.Copilot.intake);
-    //private final JoystickButton elevatorLow = new JoystickButton(pilot, Constants.ButtonMap.Copilot.elevatorLow);
-    //private final JoystickButton elevatorMid = new JoystickButton(pilot, Constants.ButtonMap.Copilot.elevatorMid);
-    //private final JoystickButton elevatorHigh = new JoystickButton(pilot, Constants.ButtonMap.Copilot.elevatorHigh);
-    private final JoystickButton robotCentric = new JoystickButton(pilot, XboxController.Button.kLeftBumper.value); //may get rid of this as a button.
-    //private final JoystickButton sliderIn = new JoystickButton(pilot, Constants.ButtonMap.Copilot.sliderIn);
-    //private final JoystickButton sliderOut = new JoystickButton(pilot, Constants.ButtonMap.Copilot.sliderOut);
+    private final double translationAxis = pilot.getLeftY();
+    private final double strafeAxis = pilot.getLeftX();
+    private final double rotationAxis = pilot.getRightX();
 
     /* Final Robot Buttons */
     //Pilot
-    private final JoystickButton toggleLED = new JoystickButton(pilot, Constants.ButtonMap.Pilot.toggleLED); //changes LED don't have limelight on this version yet
-    private final JoystickButton driveOnRampSequence = new JoystickButton(pilot, Constants.ButtonMap.Pilot.driveOnRampSequence);
-    private final JoystickButton pickupObject = new JoystickButton(pilot, Constants.ButtonMap.Pilot.pickupObject);
-    private final JoystickButton dropObject = new JoystickButton(pilot, Constants.ButtonMap.Pilot.dropObject);
-    private final JoystickButton slowDrive = new JoystickButton(pilot, Constants.ButtonMap.Pilot.slowDrive);
-    private final JoystickButton autoTrackLeft = new JoystickButton(pilot, Constants.ButtonMap.Pilot.pickupObject);
-    private final JoystickButton autoTrackRight = new JoystickButton(pilot, Constants.ButtonMap.Pilot.pickupObject);
+    private final Trigger toggleLED = pilot.back(); //changes LED don't have limelight on this version yet
+    private final Trigger driveOnRampSequence = pilot.start();
+    private final Trigger pickupObject = pilot.a();
+    private final Trigger dropObject = pilot.b();
+    private final Trigger slowDrive = pilot.rightTrigger();
+    private final Trigger autoTrackLeft = pilot.leftBumper();
+    private final Trigger autoTrackRight = pilot.rightBumper();
+    private final Trigger zeroGyro = pilot.povDown();
     
     //copilot
-    private final JoystickButton lowGoalLimelight = new JoystickButton(copilot, Constants.ButtonMap.Copilot.lowGoalLimelight);
-    private final JoystickButton highGoalLimelight = new JoystickButton(copilot, Constants.ButtonMap.Copilot.lowGoalLimelight);
-    private final JoystickButton sliderIn = new JoystickButton(copilot, Constants.ButtonMap.Copilot.sliderIn);
-    private final JoystickButton sliderOut = new JoystickButton(copilot, Constants.ButtonMap.Copilot.sliderOut);
-    private final JoystickButton elevatorHigh = new JoystickButton(copilot, Constants.ButtonMap.Copilot.elevatorHigh);
-    private final JoystickButton elevatorMid = new JoystickButton(copilot, Constants.ButtonMap.Copilot.elevatorMid);
-    private final JoystickButton elevatorLow = new JoystickButton(copilot, Constants.ButtonMap.Copilot.elevatorLow);
-    private final JoystickButton handIntake = new JoystickButton(copilot, Constants.ButtonMap.Copilot.handIntake);
-    private final JoystickButton handOuttake = new JoystickButton(copilot, Constants.ButtonMap.Copilot.handOuttake);
-    private final JoystickButton wristHigh = new JoystickButton(copilot, Constants.ButtonMap.Copilot.wristHigh);
-    private final JoystickButton wristMid = new JoystickButton(copilot, Constants.ButtonMap.Copilot.wristMid);
-    private final JoystickButton wristLow = new JoystickButton(copilot, Constants.ButtonMap.Copilot.wristLow);
-    private final JoystickButton wristGround = new JoystickButton(copilot, Constants.ButtonMap.Copilot.wristGround);
+    private final Trigger lowGoalLimelight = copilot.leftStick();
+    private final Trigger highGoalLimelight = copilot.b();
+    private final Trigger coneLimelight = copilot.leftTrigger();
+    private final Trigger cubeLimelight = copilot.rightTrigger();
+    private final Trigger sliderIn = copilot.back();
+    private final Trigger sliderOut = copilot.start();
+    private final Trigger elevatorHigh = copilot.y();
+    private final Trigger elevatorMid = copilot.x();
+    private final Trigger elevatorLow = copilot.a();
+    private final Trigger handIntake = copilot.leftTrigger();
+    private final Trigger handOuttake = copilot.rightTrigger();
+    private final Trigger wristHigh = copilot.povUp();
+    private final Trigger wristMid = copilot.povRight();
+    private final Trigger wristLow = copilot.povLeft();
+    private final Trigger wristGround = copilot.povDown();
+
+    /* Copilot Joystick Controls */
+    private final double elevatorJoystick = copilot.getLeftX();
 
     /* Smartdashboard Choosers */
     private SendableChooser<String> autoChooser;
@@ -129,16 +121,27 @@ public class RobotContainer {
 
 
         //pilot controlling swerve
-        swerve.setDefaultCommand(
-            new TeleopSwerve(
-                swerve, 
-                () -> -pilot.getRawAxis(translationAxis), 
-                () -> -pilot.getRawAxis(strafeAxis), 
-                () -> -pilot.getRawAxis(rotationAxis), 
-                () -> robotCentric.getAsBoolean()
-            )
-        );
-
+        if (slowDrive.getAsBoolean() == true){
+            swerve.setDefaultCommand(
+                new TeleopSwerve(
+                    swerve, 
+                    () -> -translationAxis * Constants.Swerve.slowDriveAmount, 
+                    () -> -strafeAxis * Constants.Swerve.slowDriveAmount, 
+                    () -> -rotationAxis * Constants.Swerve.slowDriveAmount, 
+                    () -> Constants.Swerve.robotcentric //pass in true for robotcentric false for fieldcentric
+                    )
+            );
+        } else {
+            swerve.setDefaultCommand(
+                new TeleopSwerve(
+                    swerve, 
+                    () -> -translationAxis, 
+                    () -> -strafeAxis, 
+                    () -> -rotationAxis, 
+                    () -> Constants.Swerve.robotcentric //pass in true for robotcentric false for fieldcentric
+                )
+            );
+        }
         // Configure the button bindings
         configureButtonBindings();
     }
@@ -147,7 +150,7 @@ public class RobotContainer {
      * Use this method to define your button->command mappings. Buttons can be created by
      * instantiating a {@link GenericHID} or one of its subclasses ({@link
      * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
-     * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
+     * edu.wpi.first.wpilibj2.command.button.}.
      */
     private void configureButtonBindings() {
         /* final configurations */
@@ -155,25 +158,31 @@ public class RobotContainer {
         toggleLED.onTrue(new InstantCommand(() -> s_Limelight.toggleLED()));
         pickupObject.onTrue(new ParallelCommandGroup(new Intake(hand), new RotateWrist(wrist, Constants.Subsys.wristLow))); //will change to Constants.Subsys.wristGround later
         dropObject.onTrue(new ParallelCommandGroup(new Outtake(hand), new RotateWrist(wrist, Constants.Subsys.wristLow))); //will likely have to change the height based on which node we're dropping the game piece in.
+        zeroGyro.onTrue(new InstantCommand(() -> swerve.zeroGyro()));
         // run DriveOnRamp THEN run GyroStabalize
         driveOnRampSequence.toggleOnTrue(new SequentialCommandGroup(
             new DriveOnRamp(swerve, false),
             new GyroStabalize(swerve)));
         
         //copilot
-            
-        
-        /* Driver Buttons */
-        // zeroGyro.onTrue(new InstantCommand(() -> swerve.zeroGyro()));
-        // shoot.whileTrue(new Shoot(hand));
-        // intake.whileTrue(new Intake(hand));
+        lowGoalLimelight.onTrue(new InstantCommand(() -> s_Limelight.switchProfile(Constants.LimelightPipelines.LOW_GOAL)));
+        highGoalLimelight.onTrue(new InstantCommand(() -> s_Limelight.switchProfile(Constants.LimelightPipelines.HI_GOAL)));
+        coneLimelight.onTrue(new InstantCommand(() -> s_Limelight.switchProfile(Constants.LimelightPipelines.CONE)));
+        cubeLimelight.onTrue(new InstantCommand(() -> s_Limelight.switchProfile(Constants.LimelightPipelines.CUBE)));
+        sliderIn.onTrue(new MoveSlider(slider, Constants.Subsys.sliderIn));
+        sliderOut.onTrue(new MoveSlider(slider, Constants.Subsys.sliderOut));
+        elevatorHigh.onTrue(new MoveElevator(elevator, Constants.Subsys.elevatorHigh));
+        elevatorMid.onTrue(new MoveElevator(elevator, Constants.Subsys.elevatorMid));
+        elevatorLow.onTrue(new MoveElevator(elevator, Constants.Subsys.elevatorLow));
+        handIntake.onTrue(new Intake(hand));
+        handOuttake.onTrue(new Outtake(hand));
+        wristHigh.onTrue(new RotateWrist(wrist, Constants.Subsys.wristHigh));
+        wristMid.onTrue(new RotateWrist(wrist, Constants.Subsys.wristMid));
+        wristLow.onTrue(new RotateWrist(wrist, Constants.Subsys.wristLow));
+        wristGround.onTrue(new RotateWrist(wrist, Constants.Subsys.wristGround));
         elevatorLow.onTrue(new MoveElevator(elevator, Constants.Subsys.elevatorLow));
         elevatorMid.onTrue(new MoveElevator(elevator, Constants.Subsys.elevatorMid));
         elevatorHigh.onTrue(new MoveElevator(elevator, Constants.Subsys.elevatorHigh));
-        //sliderIn.onTrue(new MoveSlider(slider, Constants.Subsys.sliderIn));
-        //sliderOut.onTrue(new MoveSlider(slider, Constants.Subsys.sliderOut));
-        //sliderIn.onTrue(new RotateWrist(wrist, Constants.Subsys.wristLow));
-        //sliderOut.onTrue(new RotateWrist(wrist, Constants.Subsys.wristHigh));
         sliderIn.whileTrue(new Intake(hand));
         sliderOut.whileTrue(new Outtake(hand));
         

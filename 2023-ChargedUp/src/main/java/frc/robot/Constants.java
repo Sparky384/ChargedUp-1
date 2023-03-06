@@ -20,6 +20,8 @@ public final class Constants {
 
     public static final class Swerve {
         public static final int pigeonID = 0;
+        public static final double slowDriveAmount = .5; //change depending on amount we want to slow down by when holding button.
+        public static final boolean robotcentric = true; //change depending on if robotcentric wanted/not wanted.
         public static final boolean invertGyro = true; // Always ensure Gyro is CCW+ CW-
 
         public static final COTSFalconSwerveConstants chosenModule =
@@ -247,7 +249,7 @@ public final class Constants {
         public static final int hand = 12; 
     }
 
-    public static class ButtonMap{
+    /*public static class ButtonMap{
         public static class Pilot{
             public static final int toggleLED = XboxController.Button.kBack.value;
             public static final int driveOnRampSequence = XboxController.Button.kStart.value;
@@ -261,7 +263,7 @@ public final class Constants {
             //public static final int zeroGyro = XboxController.Button.kX.value;
 
             /* finalized button values. */
-            public static final int sliderIn = XboxController.Button.kBack.value;
+            /*public static final int sliderIn = XboxController.Button.kBack.value;
             public static final int sliderOut = XboxController.Button.kStart.value;
             public static final int elevatorLow = XboxController.Button.kB.value;
             public static final int elevatorMid = XboxController.Button.kX.value;
@@ -279,14 +281,16 @@ public final class Constants {
             public static final int wristGround = 1;
         }
 
-    }
+    }*/
     public static class Subsys{
         public static final double elevatorLow = 0.0;
         public static final double elevatorMid = 20.0;
         public static final double elevatorHigh = 40.0;
         public static final double sliderIn = 0.0;
         public static final double sliderOut = 150.0;
-        public static final double wristLow = 0.0;
+        public static final double wristGround = 0.0;
+        public static final double wristLow = 5.0;
+        public static final double wristMid = 10.0;
         public static final double wristHigh = 20.0;
     }
 
