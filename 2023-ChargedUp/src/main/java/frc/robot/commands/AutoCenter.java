@@ -28,12 +28,12 @@ public class AutoCenter extends CommandBase
     {
         if (lime.getX() < lime.errorNum) // no target seen
         {
-            double translationVal = MathUtil.applyDeadband(0.6, Constants.stickDeadband);
+            double translationVal = 0.6;
             if (!right)
                 translationVal *= -1;
         
             swerve.drive( // drive in a direction until we see a target
-                new Translation2d(translationVal, 0.0).times(Constants.Swerve.maxSpeed), 
+                new Translation2d(0.0, translationVal).times(Constants.Swerve.maxSpeed), 
                 0.0, 
                 false, 
                 true
@@ -41,7 +41,7 @@ public class AutoCenter extends CommandBase
         }
         else // sees a target
         {
-            double translationVal = MathUtil.applyDeadband(0.6, Constants.stickDeadband);
+            double translationVal = 0.6;
             if (lime.getX() < 0.0)
                 translationVal *= -1;
             
