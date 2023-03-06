@@ -16,7 +16,7 @@ public class Hand extends SubsystemBase
 
     public Hand() 
     {
-        motor = new CANSparkMax(Constants.CANPorts.slider, MotorType.kBrushless);
+        motor = new CANSparkMax(Constants.CANPorts.hand, MotorType.kBrushless);
     }
 
     public void stop()

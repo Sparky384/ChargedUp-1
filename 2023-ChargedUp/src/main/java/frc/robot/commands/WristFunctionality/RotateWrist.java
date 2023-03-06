@@ -1,23 +1,24 @@
 package frc.robot.commands.WristFunctionality;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.subsystems.Wrist;
+import frc.robot.subsystems.*;
 
-
-public class WristMove extends CommandBase {
+public class RotateWrist extends CommandBase {
 
     private Wrist wristSubsystem; 
     private double wristAngle;
 
-    public WristMove (Wrist wrist, double initangle) {
-
+    public RotateWrist (Wrist wrist, double initangle) {
         wristAngle = initangle;
         wristSubsystem = wrist; 
         addRequirements(wristSubsystem);
     }
 
     public void execute() {
+        SmartDashboard.putNumber("wristDistance", wristSubsystem.getAngle());
+        SmartDashboard.putBoolean("wristRunner", true);
         wristSubsystem.driveToAngle(wristAngle); 
 
     }
@@ -28,6 +29,11 @@ public class WristMove extends CommandBase {
         } else {
             return false;
         }
+    }
+    @Override
+    public void end(boolean interruped){
+        wristSubsystem.stop();
+        SmartDashboard.putBoolean("wristRunner", false);
     }
 
 }

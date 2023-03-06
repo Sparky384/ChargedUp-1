@@ -1,14 +1,13 @@
-package frc.robot.commands;
+package frc.robot.commands.WristFunctionality;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Hand;
 
+public class Outtake extends CommandBase{
 
-public class Shoot extends CommandBase{
-    
     private Hand handSubsystem; 
 
-    public Shoot(Hand hand) {
+    public Outtake(Hand hand) {
         handSubsystem = hand;
         addRequirements(handSubsystem);
     }
@@ -21,8 +20,8 @@ public class Shoot extends CommandBase{
       return false;
     }
 
-    public void end(boolean interrupted)
+    public void end(boolean interrupted) 
     {
-        handSubsystem.stop();
+        handSubsystem.stop();   
     }
 }

@@ -10,14 +10,15 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.lib.util.COTSFalconSwerveConstants;
 import frc.lib.util.SwerveModuleConstants;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public final class Constants {
     public static final double stickDeadband = 0.1;
-    public static final double doubleThreshold = 0.1;
+    public static final double doubleThreshold = 1.0;
     public static final double rampThreshold = 20.0; // in degrees
 
     public static final class Swerve {
-        public static final int pigeonID = 1;
+        public static final int pigeonID = 0;
         public static final boolean invertGyro = true; // Always ensure Gyro is CCW+ CW-
 
         public static final COTSFalconSwerveConstants chosenModule =
@@ -77,15 +78,18 @@ public final class Constants {
 
         /* Drive Motor Characterization Values 
          * Divide SYSID values by 12 to convert from volts to percent output for CTRE */
-        public static final double driveKS = (0.32 / 12); //TODO: This must be tuned to specific robot
-        public static final double driveKV = (1.51 / 12);
-        public static final double driveKA = (0.27 / 12);
+        //TODO: This must be tuned to specific robot
+        public static final double driveKS = (0.082009 / 12); //original (0.32 /12) | grabbed 0.082009 from SISID
+        public static final double driveKV = (2.3358 / 12); //original (1.51 /12) | grabbed 2.3358 from SISID
+        public static final double driveKA = (0.18379 / 12); //original (0.27 /12) | grabbed 0.18379 from SISID
 
         /* Swerve Profiling Values */
         /** Meters per Second */
-        public static final double maxSpeed = 4.5; //TODO: This must be tuned to specific robot
+        public static final double maxSpeed = 0.3; //was 4.5 meters per second
+        public static final double desiredAccelerationTime = 2; //in seconds
+        public static final double maxAcceleration = 0; //meters per second
         /** Radians per Second */
-        public static final double maxAngularVelocity = 10.0; //TODO: This must be tuned to specific robot
+        public static final double maxAngularVelocity = 3.0; //was 10.0
 
         /* Neutral Modes */
         public static final NeutralMode angleNeutralMode = NeutralMode.Coast;
@@ -138,10 +142,29 @@ public final class Constants {
         public static final double kMaxAccelerationMetersPerSecondSquared = 1;
         public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
         public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
+
+        /* Pathplanner Speed Constants */
+        public static final double kPathMaxAcceleration = 1.0; //1.0 was default
+        public static final double kPathMaxVelocity = 1.0; //1.0 was default   0.3
     
-        public static final double kPXController = 1;
-        public static final double kPYController = 1;
-        public static final double kPThetaController = 1;
+
+        /* Auto Controllers
+         * Have to feed fairly large values to see signfigant change.
+         * Values appear to be affecting how quickly the motors can change. (maybe)
+         */
+        public static final double kPXController = 1.0; //1.0 was default
+        public static final double kPYController = 0.27; //1.0 was default   0.3
+        
+        // theta controller constants
+        public static final double kIThetaController = 0.0; // 0.0 is default
+        public static final double kPThetaController = 0.25; //1.0 was default  0.25 - looks good.
+
+        /* pathplanner controller PIDs */
+        public static final double kPPathXController = 0.0; //0.05
+        public static final double kPPathYController = 0.0;
+        public static final double kPPathThetaController = 0.0;
+        public static final double kIPathThetaController = 0.0;        
+        
     
         /* Constraint for the motion profilied robot angle controller */
         public static final TrapezoidProfile.Constraints kThetaControllerConstraints =
@@ -164,13 +187,13 @@ public final class Constants {
         public static final double elevatorOneP = 0.02;
         public static final double elevatorOneI = 0.0;
         public static final double elevatorOneD = 0.0;
-        public static final double elevatorTwoP = 0.0;
+        public static final double elevatorTwoP = 0.5;
         public static final double elevatorTwoI = 0.0;
         public static final double elevatorTwoD = 0.0;
-        public static final double sliderP = 0.0;
+        public static final double sliderP = 0.02;
         public static final double sliderI = 0.0;
         public static final double sliderD = 0.0;
-        public static final double wristP = 0.0; 
+        public static final double wristP = 0.02; 
         public static final double wristI = 0.0; 
         public static final double wristD = 0.0; 
         public static final double handP = 0.0;
@@ -179,21 +202,23 @@ public final class Constants {
     }
 
     public static class CANPorts{
-        public static final int frontRightTurn = 1;
-        public static final int frontRightDrive = 23;
-        public static final int frontLeftTurn = 14;
-        public static final int frontLeftDrive = 15;
+        /*public static final int frontRightTurn = 0;
+        public static final int frontRightDrive = 0;
+        public static final int frontLeftTurn = 0;
+        public static final int frontLeftDrive = 0;
         public static final int backRightTurn = 0; 
-        public static final int backRightDrive = 0;
-        public static final int backLeftTurn = 0;
-        public static final int backLeftDrive = 0; 
-        public static final int elevatorOne = 2; // Front of elevator on the right
-        public static final int elevatorTwo = 13; // Front of elevator on the left
-        public static final int slider = 12; // Top left of indexer
-        public static final int wrist = 4; // Horizontal sparkmax on the right of the elevator 
-        public static final int hand = 0; 
-
-
+        public static final int backRightDrive = 0; 
+        public static final int backLeftTurn = 0; 
+        public static final int backLeftDrive = 0;*/ 
+        public static final int elevatorLeft = 13; 
+        public static final int elevatorRight = 2;
+        public static final int frontRightDrive = 23;
+        public static final int rearRightDrive = 1;
+        public static final int frontLeftDrive = 15;
+        public static final int rearLeftDrive = 14;
+        public static final int slider = 30; 
+        public static final int wrist = 4; 
+        public static final int hand = 12; 
     }
 
     public static class ButtonMap{
@@ -201,19 +226,26 @@ public final class Constants {
             
         }
         public static class Copilot{
-          public static final int shoot = XboxController.Button.kA.value;
-          public static final int intake = XboxController.Button.kB.value;
+        //   public static final int shoot = XboxController.Button.kA.value;
+        //   public static final int intake = XboxController.Button.kB.value;
           public static final int elevatorLow = XboxController.Button.kLeftBumper.value;
           public static final int elevatorMid = XboxController.Button.kBack.value;
           public static final int elevatorHigh = XboxController.Button.kRightBumper.value;
           public static final int gyro = XboxController.Button.kX.value;
+          public static final int zeroGyro = XboxController.Button.kX.value;
+          public static final int sliderIn = XboxController.Button.kStart.value;
+          public static final int sliderOut = XboxController.Button.kB.value;
         }
 
     }
     public static class Subsys{
         public static final double elevatorLow = 0.0;
-        public static final double elevatorMid = 10.0;
-        public static final double elevatorHigh = 20.0;
+        public static final double elevatorMid = 20.0;
+        public static final double elevatorHigh = 40.0;
+        public static final double sliderIn = 0.0;
+        public static final double sliderOut = 150.0;
+        public static final double wristLow = 0.0;
+        public static final double wristHigh = 20.0;
     }
 
     public static class RampConstants{
