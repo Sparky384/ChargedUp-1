@@ -68,10 +68,8 @@ public class RobotContainer {
     private final Trigger zeroGyro = pilot.povDown();
     
     //copilot
-    private final Trigger lowGoalLimelight = copilot.leftStick();
-    private final Trigger highGoalLimelight = copilot.b();
-    private final Trigger coneLimelight = copilot.leftTrigger();
-    private final Trigger cubeLimelight = copilot.rightTrigger();
+    private final Trigger limelightProfileGoal = copilot.leftTrigger();
+    private final Trigger limelightProfileElements = copilot.leftTrigger();
     private final Trigger sliderIn = copilot.back();
     private final Trigger sliderOut = copilot.start();
     private final Trigger elevatorHigh = copilot.y();
@@ -166,10 +164,13 @@ public class RobotContainer {
             new GyroStabalize(swerve)));
         
         //copilot
-        lowGoalLimelight.onTrue(new InstantCommand(() -> s_Limelight.switchProfile(Constants.LimelightConstants.LimelightCameras.LIME1, Constants.LimelightConstants.LimelightPipelines.LOW_GOAL)));
-        highGoalLimelight.onTrue(new InstantCommand(() -> s_Limelight.switchProfile(Constants.LimelightConstants.LimelightCameras.LIME1, Constants.LimelightConstants.LimelightPipelines.HI_GOAL)));
-        coneLimelight.onTrue(new InstantCommand(() -> s_Limelight.switchProfile(Constants.LimelightConstants.LimelightCameras.LIME2, Constants.LimelightConstants.LimelightPipelines.CONE)));
-        cubeLimelight.onTrue(new InstantCommand(() -> s_Limelight.switchProfile(Constants.LimelightConstants.LimelightCameras.LIME2, Constants.LimelightConstants.LimelightPipelines.CUBE)));
+        
+        //switch limelight profiles to goal view or element view - for tracking.
+        limelightProfileElements.onTrue(new ParallelCommandGroup(new InstantCommand(() -> s_Limelight.switchProfile(Constants.LimelightConstants.LimelightCameras.LIME1, Constants.LimelightConstants.LimelightPipelines.HI_GOAL)), 
+        new InstantCommand(() -> s_Limelight.switchProfile(Constants.LimelightConstants.LimelightCameras.LIME2, Constants.LimelightConstants.LimelightPipelines.HI_GOAL))));
+        limelightProfileGoal.onTrue(new ParallelCommandGroup(new InstantCommand(() -> s_Limelight.switchProfile(Constants.LimelightConstants.LimelightCameras.LIME1, Constants.LimelightConstants.LimelightPipelines.CUBE)), 
+        new InstantCommand(() -> s_Limelight.switchProfile(Constants.LimelightConstants.LimelightCameras.LIME2, Constants.LimelightConstants.LimelightPipelines.LOW_GOAL))));
+        
         sliderIn.onTrue(new MoveSlider(slider, Constants.Subsys.sliderIn));
         sliderOut.onTrue(new MoveSlider(slider, Constants.Subsys.sliderOut));
         elevatorHigh.onTrue(new MoveElevator(elevator, Constants.Subsys.elevatorHigh));
