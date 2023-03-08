@@ -155,24 +155,25 @@ public class RobotContainer {
     private void configureButtonBindings() {
         /* final configurations */
         //pilot
-        toggleLED.onTrue(new InstantCommand(() -> s_Limelight.toggleLED()));
+        toggleLED.onTrue(new ParallelCommandGroup(new InstantCommand(() -> s_Limelight.toggleLED(Constants.LimelightConstants.LimelightCameras.LIME2)), new InstantCommand(() -> s_Limelight.toggleLED(Constants.LimelightConstants.LimelightCameras.LIME1)) ));
         pickupObject.onTrue(new ParallelCommandGroup(new Intake(hand), new RotateWrist(wrist, Constants.Subsys.wristLow))); //will change to Constants.Subsys.wristGround later
         dropObject.onTrue(new ParallelCommandGroup(new Outtake(hand), new RotateWrist(wrist, Constants.Subsys.wristLow))); //will likely have to change the height based on which node we're dropping the game piece in.
         zeroGyro.onTrue(new InstantCommand(() -> swerve.zeroGyro()));
+        
         // run DriveOnRamp THEN run GyroStabalize
         driveOnRampSequence.toggleOnTrue(new SequentialCommandGroup(
             new DriveOnRamp(swerve, false),
             new GyroStabalize(swerve)));
         
         //copilot
-        lowGoalLimelight.onTrue(new InstantCommand(() -> s_Limelight.switchProfile(Constants.LimelightPipelines.LOW_GOAL)));
-        highGoalLimelight.onTrue(new InstantCommand(() -> s_Limelight.switchProfile(Constants.LimelightPipelines.HI_GOAL)));
-        coneLimelight.onTrue(new InstantCommand(() -> s_Limelight.switchProfile(Constants.LimelightPipelines.CONE)));
-        cubeLimelight.onTrue(new InstantCommand(() -> s_Limelight.switchProfile(Constants.LimelightPipelines.CUBE)));
+        lowGoalLimelight.onTrue(new InstantCommand(() -> s_Limelight.switchProfile(Constants.LimelightConstants.LimelightCameras.LIME1, Constants.LimelightConstants.LimelightPipelines.LOW_GOAL)));
+        highGoalLimelight.onTrue(new InstantCommand(() -> s_Limelight.switchProfile(Constants.LimelightConstants.LimelightCameras.LIME1, Constants.LimelightConstants.LimelightPipelines.HI_GOAL)));
+        coneLimelight.onTrue(new InstantCommand(() -> s_Limelight.switchProfile(Constants.LimelightConstants.LimelightCameras.LIME2, Constants.LimelightConstants.LimelightPipelines.CONE)));
+        cubeLimelight.onTrue(new InstantCommand(() -> s_Limelight.switchProfile(Constants.LimelightConstants.LimelightCameras.LIME2, Constants.LimelightConstants.LimelightPipelines.CUBE)));
         sliderIn.onTrue(new MoveSlider(slider, Constants.Subsys.sliderIn));
         sliderOut.onTrue(new MoveSlider(slider, Constants.Subsys.sliderOut));
         elevatorHigh.onTrue(new MoveElevator(elevator, Constants.Subsys.elevatorHigh));
-        elevatorMid.onTrue(new MoveElevator(elevator, Constants.Subsys.elevatorMid));
+        elevatorMid.onTrue(new MoveElevator(elevator, Constants.Subsys.elevatorMid)); //may be removed later.
         elevatorLow.onTrue(new MoveElevator(elevator, Constants.Subsys.elevatorLow));
         handIntake.onTrue(new Intake(hand));
         handOuttake.onTrue(new Outtake(hand));
@@ -193,8 +194,8 @@ public class RobotContainer {
          * new MoveWrist(wrist, 0)));
          * 0 in this case references parameter i.e. elevatorLow
          */
-        autoTrackLeft.whileTrue(new AutoCenter(swerve, s_Limelight, false));
-        autoTrackRight.whileTrue(new AutoCenter(swerve, s_Limelight, true));
+        autoTrackLeft.whileTrue(new AutoCenter(swerve, s_Limelight, false, Constants.LimelightConstants.LimelightCameras.LIME1)); //assuming one camera takes precedent, otherwise rebuild command.
+        autoTrackRight.whileTrue(new AutoCenter(swerve, s_Limelight, false, Constants.LimelightConstants.LimelightCameras.LIME1));
     }
 
     /**
@@ -207,6 +208,9 @@ public class RobotContainer {
             // Chooser for different autonomous functions.
             switch(autoChooser.getSelected()) {
 
+                case "0":
+                selectedAuto = null;
+                break;
 
                 case "1":
                 selectedAuto = JustDriveAuto.followTrajectoryCommand(true, swerve);
@@ -257,6 +261,6 @@ public class RobotContainer {
                 break;
             }
 
-        return null;
+        return selectedAuto;
     }
 }

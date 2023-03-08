@@ -12,12 +12,14 @@ public class AutoCenter extends CommandBase
     private Limelight lime;
     private Swerve swerve;
     private boolean right;
+    private String camera;
 
-    public AutoCenter(Swerve s, Limelight l, boolean goRight)
+    public AutoCenter(Swerve s, Limelight l, boolean goRight, String cam)
     {
         swerve = s;
         lime = l;
         right = goRight;
+        camera = cam;
 
         addRequirements(swerve);
         // does not need to require limelight, all it does is read from it never write to it
@@ -26,14 +28,14 @@ public class AutoCenter extends CommandBase
     @Override
     public void execute()
     {
-        if (lime.getX() < lime.errorNum) // no target seen
+        if (lime.getX(camera) < lime.errorNum) // no target seen
         {
             double translationVal = 0.6;
             if (!right)
                 translationVal *= -1;
         
             swerve.drive( // drive in a direction until we see a target
-                new Translation2d(0.0, translationVal).times(Constants.Swerve.maxSpeed), 
+                new Translation2d(0.0, translationVal).times(Constants.Swerve.maxSpeed),
                 0.0, 
                 false, 
                 true
@@ -42,7 +44,7 @@ public class AutoCenter extends CommandBase
         else // sees a target
         {
             double translationVal = 0.6;
-            if (lime.getX() < 0.0)
+            if (lime.getX(camera) < 0.0)
                 translationVal *= -1;
             
             swerve.drive( // drive to center on that target
@@ -57,7 +59,7 @@ public class AutoCenter extends CommandBase
     @Override
     public boolean isFinished()
     {
-        if (Math.abs(lime.getX()) < Constants.limelightDeadband)
+        if (Math.abs(lime.getX(camera)) < Constants.LimelightConstants.limelightDeadband)
             return true;
         return false;
     }

@@ -21,7 +21,7 @@ public final class Constants {
     public static final class Swerve {
         public static final int pigeonID = 0;
         public static final double slowDriveAmount = .5; //change depending on amount we want to slow down by when holding button.
-        public static final boolean robotcentric = true; //change depending on if robotcentric wanted/not wanted.
+        public static final boolean robotcentric = false; //change depending on if robotcentric wanted/not wanted.
         public static final boolean invertGyro = true; // Always ensure Gyro is CCW+ CW-
 
         public static final COTSFalconSwerveConstants chosenModule =
@@ -112,11 +112,12 @@ public final class Constants {
         public static final NeutralMode driveNeutralMode = NeutralMode.Brake;
 
         /* Module Specific Constants */
+        
         /* Front Left Module - Module 0 */
         public static final class Mod0 { //TODO: This must be tuned to specific robot
-            public static final int driveMotorID = 4;
-            public static final int angleMotorID = 5;
-            public static final int canCoderID = 6;
+            public static final int driveMotorID = 10;
+            public static final int angleMotorID = 11;
+            public static final int canCoderID = 60; //not sure yet
             public static final Rotation2d angleOffset = Rotation2d.fromDegrees(118.03);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
@@ -124,9 +125,9 @@ public final class Constants {
 
         /* Front Right Module - Module 1 */
         public static final class Mod1 { //TODO: This must be tuned to specific robot
-            public static final int driveMotorID = 1;
-            public static final int angleMotorID = 2;
-            public static final int canCoderID = 3;
+            public static final int driveMotorID = 8;
+            public static final int angleMotorID = 9;
+            public static final int canCoderID = 30; //not sure yet
             public static final Rotation2d angleOffset = Rotation2d.fromDegrees(2.19);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
@@ -134,9 +135,9 @@ public final class Constants {
         
         /* Back Left Module - Module 2 */
         public static final class Mod2 { //TODO: This must be tuned to specific robot
-            public static final int driveMotorID = 10;
-            public static final int angleMotorID = 11;
-            public static final int canCoderID = 12;
+            public static final int driveMotorID = 12;
+            public static final int angleMotorID = 13;
+            public static final int canCoderID = 120; //not sure yet
             public static final Rotation2d angleOffset = Rotation2d.fromDegrees(2.28);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
@@ -144,9 +145,9 @@ public final class Constants {
 
         /* Back Right Module - Module 3 */
         public static final class Mod3 { //TODO: This must be tuned to specific robot
-            public static final int driveMotorID = 7;
-            public static final int angleMotorID = 8;
-            public static final int canCoderID = 9;
+            public static final int driveMotorID = 6;
+            public static final int angleMotorID = 7;
+            public static final int canCoderID = 90; //not sure yet
             public static final Rotation2d angleOffset = Rotation2d.fromDegrees(245.65);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
@@ -238,15 +239,17 @@ public final class Constants {
         public static final int backRightDrive = 0; 
         public static final int backLeftTurn = 0; 
         public static final int backLeftDrive = 0;*/ 
-        public static final int elevatorLeft = 13; 
-        public static final int elevatorRight = 2;
-        public static final int frontRightDrive = 23;
+        /* for old robot (2022 robot) */
+        /*public static final int frontRightDrive = 23;
         public static final int rearRightDrive = 1;
         public static final int frontLeftDrive = 15;
         public static final int rearLeftDrive = 14;
-        public static final int slider = 30; 
-        public static final int wrist = 4; 
-        public static final int hand = 12; 
+        */
+        public static final int elevatorLeft = 13; // don't have yet 
+        public static final int elevatorRight = 0; //final
+        public static final int slider = 19; //final
+        public static final int wrist = 18; //final
+        public static final int hand = 17; //final
     }
 
     /*public static class ButtonMap{
@@ -284,10 +287,10 @@ public final class Constants {
     }*/
     public static class Subsys{
         public static final double elevatorLow = 0.0;
-        public static final double elevatorMid = 20.0;
-        public static final double elevatorHigh = 40.0;
+        public static final double elevatorMid = 0.0; //may not need in final.
+        public static final double elevatorHigh = 30.0;
         public static final double sliderIn = 0.0;
-        public static final double sliderOut = 150.0;
+        public static final double sliderOut = 11; //final
         public static final double wristGround = 0.0;
         public static final double wristLow = 5.0;
         public static final double wristMid = 10.0;
@@ -299,13 +302,23 @@ public final class Constants {
         public static final double maxRampSpeed = 0.0; // percentage
     }
 
-    public static enum LimelightPipelines
-    {
-        HI_GOAL,
-        LOW_GOAL,
-        CONE, 
-        CUBE
+    public static class LimelightConstants {
+
+        public static class LimelightCameras {
+            public static final String LIME1 = "limelight-limeone"; //setup as goal camera for now
+            public static final String LIME2 = "limelight-limetwo"; //setup as element camera for now
+
+        }
+
+        public static enum LimelightPipelines
+        {
+            HI_GOAL,
+            LOW_GOAL,
+            CONE, 
+            CUBE
+        }
+
+        public static final double limelightDeadband = 0.8;
     }
 
-    public static final double limelightDeadband = 0.8;
 }
