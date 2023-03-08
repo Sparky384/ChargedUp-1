@@ -22,6 +22,7 @@ public class Elevator extends SubsystemBase {
         motorOne = new CANSparkMax(Constants.CANPorts.elevatorLeft, MotorType.kBrushless);
         motorTwo = new CANSparkMax(Constants.CANPorts.elevatorRight, MotorType.kBrushless); 
 
+        motorTwo.follow(motorOne, true);
         m_pidController = motorOne.getPIDController();
         m_pidController.setP(Constants.PIDValues.elevatorOneP);
         m_pidController.setI(Constants.PIDValues.elevatorOneI);
@@ -41,8 +42,11 @@ public class Elevator extends SubsystemBase {
 
     public void move(double height){
         height = height; //replace this with conversion function
-        m_pidController.setReference(height, CANSparkMax.ControlType.kPosition); 
-        motorTwo.set(-motorOne.get());
+        m_pidController.setReference(height, CANSparkMax.ControlType.kPosition);
+    }
+
+    public void drive(double speed){
+        motorOne.set(speed);
     }
 
     public double getHeight() {

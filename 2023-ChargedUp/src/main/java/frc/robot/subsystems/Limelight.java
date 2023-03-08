@@ -37,7 +37,7 @@ public class Limelight extends SubsystemBase
     //one method to get target x
     public double getX()
     {
-        return tx.getDouble(errorNum -1);
+        return tx.getDouble(errorNum - 1);
     }
 
     public double getY()

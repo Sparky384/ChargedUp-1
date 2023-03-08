@@ -11,8 +11,8 @@ public class MoveElevator extends CommandBase {
     private Elevator elevatorSubsystem; 
     private double elevatorHeight;
 
-    public MoveElevator(Elevator elevator, double initHeight) {
-        elevatorHeight = initHeight;
+    public MoveElevator(Elevator elevator, double targetHeight) {
+        elevatorHeight = targetHeight;
         elevatorSubsystem = elevator;
         addRequirements(elevatorSubsystem);
     }
