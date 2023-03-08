@@ -25,6 +25,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
 import frc.robot.commands.*;
+import frc.robot.commands.ElevatorFunctionality.ManualElevator;
 import frc.robot.commands.ElevatorFunctionality.MoveElevator;
 import frc.robot.commands.SliderFunctionality.MoveSlider;
 import frc.robot.commands.WristFunctionality.Intake;
@@ -75,6 +76,7 @@ public class RobotContainer {
     private final Trigger elevatorHigh = copilot.y();
     private final Trigger elevatorMid = copilot.x();
     private final Trigger elevatorLow = copilot.a();
+    private final double elevatorX = copilot.getRightX();
     private final Trigger handIntake = copilot.leftTrigger();
     private final Trigger handOuttake = copilot.rightTrigger();
     private final Trigger wristHigh = copilot.povUp();
@@ -140,6 +142,16 @@ public class RobotContainer {
                 )
             );
         }
+
+        // Copilot Manual Elevator
+
+        elevator.setDefaultCommand(
+            new ManualElevator(
+                elevator,
+                () -> elevatorX
+            )
+        );
+
         // Configure the button bindings
         configureButtonBindings();
     }

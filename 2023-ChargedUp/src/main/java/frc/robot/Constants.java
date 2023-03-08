@@ -18,6 +18,8 @@ public final class Constants {
     public static final double doubleThreshold = 1.0;
     public static final double rampThreshold = 20.0; // in degrees
 
+    public static final double elevatorSpeedLimit = 0.7;
+
     public static final class Swerve {
         public static final int pigeonID = 0;
         public static final double slowDriveAmount = .5; //change depending on amount we want to slow down by when holding button.
