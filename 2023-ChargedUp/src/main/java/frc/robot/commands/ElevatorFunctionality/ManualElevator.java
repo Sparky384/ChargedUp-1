@@ -18,6 +18,7 @@ public class ManualElevator extends CommandBase{
     {
         s_Elevator = elevator;
         this.translationSup = translationSup;
+        addRequirements(s_Elevator);
     }
 
     @Override

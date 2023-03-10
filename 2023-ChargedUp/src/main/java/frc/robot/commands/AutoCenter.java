@@ -14,9 +14,9 @@ public class AutoCenter extends CommandBase
     private boolean right;
     private String camera;
 
-    public AutoCenter(Swerve s, Limelight l, boolean goRight, String cam)
+    public AutoCenter(Swerve swerve2, Limelight l, boolean goRight, String cam)
     {
-        swerve = s;
+        swerve = swerve2;
         lime = l;
         right = goRight;
         camera = cam;

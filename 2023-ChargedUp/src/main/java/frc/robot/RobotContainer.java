@@ -63,6 +63,7 @@ public class RobotContainer {
     private final Trigger driveOnRampSequence = pilot.start();
     private final Trigger pickupObject = pilot.a();
     private final Trigger dropObject = pilot.b();
+    private final Trigger stow = pilot.x();
     private final Trigger slowDrive = pilot.rightTrigger();
     private final Trigger autoTrackLeft = pilot.leftBumper();
     private final Trigger autoTrackRight = pilot.rightBumper();
@@ -190,6 +191,7 @@ public class RobotContainer {
         elevatorLow.onTrue(new MoveElevator(elevator, Constants.Subsys.elevatorLow));
         handIntake.onTrue(new Intake(hand));
         handOuttake.onTrue(new Outtake(hand));
+        stow.onTrue(Stow.getStowCommand(slider, wrist)); // gets a parallel command group
         wristHigh.onTrue(new RotateWrist(wrist, Constants.Subsys.wristHigh));
         wristMid.onTrue(new RotateWrist(wrist, Constants.Subsys.wristMid));
         wristLow.onTrue(new RotateWrist(wrist, Constants.Subsys.wristLow));
@@ -207,8 +209,8 @@ public class RobotContainer {
          * new MoveWrist(wrist, 0)));
          * 0 in this case references parameter i.e. elevatorLow
          */
-        autoTrackLeft.whileTrue(new AutoCenter(swerve, s_Limelight, false, Constants.LimelightConstants.LimelightCameras.LIME1)); //assuming one camera takes precedent, otherwise rebuild command.
-        autoTrackRight.whileTrue(new AutoCenter(swerve, s_Limelight, false, Constants.LimelightConstants.LimelightCameras.LIME1));
+        autoTrackLeft.whileTrue(Place.getPlaceCommand(swerve, wrist, hand, slider, s_Limelight, true)); //assuming one camera takes precedent, otherwise rebuild command.
+        autoTrackRight.whileTrue(Place.getPlaceCommand(swerve, wrist, hand, slider, s_Limelight, true));
     }
 
     /**
