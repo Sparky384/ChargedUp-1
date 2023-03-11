@@ -68,7 +68,8 @@ public class RobotContainer {
     private final Trigger autoTrackLeft = pilot.leftBumper();
     private final Trigger autoTrackRight = pilot.rightBumper();
     private final Trigger zeroGyro = pilot.povDown();
-    
+    private final Trigger toggleSliderMode = pilot.y();  
+
     //copilot
     private final Trigger limelightProfileGoal = copilot.leftTrigger();
     private final Trigger limelightProfileElements = copilot.leftTrigger();
@@ -94,7 +95,9 @@ public class RobotContainer {
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {        
-
+        SmartDashboard.putNumber("Slider P", Constants.PIDValues.sliderP);
+        SmartDashboard.putNumber("Slider I", Constants.PIDValues.sliderI);
+        SmartDashboard.putNumber("Slider D", Constants.PIDValues.sliderD);
         //Constants.AutoConstants.smartDashboardAutoPIDs();
         //Constants.Swerve.smartDashboardDrivePIDs();
 
@@ -149,12 +152,12 @@ public class RobotContainer {
         elevator.setDefaultCommand(
             new ManualElevator(
                 elevator,
-                () -> elevatorX
+                () -> copilot.getRightY()
             )
         );
 
         // Configure the button bindings
-        //configureButtonBindings();
+        configureButtonBindings();
     }
 
     /**
@@ -170,11 +173,13 @@ public class RobotContainer {
         pickupObject.onTrue(new ParallelCommandGroup(new Intake(hand), new RotateWrist(wrist, Constants.Subsys.wristLow))); //will change to Constants.Subsys.wristGround later
         dropObject.onTrue(new ParallelCommandGroup(new Outtake(hand), new RotateWrist(wrist, Constants.Subsys.wristLow))); //will likely have to change the height based on which node we're dropping the game piece in.
         zeroGyro.onTrue(new InstantCommand(() -> swerve.zeroGyro()));
+        toggleSliderMode.onTrue(new InstantCommand(() -> slider.toggle()));
         
         // run DriveOnRamp THEN run GyroStabalize
         driveOnRampSequence.toggleOnTrue(new SequentialCommandGroup(
             new DriveOnRamp(swerve, false),
             new GyroStabalize(swerve)));
+        
         
         //copilot
         

@@ -16,9 +16,11 @@ import edu.wpi.first.wpilibj.smartdashboard.*;
 public final class Constants {
     public static final double stickDeadband = 0.1;
     public static final double doubleThreshold = 1.0;
+    public static final double elevatorThreshold = 0.2;
     public static final double rampThreshold = 20.0; // in degrees
 
-    public static final double elevatorSpeedLimit = 0.7;
+    public static final double elevatorSpeedLimit = 0.3;
+    public static final double elevatorDownSpeedLimit = 0.0;
 
     public static final class Swerve {
         public static final int pigeonID = 20;
@@ -215,13 +217,14 @@ public final class Constants {
         public static final double backLeftDriveP = 0.0; 
         public static final double backLeftDriveI = 0.0; 
         public static final double backLeftDriveD = 0.0; 
-        public static final double elevatorOneP = 0.02;
+        public static final double elevatorOneP = 0.00003;
         public static final double elevatorOneI = 0.0;
-        public static final double elevatorOneD = 0.0;
+        public static final double elevatorOneD = -0.005;
+        public static final double elevatorOneF = 0.06387;
         public static final double elevatorTwoP = 0.5;
         public static final double elevatorTwoI = 0.0;
         public static final double elevatorTwoD = 0.0;
-        public static final double sliderP = 0.02;
+        public static final double sliderP = 0.32;
         public static final double sliderI = 0.0;
         public static final double sliderD = 0.0;
         public static final double wristP = 0.02; 
@@ -232,22 +235,13 @@ public final class Constants {
         public static final double handD = 0.0;
     }
 
+    public static class ConversionValues {
+        public static final double sliderConversionFunction = .798;
+        public static final double elevatorConversionFunction = 0.000356;
+    }
+
     public static class CANPorts{
-        /*public static final int frontRightTurn = 0;
-        public static final int frontRightDrive = 0;
-        public static final int frontLeftTurn = 0;
-        public static final int frontLeftDrive = 0;
-        public static final int backRightTurn = 0; 
-        public static final int backRightDrive = 0; 
-        public static final int backLeftTurn = 0; 
-        public static final int backLeftDrive = 0;*/ 
-        /* for old robot (2022 robot) */
-        /*public static final int frontRightDrive = 23;
-        public static final int rearRightDrive = 1;
-        public static final int frontLeftDrive = 15;
-        public static final int rearLeftDrive = 14;
-        */
-        public static final int elevatorLeft = 13; // don't have yet 
+        public static final int elevatorLeft = 16; // don't have yet 
         public static final int elevatorRight = 0; //final
         public static final int slider = 19; //final
         public static final int wrist = 18; //final
@@ -289,10 +283,10 @@ public final class Constants {
     }*/
     public static class Subsys{
         public static final double elevatorLow = 0.0;
-        public static final double elevatorMid = 0.0; //may not need in final.
-        public static final double elevatorHigh = 30.0;
+        public static final double elevatorMid = 13.0; //may not need in final.
+        public static final double elevatorHigh = 13.0;
         public static final double sliderIn = 0.0;
-        public static final double sliderOut = 11; //final
+        public static final double sliderOut = 8.5; //final
         public static final double wristGround = 0.0;
         public static final double wristLow = 5.0;
         public static final double wristMid = 10.0;

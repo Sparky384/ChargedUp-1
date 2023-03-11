@@ -24,7 +24,7 @@ public class MoveElevator extends CommandBase {
     }
 
     public boolean isFinished(){
-        if (Math.abs(elevatorSubsystem.getHeight() - elevatorHeight) < Constants.doubleThreshold){
+        if (Math.abs(elevatorSubsystem.getHeight() - elevatorHeight) < Constants.elevatorThreshold){
             return true; 
         } else {
             return false;
