@@ -21,7 +21,7 @@ public class Slider extends SubsystemBase{
 
     public Slider(){
         motorOne = new CANSparkMax(Constants.CANPorts.slider, MotorType.kBrushless);
-        motorOne.setIdleMode(IdleMode.kCoast);
+        motorOne.setIdleMode(IdleMode.kBrake);
         //motorTwo = new CANSparkMax(Constants.CANPorts.elevatorRight, MotorType.kBrushless); 
 
         m_pidController = motorOne.getPIDController();
@@ -45,19 +45,19 @@ public class Slider extends SubsystemBase{
         if (motorOne.getIdleMode() == IdleMode.kBrake)
             motorOne.setIdleMode(IdleMode.kCoast);
         else
-        motorOne.setIdleMode(IdleMode.kBrake);
+            motorOne.setIdleMode(IdleMode.kBrake);
     }
 
     public void move(double distance){
-        distance /= Constants.ConversionValues.sliderConversionFunction; //replace this with conversion function
+        distance /= Constants.ConversionValues.sliderConversionFunction; //uses encoder counts.
         m_pidController.setReference(distance, CANSparkMax.ControlType.kPosition);
 
     }
 
     public double getDistance() {
         double distance = m_encoder.getPosition();
-        sliderRawCounts = distance;
-        distance *= Constants.ConversionValues.sliderConversionFunction; //replace this with conversion function
+        sliderRawCounts = distance; //testing purposes - remove later.
+        distance *= Constants.ConversionValues.sliderConversionFunction; //uses inches (to display)
         return distance;
     }
     public void periodic() {

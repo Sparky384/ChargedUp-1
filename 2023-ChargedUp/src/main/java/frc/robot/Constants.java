@@ -217,10 +217,10 @@ public final class Constants {
         public static final double backLeftDriveP = 0.0; 
         public static final double backLeftDriveI = 0.0; 
         public static final double backLeftDriveD = 0.0; 
-        public static final double elevatorOneP = 0.00003;
+        public static final double elevatorOneP = 0.00000;
         public static final double elevatorOneI = 0.0;
-        public static final double elevatorOneD = -0.005;
-        public static final double elevatorOneF = 0.06387;
+        public static final double elevatorOneD = 0.0;
+        public static final double elevatorOneF = 0.0; //FF was .06687
         public static final double elevatorTwoP = 0.5;
         public static final double elevatorTwoI = 0.0;
         public static final double elevatorTwoD = 0.0;
@@ -238,14 +238,16 @@ public final class Constants {
     public static class ConversionValues {
         public static final double sliderConversionFunction = .798;
         public static final double elevatorConversionFunction = 0.000356;
+        public static final double wristConversionFunction = 0.0878; //not final.
     }
 
     public static class CANPorts{
         public static final int elevatorLeft = 16; // don't have yet 
         public static final int elevatorRight = 0; //final
-        public static final int slider = 19; //final
-        public static final int wrist = 18; //final
-        public static final int hand = 17; //final
+        public static final int slider = 17; //final19
+        public static final int wristMotor = 18; //final
+        public static final int wristCancoder = 2;
+        public static final int hand = 19; //final17
     }
 
     /*public static class ButtonMap{
@@ -291,6 +293,7 @@ public final class Constants {
         public static final double wristLow = 5.0;
         public static final double wristMid = 10.0;
         public static final double wristHigh = 20.0;
+        public static final double wristAbsEncoderOffset = 0.0;
     }
 
     public static class RampConstants{

@@ -1,5 +1,6 @@
 package frc.robot.commands.ElevatorFunctionality;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
@@ -10,9 +11,11 @@ public class MoveElevator extends CommandBase {
 
     private Elevator elevatorSubsystem; 
     private double elevatorHeight;
+    private Timer timer;
 
     public MoveElevator(Elevator elevator, double targetHeight) {
         elevatorHeight = targetHeight;
+        timer = new Timer();
         elevatorSubsystem = elevator;
         addRequirements(elevatorSubsystem);
     }
@@ -24,11 +27,23 @@ public class MoveElevator extends CommandBase {
     }
 
     public boolean isFinished(){
+
+        if (elevatorSubsystem.getHeight() > 20)
+            return true;
+
         if (Math.abs(elevatorSubsystem.getHeight() - elevatorHeight) < Constants.elevatorThreshold){
-            return true; 
+            timer.start(); 
         } else {
-            return false;
+            timer.stop();
+            timer.reset();
         }
+
+        if (timer.hasElapsed(0.3)) {
+            timer.stop();
+            timer.reset();
+            return true;
+        } else
+        return false;
     }
 
     @Override

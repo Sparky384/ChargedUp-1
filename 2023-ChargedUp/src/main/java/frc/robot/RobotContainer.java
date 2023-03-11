@@ -167,6 +167,9 @@ public class RobotContainer {
      * edu.wpi.first.wpilibj2.command.button.}.
      */
     private void configureButtonBindings() {
+        handIntake.whileTrue(new Intake(hand));
+        handOuttake.whileTrue(new Outtake(hand));
+
         /* final configurations */
         //pilot
         toggleLED.onTrue(new ParallelCommandGroup(new InstantCommand(() -> s_Limelight.toggleLED(Constants.LimelightConstants.LimelightCameras.LIME2)), new InstantCommand(() -> s_Limelight.toggleLED(Constants.LimelightConstants.LimelightCameras.LIME1)) ));
@@ -191,7 +194,7 @@ public class RobotContainer {
         
         sliderIn.onTrue(new MoveSlider(slider, Constants.Subsys.sliderIn));
         sliderOut.onTrue(new MoveSlider(slider, Constants.Subsys.sliderOut));
-        elevatorHigh.onTrue(new MoveElevator(elevator, Constants.Subsys.elevatorHigh));
+        elevatorHigh.whileTrue(new MoveElevator(elevator, Constants.Subsys.elevatorHigh));
         elevatorMid.onTrue(new MoveElevator(elevator, Constants.Subsys.elevatorMid)); //may be removed later.
         elevatorLow.onTrue(new MoveElevator(elevator, Constants.Subsys.elevatorLow));
         handIntake.onTrue(new Intake(hand));
@@ -204,8 +207,6 @@ public class RobotContainer {
         elevatorLow.onTrue(new MoveElevator(elevator, Constants.Subsys.elevatorLow));
         elevatorMid.onTrue(new MoveElevator(elevator, Constants.Subsys.elevatorMid));
         elevatorHigh.onTrue(new MoveElevator(elevator, Constants.Subsys.elevatorHigh));
-        sliderIn.whileTrue(new Intake(hand));
-        sliderOut.whileTrue(new Outtake(hand));
         
         /*
          * This is example command group, each command will run at the same time
@@ -214,8 +215,8 @@ public class RobotContainer {
          * new MoveWrist(wrist, 0)));
          * 0 in this case references parameter i.e. elevatorLow
          */
-        autoTrackLeft.whileTrue(Place.getPlaceCommand(swerve, wrist, hand, slider, s_Limelight, true)); //assuming one camera takes precedent, otherwise rebuild command.
-        autoTrackRight.whileTrue(Place.getPlaceCommand(swerve, wrist, hand, slider, s_Limelight, true));
+        //autoTrackLeft.whileTrue(Place.getPlaceCommand(swerve, wrist, hand, slider, s_Limelight, true)); //assuming one camera takes precedent, otherwise rebuild command.
+        //autoTrackRight.whileTrue(Place.getPlaceCommand(swerve, wrist, hand, slider, s_Limelight, true));
     }
 
     /**

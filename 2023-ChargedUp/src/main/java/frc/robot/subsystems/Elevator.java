@@ -35,7 +35,7 @@ public class Elevator extends SubsystemBase {
         motorOne.config_kP(0, Constants.PIDValues.elevatorOneI);
         motorOne.config_kP(0, Constants.PIDValues.elevatorOneD);
         motorOne.config_kF(0, Constants.PIDValues.elevatorOneF);
-        motorOne.configClosedLoopPeakOutput(0, 0.6);
+        motorOne.configClosedLoopPeakOutput(0, 0.45);
         //m_encoder.setInverted(true);
     }
 
@@ -44,19 +44,18 @@ public class Elevator extends SubsystemBase {
     }
 
     public void move(double height){
-        height /= Constants.ConversionValues.elevatorConversionFunction; //replace this with conversion function
+        height /= Constants.ConversionValues.elevatorConversionFunction; //uses encoder counts.
         motorOne.set(ControlMode.Position, height);
     }
 
     public void drive(double speed)
     {
-        System.out.println("--" + speed);
         motorOne.set(ControlMode.PercentOutput, speed);
     }
 
     public double getHeight() {
         double height = motorOne.getSelectedSensorPosition();// was multiplying get position by negative 1
-        height *= Constants.ConversionValues.elevatorConversionFunction; //inch to encoder counts conversion.
+        height *= Constants.ConversionValues.elevatorConversionFunction; //uses inches (to display on screen)
         return height;
     }
 

@@ -43,7 +43,7 @@ public class LScore2Ramp extends SequentialCommandGroup {
             new ParallelCommandGroup(new MoveElevator(s_Elevator, Constants.Subsys.elevatorLow), LRampFrom2nd.followTrajectoryCommand(false, s_Swerve)),
             
             /* Drive onto ramp then balance indefinitely */
-            new DriveOnRamp(s_Swerve, false),
+            new DriveOnRamp(s_Swerve, true),
             new GyroStabalize(s_Swerve)
         );
     }
