@@ -122,7 +122,7 @@ public class RobotContainer {
 
 
         //pilot controlling swerve
-        if (slowDrive.getAsBoolean() == true){
+        /*if (slowDrive.getAsBoolean() == true){
             swerve.setDefaultCommand(
                 new TeleopSwerve(
                     swerve, 
@@ -132,17 +132,17 @@ public class RobotContainer {
                     () -> Constants.Swerve.robotcentric //pass in true for robotcentric false for fieldcentric
                     )
             );
-        } else {
+        } else {*/
             swerve.setDefaultCommand(
                 new TeleopSwerve(
                     swerve, 
-                    () -> -translationAxis, 
-                    () -> -strafeAxis, 
-                    () -> -rotationAxis, 
+                    () -> -pilot.getLeftY(), 
+                    () -> -pilot.getLeftX(), 
+                    () -> -pilot.getRightX(), 
                     () -> Constants.Swerve.robotcentric //pass in true for robotcentric false for fieldcentric
                 )
             );
-        }
+        //}
 
         // Copilot Manual Elevator
 
@@ -154,7 +154,7 @@ public class RobotContainer {
         );
 
         // Configure the button bindings
-        configureButtonBindings();
+        //configureButtonBindings();
     }
 
     /**
