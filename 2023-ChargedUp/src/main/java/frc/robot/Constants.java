@@ -217,10 +217,10 @@ public final class Constants {
         public static final double backLeftDriveP = 0.0; 
         public static final double backLeftDriveI = 0.0; 
         public static final double backLeftDriveD = 0.0; 
-        public static final double elevatorOneP = 0.00000;
+        public static final double elevatorOneP = 0.083; //.08
         public static final double elevatorOneI = 0.0;
         public static final double elevatorOneD = 0.0;
-        public static final double elevatorOneF = 0.0; //FF was .06687
+        public static final double elevatorOneF = 0.06687; //FF was .06687
         public static final double elevatorTwoP = 0.5;
         public static final double elevatorTwoI = 0.0;
         public static final double elevatorTwoD = 0.0;
@@ -233,6 +233,8 @@ public final class Constants {
         public static final double handP = 0.0;
         public static final double handI = 0.0;
         public static final double handD = 0.0;
+        public static final double elevatorMaxSpeed = 0.2; 
+        public static final double elevatorMinSpeed = -0.1; 
     }
 
     public static class ConversionValues {
@@ -244,10 +246,10 @@ public final class Constants {
     public static class CANPorts{
         public static final int elevatorLeft = 16; // don't have yet 
         public static final int elevatorRight = 0; //final
-        public static final int slider = 17; //final19
+        public static final int slider = 19; //final 19
         public static final int wristMotor = 18; //final
         public static final int wristCancoder = 2;
-        public static final int hand = 19; //final17
+        public static final int hand = 17; //final 17
     }
 
     /*public static class ButtonMap{

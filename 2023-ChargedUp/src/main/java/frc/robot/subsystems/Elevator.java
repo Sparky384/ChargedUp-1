@@ -8,6 +8,7 @@ import com.revrobotics.SparkMaxAbsoluteEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
@@ -30,6 +31,8 @@ public class Elevator extends SubsystemBase {
 
         motorTwo.follow(motorOne);
         motorOne.setSelectedSensorPosition(0.0);
+        motorOne.setNeutralMode(NeutralMode.Brake);
+        motorTwo.setNeutralMode(NeutralMode.Brake);
         // initialize SPARK MAX with CAN ID
         motorOne.config_kP(0, Constants.PIDValues.elevatorOneP);
         motorOne.config_kP(0, Constants.PIDValues.elevatorOneI);
@@ -44,8 +47,15 @@ public class Elevator extends SubsystemBase {
     }
 
     public void move(double height){
-        height /= Constants.ConversionValues.elevatorConversionFunction; //uses encoder counts.
-        motorOne.set(ControlMode.Position, height);
+        //height /= Constants.ConversionValues.elevatorConversionFunction; //uses encoder counts.
+        double difference = height - getHeight(); 
+        double output = difference * Constants.PIDValues.elevatorOneP;
+        output += Constants.PIDValues.elevatorOneF; 
+        if (output > Constants.PIDValues.elevatorMaxSpeed)
+            output = Constants.PIDValues.elevatorMaxSpeed;
+        else if (output < Constants.PIDValues.elevatorMinSpeed)
+            output = Constants.PIDValues.elevatorMinSpeed;
+        motorOne.set(ControlMode.PercentOutput, output);
     }
 
     public void drive(double speed)
@@ -63,6 +73,7 @@ public class Elevator extends SubsystemBase {
     public void periodic() {
         SmartDashboard.putNumber("height", getHeight());
         //SmartDashboard.putNumber("elevatorPosition", m_encoder.getPosition());
+        SmartDashboard.putNumber("elevatorSpeed", getHeight());
     }
 }
 

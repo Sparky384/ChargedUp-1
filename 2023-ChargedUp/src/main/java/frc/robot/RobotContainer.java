@@ -172,7 +172,7 @@ public class RobotContainer {
 
         /* final configurations */
         //pilot
-        toggleLED.onTrue(new ParallelCommandGroup(new InstantCommand(() -> s_Limelight.toggleLED(Constants.LimelightConstants.LimelightCameras.LIME2)), new InstantCommand(() -> s_Limelight.toggleLED(Constants.LimelightConstants.LimelightCameras.LIME1)) ));
+/*        toggleLED.onTrue(new ParallelCommandGroup(new InstantCommand(() -> s_Limelight.toggleLED(Constants.LimelightConstants.LimelightCameras.LIME2)), new InstantCommand(() -> s_Limelight.toggleLED(Constants.LimelightConstants.LimelightCameras.LIME1)) ));
         pickupObject.onTrue(new ParallelCommandGroup(new Intake(hand), new RotateWrist(wrist, Constants.Subsys.wristLow))); //will change to Constants.Subsys.wristGround later
         dropObject.onTrue(new ParallelCommandGroup(new Outtake(hand), new RotateWrist(wrist, Constants.Subsys.wristLow))); //will likely have to change the height based on which node we're dropping the game piece in.
         zeroGyro.onTrue(new InstantCommand(() -> swerve.zeroGyro()));
@@ -206,6 +206,7 @@ public class RobotContainer {
         wristGround.onTrue(new RotateWrist(wrist, Constants.Subsys.wristGround));
         elevatorLow.onTrue(new MoveElevator(elevator, Constants.Subsys.elevatorLow));
         elevatorMid.onTrue(new MoveElevator(elevator, Constants.Subsys.elevatorMid));
+        */
         elevatorHigh.onTrue(new MoveElevator(elevator, Constants.Subsys.elevatorHigh));
         
         /*

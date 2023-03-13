@@ -13,7 +13,7 @@ import frc.robot.Constants;
 // Subsystem initializes hardware and methods that are then going to be used in commands
 public class Hand extends SubsystemBase
 {
-    private CANSparkMax motor; 
+    private CANSparkMax motor;
 
     public Hand() 
     {
@@ -30,11 +30,11 @@ public class Hand extends SubsystemBase
     public void shoot()
     {
         System.out.println("Out");
-        motor.set(0.15); //0.5
+        motor.set(0.5); //0.5
     }
     public void rollIn()
     {
         System.out.println("in");
-        motor.set(-0.15); // -0.5
+        motor.set(-0.5); // -0.5
     }
 }
