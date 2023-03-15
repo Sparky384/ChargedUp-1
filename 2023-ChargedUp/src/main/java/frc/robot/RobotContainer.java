@@ -67,8 +67,11 @@ public class RobotContainer {
     private final Trigger slowDrive = pilot.rightTrigger();
     private final Trigger autoTrackLeft = pilot.leftBumper();
     private final Trigger autoTrackRight = pilot.rightBumper();
-    private final Trigger zeroGyro = pilot.povDown();
-    private final Trigger toggleSliderMode = pilot.y();  
+    //private final Trigger zeroGyro = pilot.povDown();
+    //private final Trigger toggleSliderMode = pilot.y();  
+    private final Trigger wristUp = pilot.y();
+    private final Trigger wristDown = pilot.povDown();  
+
 
     //copilot
     private final Trigger limelightProfileGoal = copilot.leftTrigger();
@@ -83,8 +86,11 @@ public class RobotContainer {
     private final Trigger handOuttake = copilot.rightTrigger();
     private final Trigger wristHigh = copilot.povUp();
     private final Trigger wristMid = copilot.povRight();
-    private final Trigger wristLow = copilot.povLeft();
-    private final Trigger wristGround = copilot.povDown();
+    //private final Trigger wristLow = copilot.povLeft();
+    //private final Trigger wristGround = copilot.povDown();
+    private final Trigger elevatorDown = copilot.povDown();
+    private final Trigger motionMagic = copilot.povLeft();
+
 
     /* Copilot Joystick Controls */
     private final double elevatorJoystick = copilot.getLeftX();
@@ -149,12 +155,12 @@ public class RobotContainer {
 
         // Copilot Manual Elevator
 
-        elevator.setDefaultCommand(
+        /*elevator.setDefaultCommand(
             new ManualElevator(
                 elevator,
                 () -> copilot.getRightY()
             )
-        );
+        );*/
 
         // Configure the button bindings
         configureButtonBindings();
@@ -177,7 +183,10 @@ public class RobotContainer {
         dropObject.onTrue(new ParallelCommandGroup(new Outtake(hand), new RotateWrist(wrist, Constants.Subsys.wristLow))); //will likely have to change the height based on which node we're dropping the game piece in.
         zeroGyro.onTrue(new InstantCommand(() -> swerve.zeroGyro()));
         toggleSliderMode.onTrue(new InstantCommand(() -> slider.toggle()));
-        
+        */
+        wristUp.whileTrue(elevator.wristUp());
+        wristDown.whileTrue(elevator.wristDown());
+        /*
         // run DriveOnRamp THEN run GyroStabalize
         driveOnRampSequence.toggleOnTrue(new SequentialCommandGroup(
             new DriveOnRamp(swerve, false),
@@ -203,12 +212,15 @@ public class RobotContainer {
         wristHigh.onTrue(new RotateWrist(wrist, Constants.Subsys.wristHigh));
         wristMid.onTrue(new RotateWrist(wrist, Constants.Subsys.wristMid));
         wristLow.onTrue(new RotateWrist(wrist, Constants.Subsys.wristLow));
-        wristGround.onTrue(new RotateWrist(wrist, Constants.Subsys.wristGround));
-        elevatorLow.onTrue(new MoveElevator(elevator, Constants.Subsys.elevatorLow));
-        elevatorMid.onTrue(new MoveElevator(elevator, Constants.Subsys.elevatorMid));
         */
-        elevatorHigh.onTrue(new MoveElevator(elevator, Constants.Subsys.elevatorHigh));
-        
+        //wristGround.onTrue(new RotateWrist(wrist, Constants.Subsys.wristGround));
+        //elevatorLow.onTrue(new MoveElevator(elevator, Constants.Subsys.elevatorLow));
+        //elevatorMid.onTrue(new MoveElevator(elevator, Constants.Subsys.elevatorMid));
+        //elevatorHigh.onTrue(new MoveElevator(elevator, Constants.Subsys.elevatorHigh));
+        //elevatorHigh.onFalse(new InstantCommand(() -> System.out.println("HHHHHHHHHHHHHHH")));
+        elevatorHigh.whileTrue(elevator.drive());
+        elevatorDown.whileTrue(elevator.driveDown());
+        motionMagic.onTrue(elevator.elevatorMotionMagic());
         /*
          * This is example command group, each command will run at the same time
          * Button.onTrue(new ParallelCommandGroup(new MoveElevator(elevator, 0),

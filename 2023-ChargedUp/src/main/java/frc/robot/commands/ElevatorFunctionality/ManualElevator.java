@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class ManualElevator extends CommandBase{
 
-    private Elevator s_Elevator;
+    /*private Elevator s_Elevator;
     private DoubleSupplier translationSup; // Should be controller stick X
 
     public ManualElevator(Elevator elevator, DoubleSupplier translationSup)
@@ -50,5 +50,5 @@ public class ManualElevator extends CommandBase{
     // Not too fast
     // Have min and max
     // We don't know starting height
-
+*/
 }

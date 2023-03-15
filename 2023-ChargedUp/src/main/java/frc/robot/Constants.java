@@ -15,7 +15,8 @@ import edu.wpi.first.wpilibj.smartdashboard.*;
 
 public final class Constants {
     public static final double stickDeadband = 0.1;
-    public static final double doubleThreshold = 1.0;
+    public static final double wristThreshold = 1.0;
+    public static final double sliderThreshold = 1.0;
     public static final double elevatorThreshold = 0.2;
     public static final double rampThreshold = 20.0; // in degrees
 
@@ -291,10 +292,10 @@ public final class Constants {
         public static final double elevatorHigh = 13.0;
         public static final double sliderIn = 0.0;
         public static final double sliderOut = 8.5; //final
-        public static final double wristGround = 0.0;
+        public static final double wristGround = -141.6769; //was 0.0
         public static final double wristLow = 5.0;
         public static final double wristMid = 10.0;
-        public static final double wristHigh = 20.0;
+        public static final double wristHigh = 0.0; //was 20.0
         public static final double wristAbsEncoderOffset = 0.0;
     }
 
