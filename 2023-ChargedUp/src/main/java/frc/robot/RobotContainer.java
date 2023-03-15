@@ -220,7 +220,7 @@ public class RobotContainer {
         //elevatorHigh.onFalse(new InstantCommand(() -> System.out.println("HHHHHHHHHHHHHHH")));
         elevatorHigh.whileTrue(elevator.drive());
         elevatorDown.whileTrue(elevator.driveDown());
-        motionMagic.onTrue(elevator.elevatorMotionMagic());
+        motionMagic.onTrue(elevator.elevatorMotionMagic(Constants.Subsys.elevatorHigh));
         /*
          * This is example command group, each command will run at the same time
          * Button.onTrue(new ParallelCommandGroup(new MoveElevator(elevator, 0),

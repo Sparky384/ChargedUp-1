@@ -292,11 +292,18 @@ public final class Constants {
         public static final double elevatorHigh = 13.0;
         public static final double sliderIn = 0.0;
         public static final double sliderOut = 8.5; //final
-        public static final double wristGround = -141.6769; //was 0.0
-        public static final double wristLow = 5.0;
-        public static final double wristMid = 10.0;
-        public static final double wristHigh = 0.0; //was 20.0
+        public static final double wristGround = -141.6769; //convert to encoder counts later
+        public static final double wristLow = 5.0; //convert to encoder counts later
+        public static final double wristMid = 10.0; //convert to encoder counts later
+        public static final double wristHigh = 0.0; //convert to encoder counts later
         public static final double wristAbsEncoderOffset = 0.0;
+
+        public static final double wristUpperLimit = 800.0; //this is in encoder counts from motion magic
+        public static final double wristLowerLimit = -400.0; //this is in encoder counts from motion magic
+        public static final double wristThreshold = 100.0; //not final
+        public static final double elevatorUpperLimit = 90000; //final
+        public static final double elevatorLowerLimit = 0.0; //final
+        public static final double elevatorThreshold = 1000; //final (maybe)
     }
 
     public static class RampConstants{
