@@ -251,6 +251,7 @@ public final class Constants {
         public static final int elevatorRight = 0; //final
         public static final int slider = 19; //final
         public static final int wrist = 18; //final
+        public static final int wristCancoder = 1000; //not final
         public static final int hand = 17; //final
     }
 
