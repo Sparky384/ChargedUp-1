@@ -7,6 +7,9 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxAbsoluteEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.IdleMode;
+
+import java.util.function.DoubleSupplier;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -32,6 +35,7 @@ public class Elevator extends SubsystemBase {
     private WPI_TalonFX motorTwo; 
     private CANCoder wristEncoder;
     private WPI_TalonFX wristMotor;
+    private boolean wristMoving;
 
     //private Timer pidTimer;
 
@@ -42,6 +46,9 @@ public class Elevator extends SubsystemBase {
         wristEncoder = new CANCoder(Constants.CANPorts.wristCancoder);
         wristMotor = new WPI_TalonFX(Constants.CANPorts.wristMotor);
         //pidTimer = new Timer();
+        wristMoving = false;
+
+        wristMotor.setSensorPhase(true);
 
         motorTwo.follow(motorOne);
         motorOne.setSelectedSensorPosition(0.0);
@@ -53,24 +60,27 @@ public class Elevator extends SubsystemBase {
         motorOne.configForwardSoftLimitThreshold(Constants.Subsys.elevatorUpperLimit);
         motorOne.configReverseSoftLimitEnable(true);
         motorOne.configReverseSoftLimitThreshold(Constants.Subsys.elevatorLowerLimit);
+        
         motorOne.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 30);
-        motorOne.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, 10);
-        motorOne.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, 10);
-        motorOne.configNominalOutputForward(0, 10);
-        motorOne.configNominalOutputReverse(0, 10);
-        motorOne.configPeakOutputForward(1, 10);
-        motorOne.configPeakOutputReverse(-1, 10);
+        motorOne.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, Constants.Subsys.timeOutMs);
+        motorOne.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, Constants.Subsys.timeOutMs);
+        
+        motorOne.configNominalOutputForward(0, Constants.Subsys.timeOutMs);
+        motorOne.configNominalOutputReverse(0, Constants.Subsys.timeOutMs);
+        motorOne.configPeakOutputForward(1, Constants.Subsys.timeOutMs);
+        motorOne.configPeakOutputReverse(-1, Constants.Subsys.timeOutMs);
+        
         motorOne.configMotionAcceleration(6400, 0);
         motorOne.configMotionCruiseVelocity(6400, 0);
         
-        // initialize SPARK MAX with CAN ID
-        motorOne.config_kP(0, 0.1047); //
+        /* Slot 0 for going up the elevator */
+        motorOne.config_kP(0, Constants.PIDValues.elevatorOneP); //0.1047
         motorOne.config_kI(0, 0.0);
         motorOne.config_kD(0, 0.0);
-        motorOne.config_kF(0, 0.05863);
+        motorOne.config_kF(0, Constants.PIDValues.elevatorOneF); //0.05863
         motorOne.configAllowableClosedloopError(0, 0);
         /*
-        // slots for going down the elevator.
+        // Slot 1 for going down the elevator.
         motorOne.config_kP(1, Constants.PIDValues.elevatorOnePDown);
         motorOne.config_kP(1, Constants.PIDValues.elevatorOneI);
         motorOne.config_kP(1, Constants.PIDValues.elevatorOneD);
@@ -79,26 +89,29 @@ public class Elevator extends SubsystemBase {
         //m_encoder.setInverted(true);
 
         /*PIDs for wrist motor */
-        wristMotor.config_kP(0, 0.0);
+        wristMotor.config_kP(0, 1.0);
         wristMotor.config_kI(0, 0.0);
-        wristMotor.config_kD(0, 0.0);
+        wristMotor.config_kD(0, 2.5);
         wristMotor.config_kF(0, 0.0);
-
+        
+        wristMotor.set(ControlMode.PercentOutput, 0.0);
+        wristMotor.setInverted(true);
         /* Motion Magic Configs for Wrist */
         wristMotor.configClosedLoopPeakOutput(0, 0.1);
         wristMotor.configForwardSoftLimitEnable(true);
-        wristMotor.configForwardSoftLimitThreshold(Constants.Subsys.wristUpperLimit); //800
+        wristMotor.configForwardSoftLimitThreshold(Constants.Subsys.wristLowerLimit); //800 119
         wristMotor.configReverseSoftLimitEnable(true);
-        wristMotor.configReverseSoftLimitThreshold(Constants.Subsys.wristLowerLimit); //-400
-        wristMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 30);
-        wristMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, 10);
-        wristMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, 10);
-        wristMotor.configNominalOutputForward(0, 10);
-        wristMotor.configNominalOutputReverse(0, 10);
-        wristMotor.configPeakOutputForward(1, 10);
-        wristMotor.configPeakOutputReverse(-1, 10);
-        wristMotor.configMotionAcceleration(6400, 0);
-        wristMotor.configMotionCruiseVelocity(6400, 0);
+        wristMotor.configReverseSoftLimitThreshold(Constants.Subsys.wristUpperLimit); //-400 1534
+        
+        wristMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, Constants.Subsys.timeOutMs);
+        wristMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, Constants.Subsys.timeOutMs);
+        
+        wristMotor.configNominalOutputForward(0, Constants.Subsys.timeOutMs);
+        wristMotor.configNominalOutputReverse(0, Constants.Subsys.timeOutMs);
+        wristMotor.configPeakOutputForward(1, Constants.Subsys.timeOutMs);
+        wristMotor.configPeakOutputReverse(-1, Constants.Subsys.timeOutMs);
+        wristMotor.configMotionAcceleration(3500, 0);
+        wristMotor.configMotionCruiseVelocity(3500, 0);
         
     }
 
@@ -107,33 +120,38 @@ public class Elevator extends SubsystemBase {
     }
 
     public CommandBase elevatorMotionMagic(double finalPosition){
-        return runOnce(() -> motorOne.set(TalonFXControlMode.MotionMagic, finalPosition, DemandType.ArbitraryFeedForward, 0.06687))
-        .andThen(Commands.waitUntil(() -> motorOne.getActiveTrajectoryPosition() < finalPosition + 1000 
-        && motorOne.getActiveTrajectoryPosition() > finalPosition - 1000).withTimeout(1.5))
-        .andThen(runOnce(() -> motorOne.set(TalonFXControlMode.PercentOutput, .06687)));
+        return runOnce(() -> motorOne.set(TalonFXControlMode.MotionMagic, finalPosition, DemandType.ArbitraryFeedForward, Constants.Subsys.elevatorArbitraryFeedForward))
+        .andThen(Commands.waitUntil(() -> motorOne.getActiveTrajectoryPosition() < finalPosition + Constants.Subsys.elevatorThreshold 
+        && motorOne.getActiveTrajectoryPosition() > finalPosition - Constants.Subsys.elevatorThreshold).withTimeout(1.5))
+        .andThen(runOnce(() -> motorOne.set(TalonFXControlMode.PercentOutput, Constants.Subsys.elevatorArbitraryFeedForward)));
     }
 
-    public CommandBase wristMotionMagic(double finalPosition) {
-        return runOnce(() -> wristMotor.set(TalonFXControlMode.MotionMagic, finalPosition, DemandType.ArbitraryFeedForward, 0.06687))
-        .andThen(Commands.waitUntil(() -> wristMotor.getActiveTrajectoryPosition() < finalPosition + 1000 
-        && wristMotor.getActiveTrajectoryPosition() > finalPosition - 1000).withTimeout(1.5))
-        .andThen(runOnce(() -> wristMotor.set(TalonFXControlMode.PercentOutput, .06687)));
+    public CommandBase wristMotionMagic(double finalPositionInDegrees) {
+        return runOnce(() -> {System.out.println("GO NOW======="); wristMoving = true; wristMotor.set(TalonFXControlMode.MotionMagic, (finalPositionInDegrees * 11.4) + .603, DemandType.ArbitraryFeedForward, 0.0);})
+        .andThen(Commands.waitUntil(() -> Math.abs(wristEncoder.getAbsolutePosition() - finalPositionInDegrees) < Constants.Subsys.wristThreshold).withTimeout(8.0))
+        .andThen(runOnce(() -> {wristMoving = false;}));
     }
 
     
     public CommandBase wristUp() {
-        return run(() -> wristMotor.set(TalonFXControlMode.PercentOutput, 0.5)).
-        finallyDo(interrupted -> wristMotor.set(TalonFXControlMode.PercentOutput, 0.06687)).
+        return run(() -> {wristMoving = true; wristMotor.set(TalonFXControlMode.PercentOutput, 0.2);}).
+        finallyDo(interrupted -> {wristMoving = false;}).
         withName("driveWrist");
     }
+    
 
     public CommandBase wristDown() {
-        return run(() -> wristMotor.set(TalonFXControlMode.PercentOutput, -0.5)).
-        finallyDo(interrupted -> wristMotor.set(TalonFXControlMode.PercentOutput, 0.06687)).
+        return run(() -> {wristMoving = true; wristMotor.set(TalonFXControlMode.PercentOutput, -0.2);}).
+        finallyDo(interrupted -> {wristMoving = false;}).
         withName("driveWrist");
     }
 
-    
+    public CommandBase wristStick(DoubleSupplier stick) {
+        return run(() -> wristMotor.set(TalonFXControlMode.PercentOutput, stick.getAsDouble())).
+        finallyDo(interrupted -> wristMotor.set(TalonFXControlMode.PercentOutput, 0.0)).
+        withName("driveWrist");
+    }
+   
     public void move(double height){
         //height /= Constants.ConversionValues.elevatorConversionFunction; //uses encoder counts.
         double difference = height - getHeight(); 
@@ -172,6 +190,19 @@ public class Elevator extends SubsystemBase {
         SmartDashboard.putNumber("height", getHeight());
         //SmartDashboard.putNumber("elevatorPosition", m_encoder.getPosition());
         SmartDashboard.putNumber("elevatorSpeed", getHeight());
+        SmartDashboard.putBoolean("w", wristMoving);
+        SmartDashboard.putNumber("wangle", wristEncoder.getAbsolutePosition());
+        SmartDashboard.putNumber("wcos", Math.cos(Math.toRadians(wristEncoder.getAbsolutePosition())));
+        SmartDashboard.putNumber("w2", 0.08086 * Math.cos(Math.toRadians(wristEncoder.getAbsolutePosition())));
+        if (!wristMoving)
+        {
+            if (wristEncoder.getAbsolutePosition() > 100)
+                wristMotor.set(TalonFXControlMode.PercentOutput, 0.22186 * Math.cos(Math.toRadians(wristEncoder.getAbsolutePosition())));
+            else if (wristEncoder.getAbsolutePosition() > 50)
+                wristMotor.set(TalonFXControlMode.PercentOutput, 0.22186 * Math.cos(Math.toRadians(wristEncoder.getAbsolutePosition())));
+            else
+                wristMotor.set(TalonFXControlMode.PercentOutput, 0.08086 * Math.cos(Math.toRadians(wristEncoder.getAbsolutePosition())));
+        }
     }
 }
 

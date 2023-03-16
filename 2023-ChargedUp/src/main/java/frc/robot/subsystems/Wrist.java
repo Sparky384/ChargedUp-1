@@ -23,8 +23,8 @@ public class Wrist extends SubsystemBase{
 
     public Wrist(){
         
-        motor = new WPI_TalonFX(Constants.CANPorts.wristMotor);
-        m_encoder = new CANCoder(Constants.CANPorts.wristCancoder);
+        //motor = new WPI_TalonFX(Constants.CANPorts.wristMotor);
+        //m_encoder = new CANCoder(Constants.CANPorts.wristCancoder);
         /*
         motor.config_kP(0, Constants.PIDValues.elevatorOneP);
         motor.config_kP(0, Constants.PIDValues.elevatorOneI);
@@ -38,23 +38,24 @@ public class Wrist extends SubsystemBase{
     }
 
     public void stop(){
-        motor.stopMotor();
+        //motor.stopMotor();
     }
 
     public void driveToAngle(double angle){
-        angle /= Constants.ConversionValues.wristConversionFunction; //uses encoder counts - could be switched to .00630366 without /= just =
-        SmartDashboard.putNumber("driveToWristAngle", angle);
+        //angle /= Constants.ConversionValues.wristConversionFunction; //uses encoder counts - could be switched to .00630366 without /= just =
+        //SmartDashboard.putNumber("driveToWristAngle", angle);
         //motor.set(ControlMode.PercentOutput, angle);
     }
 
     public double getAngle() 
     {
-        return m_encoder.getAbsolutePosition();
+        return 0.0;
+        //return m_encoder.getAbsolutePosition();
     }
 
     public void periodic() {
-        SmartDashboard.putNumber("wristAngle", getAngle());
+        //SmartDashboard.putNumber("wristAngle", getAngle());
         //SmartDashboard.putNumber("elevatorPosition", m_encoder.getPosition());
-        SmartDashboard.putNumber("wristSensorPosition", motor.getSelectedSensorPosition());
+        //SmartDashboard.putNumber("wristSensorPosition", motor.getSelectedSensorPosition());
     }
 }

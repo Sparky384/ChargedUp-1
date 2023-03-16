@@ -211,29 +211,35 @@ public final class Constants {
         public static final double frontRightTurnD = 0.0; 
         public static final double frontRightDriveP = 0.0; 
         public static final double frontRightDriveI = 0.0; 
-        public static final double frontRightDriveD = 0.0; 
+        public static final double frontRightDriveD = 0.0;
+
         public static final double backLeftTurnP = 0.0; 
         public static final double backLeftTurnI = 0.0; 
         public static final double backLeftTurnD = 0.0; 
         public static final double backLeftDriveP = 0.0; 
         public static final double backLeftDriveI = 0.0; 
-        public static final double backLeftDriveD = 0.0; 
-        public static final double elevatorOneP = 0.083; //.08
+        public static final double backLeftDriveD = 0.0;
+
+        public static final double elevatorOneP = 0.1047; //.08
         public static final double elevatorOneI = 0.0;
         public static final double elevatorOneD = 0.0;
-        public static final double elevatorOneF = 0.06687; //FF was .06687
+        public static final double elevatorOneF = 0.05863; //FF was .06687
         public static final double elevatorTwoP = 0.5;
         public static final double elevatorTwoI = 0.0;
         public static final double elevatorTwoD = 0.0;
+
         public static final double sliderP = 0.32;
         public static final double sliderI = 0.0;
         public static final double sliderD = 0.0;
+
         public static final double wristP = 0.02; 
         public static final double wristI = 0.0; 
-        public static final double wristD = 0.0; 
+        public static final double wristD = 0.0;
+
         public static final double handP = 0.0;
         public static final double handI = 0.0;
         public static final double handD = 0.0;
+
         public static final double elevatorMaxSpeed = 0.2; 
         public static final double elevatorMinSpeed = -0.1; 
     }
@@ -241,7 +247,7 @@ public final class Constants {
     public static class ConversionValues {
         public static final double sliderConversionFunction = .798;
         public static final double elevatorConversionFunction = 0.000356;
-        public static final double wristConversionFunction = 0.0878; //not final.
+        public static final double wristConversionFunction = 0.0; //not final.
     }
 
     public static class CANPorts{
@@ -289,21 +295,25 @@ public final class Constants {
     public static class Subsys{
         public static final double elevatorLow = 0.0;
         public static final double elevatorMid = 13.0; //may not need in final.
-        public static final double elevatorHigh = 13.0;
+        public static final double elevatorHigh = 89000; //could go lower.
         public static final double sliderIn = 0.0;
-        public static final double sliderOut = 8.5; //final
+        public static final double sliderOut = 8.5; //final in inches
         public static final double wristGround = -141.6769; //convert to encoder counts later
         public static final double wristLow = 5.0; //convert to encoder counts later
-        public static final double wristMid = 10.0; //convert to encoder counts later
-        public static final double wristHigh = 0.0; //convert to encoder counts later
+        public static final double wristMid = 25.0; //convert to encoder counts later
+        public static final double wristHigh = 90.0; //convert to encoder counts later
         public static final double wristAbsEncoderOffset = 0.0;
-
-        public static final double wristUpperLimit = 800.0; //this is in encoder counts from motion magic
-        public static final double wristLowerLimit = -400.0; //this is in encoder counts from motion magic
-        public static final double wristThreshold = 100.0; //not final
+        /* Motion Magic Constants */
+        public static final int timeOutMs = 10;
+        public static final double wristUpperLimit = -185.0; //this is in encoder counts from motion magic
+        public static final double wristLowerLimit = 1204; //this is in encoder counts from motion magic
+        public static final double wristThreshold = 2.0; //not final
         public static final double elevatorUpperLimit = 90000; //final
         public static final double elevatorLowerLimit = 0.0; //final
         public static final double elevatorThreshold = 1000; //final (maybe)
+        public static final double elevatorArbitraryFeedForward = 0.06687;
+        public static final double wristArbitraryFeedForward = 0.0;
+
     }
 
     public static class RampConstants{

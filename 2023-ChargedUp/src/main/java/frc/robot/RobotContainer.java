@@ -161,7 +161,7 @@ public class RobotContainer {
                 () -> copilot.getRightY()
             )
         );*/
-
+        //elevator.setDefaultCommand(elevator.wristStick(() -> copilot.getLeftY()));
         // Configure the button bindings
         configureButtonBindings();
     }
@@ -209,18 +209,18 @@ public class RobotContainer {
         handIntake.onTrue(new Intake(hand));
         handOuttake.onTrue(new Outtake(hand));
         stow.onTrue(Stow.getStowCommand(slider, wrist)); // gets a parallel command group
-        wristHigh.onTrue(new RotateWrist(wrist, Constants.Subsys.wristHigh));
-        wristMid.onTrue(new RotateWrist(wrist, Constants.Subsys.wristMid));
-        wristLow.onTrue(new RotateWrist(wrist, Constants.Subsys.wristLow));
-        */
+        */wristHigh.onTrue(elevator.wristMotionMagic(Constants.Subsys.wristHigh));
+        wristMid.onTrue(elevator.wristMotionMagic(Constants.Subsys.wristMid));
+        //wristLow.onTrue(new RotateWrist(wrist, Constants.Subsys.wristLow));
+        
         //wristGround.onTrue(new RotateWrist(wrist, Constants.Subsys.wristGround));
         //elevatorLow.onTrue(new MoveElevator(elevator, Constants.Subsys.elevatorLow));
         //elevatorMid.onTrue(new MoveElevator(elevator, Constants.Subsys.elevatorMid));
         //elevatorHigh.onTrue(new MoveElevator(elevator, Constants.Subsys.elevatorHigh));
-        //elevatorHigh.onFalse(new InstantCommand(() -> System.out.println("HHHHHHHHHHHHHHH")));
         elevatorHigh.whileTrue(elevator.drive());
         elevatorDown.whileTrue(elevator.driveDown());
         motionMagic.onTrue(elevator.elevatorMotionMagic(Constants.Subsys.elevatorHigh));
+
         /*
          * This is example command group, each command will run at the same time
          * Button.onTrue(new ParallelCommandGroup(new MoveElevator(elevator, 0),
@@ -296,5 +296,11 @@ public class RobotContainer {
             }
 
         return selectedAuto;
+    }
+
+    public void periodic()
+    {
+        SmartDashboard.putNumber("stickAmount", copilot.getLeftY());
+        SmartDashboard.putBoolean("pov", wristHigh.getAsBoolean());
     }
 }
