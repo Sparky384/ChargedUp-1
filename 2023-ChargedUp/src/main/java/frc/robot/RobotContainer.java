@@ -63,11 +63,16 @@ public class RobotContainer {
     private final Trigger driveOnRampSequence = pilot.start();
     private final Trigger pickupObject = pilot.a();
     private final Trigger dropObject = pilot.b();
+    private final Trigger stow = pilot.x();
     private final Trigger slowDrive = pilot.rightTrigger();
     private final Trigger autoTrackLeft = pilot.leftBumper();
     private final Trigger autoTrackRight = pilot.rightBumper();
-    private final Trigger zeroGyro = pilot.povDown();
-    
+    //private final Trigger zeroGyro = pilot.povDown();
+    //private final Trigger toggleSliderMode = pilot.y();  
+    private final Trigger wristUp = pilot.y();
+    private final Trigger wristDown = pilot.povDown();  
+
+
     //copilot
     private final Trigger limelightProfileGoal = copilot.leftTrigger();
     private final Trigger limelightProfileElements = copilot.leftTrigger();
@@ -81,8 +86,11 @@ public class RobotContainer {
     private final Trigger handOuttake = copilot.rightTrigger();
     private final Trigger wristHigh = copilot.povUp();
     private final Trigger wristMid = copilot.povRight();
-    private final Trigger wristLow = copilot.povLeft();
-    private final Trigger wristGround = copilot.povDown();
+    //private final Trigger wristLow = copilot.povLeft();
+    //private final Trigger wristGround = copilot.povDown();
+    private final Trigger elevatorDown = copilot.povDown();
+    private final Trigger motionMagic = copilot.povLeft();
+
 
     /* Copilot Joystick Controls */
     private final double elevatorJoystick = copilot.getLeftX();
@@ -93,7 +101,9 @@ public class RobotContainer {
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {        
-
+        SmartDashboard.putNumber("Slider P", Constants.PIDValues.sliderP);
+        SmartDashboard.putNumber("Slider I", Constants.PIDValues.sliderI);
+        SmartDashboard.putNumber("Slider D", Constants.PIDValues.sliderD);
         //Constants.AutoConstants.smartDashboardAutoPIDs();
         //Constants.Swerve.smartDashboardDrivePIDs();
 
@@ -121,7 +131,7 @@ public class RobotContainer {
 
 
         //pilot controlling swerve
-        if (slowDrive.getAsBoolean() == true){
+        /*if (slowDrive.getAsBoolean() == true){
             swerve.setDefaultCommand(
                 new TeleopSwerve(
                     swerve, 
@@ -131,27 +141,27 @@ public class RobotContainer {
                     () -> Constants.Swerve.robotcentric //pass in true for robotcentric false for fieldcentric
                     )
             );
-        } else {
+        } else {*/
             swerve.setDefaultCommand(
                 new TeleopSwerve(
                     swerve, 
-                    () -> -translationAxis, 
-                    () -> -strafeAxis, 
-                    () -> -rotationAxis, 
+                    () -> -pilot.getLeftY(), 
+                    () -> -pilot.getLeftX(), 
+                    () -> -pilot.getRightX(), 
                     () -> Constants.Swerve.robotcentric //pass in true for robotcentric false for fieldcentric
                 )
             );
-        }
+        //}
 
         // Copilot Manual Elevator
 
-        elevator.setDefaultCommand(
+        /*elevator.setDefaultCommand(
             new ManualElevator(
                 elevator,
-                () -> elevatorX
+                () -> copilot.getRightY()
             )
-        );
-
+        );*/
+        //elevator.setDefaultCommand(elevator.wristStick(() -> copilot.getLeftY()));
         // Configure the button bindings
         configureButtonBindings();
     }
@@ -163,17 +173,25 @@ public class RobotContainer {
      * edu.wpi.first.wpilibj2.command.button.}.
      */
     private void configureButtonBindings() {
+        handIntake.whileTrue(new Intake(hand));
+        handOuttake.whileTrue(new Outtake(hand));
+
         /* final configurations */
         //pilot
-        toggleLED.onTrue(new ParallelCommandGroup(new InstantCommand(() -> s_Limelight.toggleLED(Constants.LimelightConstants.LimelightCameras.LIME2)), new InstantCommand(() -> s_Limelight.toggleLED(Constants.LimelightConstants.LimelightCameras.LIME1)) ));
+/*        toggleLED.onTrue(new ParallelCommandGroup(new InstantCommand(() -> s_Limelight.toggleLED(Constants.LimelightConstants.LimelightCameras.LIME2)), new InstantCommand(() -> s_Limelight.toggleLED(Constants.LimelightConstants.LimelightCameras.LIME1)) ));
         pickupObject.onTrue(new ParallelCommandGroup(new Intake(hand), new RotateWrist(wrist, Constants.Subsys.wristLow))); //will change to Constants.Subsys.wristGround later
         dropObject.onTrue(new ParallelCommandGroup(new Outtake(hand), new RotateWrist(wrist, Constants.Subsys.wristLow))); //will likely have to change the height based on which node we're dropping the game piece in.
         zeroGyro.onTrue(new InstantCommand(() -> swerve.zeroGyro()));
-        
+        toggleSliderMode.onTrue(new InstantCommand(() -> slider.toggle()));
+        */
+        wristUp.whileTrue(elevator.wristUp());
+        wristDown.whileTrue(elevator.wristDown());
+        /*
         // run DriveOnRamp THEN run GyroStabalize
         driveOnRampSequence.toggleOnTrue(new SequentialCommandGroup(
             new DriveOnRamp(swerve, false),
             new GyroStabalize(swerve)));
+        
         
         //copilot
         
@@ -185,21 +203,24 @@ public class RobotContainer {
         
         sliderIn.onTrue(new MoveSlider(slider, Constants.Subsys.sliderIn));
         sliderOut.onTrue(new MoveSlider(slider, Constants.Subsys.sliderOut));
-        elevatorHigh.onTrue(new MoveElevator(elevator, Constants.Subsys.elevatorHigh));
+        elevatorHigh.whileTrue(new MoveElevator(elevator, Constants.Subsys.elevatorHigh));
         elevatorMid.onTrue(new MoveElevator(elevator, Constants.Subsys.elevatorMid)); //may be removed later.
         elevatorLow.onTrue(new MoveElevator(elevator, Constants.Subsys.elevatorLow));
         handIntake.onTrue(new Intake(hand));
         handOuttake.onTrue(new Outtake(hand));
-        wristHigh.onTrue(new RotateWrist(wrist, Constants.Subsys.wristHigh));
-        wristMid.onTrue(new RotateWrist(wrist, Constants.Subsys.wristMid));
-        wristLow.onTrue(new RotateWrist(wrist, Constants.Subsys.wristLow));
-        wristGround.onTrue(new RotateWrist(wrist, Constants.Subsys.wristGround));
-        elevatorLow.onTrue(new MoveElevator(elevator, Constants.Subsys.elevatorLow));
-        elevatorMid.onTrue(new MoveElevator(elevator, Constants.Subsys.elevatorMid));
-        elevatorHigh.onTrue(new MoveElevator(elevator, Constants.Subsys.elevatorHigh));
-        sliderIn.whileTrue(new Intake(hand));
-        sliderOut.whileTrue(new Outtake(hand));
+        stow.onTrue(Stow.getStowCommand(slider, wrist)); // gets a parallel command group
+        */wristHigh.onTrue(elevator.wristMotionMagic(Constants.Subsys.wristHigh));
+        wristMid.onTrue(elevator.wristMotionMagic(Constants.Subsys.wristMid));
+        //wristLow.onTrue(new RotateWrist(wrist, Constants.Subsys.wristLow));
         
+        //wristGround.onTrue(new RotateWrist(wrist, Constants.Subsys.wristGround));
+        //elevatorLow.onTrue(new MoveElevator(elevator, Constants.Subsys.elevatorLow));
+        //elevatorMid.onTrue(new MoveElevator(elevator, Constants.Subsys.elevatorMid));
+        //elevatorHigh.onTrue(new MoveElevator(elevator, Constants.Subsys.elevatorHigh));
+        elevatorHigh.whileTrue(elevator.drive());
+        elevatorDown.whileTrue(elevator.driveDown());
+        motionMagic.onTrue(elevator.elevatorMotionMagic(Constants.Subsys.elevatorHigh));
+
         /*
          * This is example command group, each command will run at the same time
          * Button.onTrue(new ParallelCommandGroup(new MoveElevator(elevator, 0),
@@ -207,8 +228,8 @@ public class RobotContainer {
          * new MoveWrist(wrist, 0)));
          * 0 in this case references parameter i.e. elevatorLow
          */
-        autoTrackLeft.whileTrue(new AutoCenter(swerve, s_Limelight, false, Constants.LimelightConstants.LimelightCameras.LIME1)); //assuming one camera takes precedent, otherwise rebuild command.
-        autoTrackRight.whileTrue(new AutoCenter(swerve, s_Limelight, false, Constants.LimelightConstants.LimelightCameras.LIME1));
+        //autoTrackLeft.whileTrue(Place.getPlaceCommand(swerve, wrist, hand, slider, s_Limelight, true)); //assuming one camera takes precedent, otherwise rebuild command.
+        //autoTrackRight.whileTrue(Place.getPlaceCommand(swerve, wrist, hand, slider, s_Limelight, true));
     }
 
     /**
@@ -275,5 +296,11 @@ public class RobotContainer {
             }
 
         return selectedAuto;
+    }
+
+    public void periodic()
+    {
+        SmartDashboard.putNumber("stickAmount", copilot.getLeftY());
+        SmartDashboard.putBoolean("pov", wristHigh.getAsBoolean());
     }
 }

@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -12,24 +13,28 @@ import frc.robot.Constants;
 // Subsystem initializes hardware and methods that are then going to be used in commands
 public class Hand extends SubsystemBase
 {
-    private CANSparkMax motor; 
+    private CANSparkMax motor;
 
     public Hand() 
     {
         motor = new CANSparkMax(Constants.CANPorts.hand, MotorType.kBrushless);
+        motor.setIdleMode(IdleMode.kCoast);
     }
 
     public void stop()
     {
+        System.out.println("stop");
         motor.stopMotor();
     }
 
     public void shoot()
     {
-        motor.set(0.5);
+        System.out.println("Out");
+        motor.set(0.5); //0.5
     }
     public void rollIn()
     {
-        motor.set(-0.5);
+        System.out.println("in");
+        motor.set(-0.5); // -0.5
     }
 }

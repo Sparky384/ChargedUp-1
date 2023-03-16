@@ -20,13 +20,13 @@ public class RotateWrist extends CommandBase {
 
     public void execute() {
         SmartDashboard.putNumber("wristDistance", wristSubsystem.getAngle());
-        SmartDashboard.putBoolean("wristRunner", true);
+        SmartDashboard.putBoolean("wristRunning", true);
         wristSubsystem.driveToAngle(wristAngle); 
 
     }
 
     public boolean isFinished() {
-        if (Math.abs(wristSubsystem.getAngle() - wristAngle) < Constants.doubleThreshold){
+        if (Math.abs(wristSubsystem.getAngle() - wristAngle) < Constants.wristThreshold){
             return true; 
         } else {
             return false;
@@ -35,7 +35,7 @@ public class RotateWrist extends CommandBase {
     @Override
     public void end(boolean interruped) {
         wristSubsystem.stop();
-        SmartDashboard.putBoolean("wristRunner", false);
+        SmartDashboard.putBoolean("wristRunning", false);
     }
 
 }

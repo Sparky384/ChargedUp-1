@@ -44,7 +44,7 @@ public class RUltimate extends SequentialCommandGroup{
         new ParallelCommandGroup(new MoveElevator(s_Elevator, Constants.Subsys.elevatorLow), RRampFinal.followTrajectoryCommand(false, s_Swerve)),
         
         /* Drive up ramp and balance indefinitely. */
-        new DriveOnRamp(s_Swerve, false),
+        new DriveOnRamp(s_Swerve, true),
         new GyroStabalize(s_Swerve)
         );
     }

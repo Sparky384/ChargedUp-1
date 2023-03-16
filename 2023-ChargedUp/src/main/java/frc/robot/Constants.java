@@ -15,13 +15,16 @@ import edu.wpi.first.wpilibj.smartdashboard.*;
 
 public final class Constants {
     public static final double stickDeadband = 0.1;
-    public static final double doubleThreshold = 1.0;
+    public static final double wristThreshold = 1.0;
+    public static final double sliderThreshold = 1.0;
+    public static final double elevatorThreshold = 0.2;
     public static final double rampThreshold = 20.0; // in degrees
 
-    public static final double elevatorSpeedLimit = 0.7;
+    public static final double elevatorSpeedLimit = 0.3;
+    public static final double elevatorDownSpeedLimit = 0.0;
 
     public static final class Swerve {
-        public static final int pigeonID = 0;
+        public static final int pigeonID = 20;
         public static final double slowDriveAmount = .5; //change depending on amount we want to slow down by when holding button.
         public static final boolean robotcentric = false; //change depending on if robotcentric wanted/not wanted.
         public static final boolean invertGyro = true; // Always ensure Gyro is CCW+ CW-
@@ -119,8 +122,8 @@ public final class Constants {
         public static final class Mod0 { //TODO: This must be tuned to specific robot
             public static final int driveMotorID = 10;
             public static final int angleMotorID = 11;
-            public static final int canCoderID = 60; //not sure yet
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(118.03);
+            public static final int canCoderID = 36; //not sure yet
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(117.07);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
@@ -129,8 +132,8 @@ public final class Constants {
         public static final class Mod1 { //TODO: This must be tuned to specific robot
             public static final int driveMotorID = 8;
             public static final int angleMotorID = 9;
-            public static final int canCoderID = 30; //not sure yet
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(2.19);
+            public static final int canCoderID = 37; //not sure yet
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(3.86);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
@@ -139,8 +142,8 @@ public final class Constants {
         public static final class Mod2 { //TODO: This must be tuned to specific robot
             public static final int driveMotorID = 12;
             public static final int angleMotorID = 13;
-            public static final int canCoderID = 120; //not sure yet
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(2.28);
+            public static final int canCoderID = 34; //not sure yet
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(250.92);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
@@ -149,8 +152,8 @@ public final class Constants {
         public static final class Mod3 { //TODO: This must be tuned to specific robot
             public static final int driveMotorID = 6;
             public static final int angleMotorID = 7;
-            public static final int canCoderID = 90; //not sure yet
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(245.65);
+            public static final int canCoderID = 35; //not sure yet
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(247.23);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
@@ -208,51 +211,52 @@ public final class Constants {
         public static final double frontRightTurnD = 0.0; 
         public static final double frontRightDriveP = 0.0; 
         public static final double frontRightDriveI = 0.0; 
-        public static final double frontRightDriveD = 0.0; 
+        public static final double frontRightDriveD = 0.0;
+
         public static final double backLeftTurnP = 0.0; 
         public static final double backLeftTurnI = 0.0; 
         public static final double backLeftTurnD = 0.0; 
         public static final double backLeftDriveP = 0.0; 
         public static final double backLeftDriveI = 0.0; 
-        public static final double backLeftDriveD = 0.0; 
-        public static final double elevatorOneP = 0.02;
+        public static final double backLeftDriveD = 0.0;
+
+        public static final double elevatorOneP = 0.1047; //.08
         public static final double elevatorOneI = 0.0;
         public static final double elevatorOneD = 0.0;
+        public static final double elevatorOneF = 0.05863; //FF was .06687
         public static final double elevatorTwoP = 0.5;
         public static final double elevatorTwoI = 0.0;
         public static final double elevatorTwoD = 0.0;
-        public static final double sliderP = 0.02;
+
+        public static final double sliderP = 0.32;
         public static final double sliderI = 0.0;
         public static final double sliderD = 0.0;
+
         public static final double wristP = 0.02; 
         public static final double wristI = 0.0; 
-        public static final double wristD = 0.0; 
+        public static final double wristD = 0.0;
+
         public static final double handP = 0.0;
         public static final double handI = 0.0;
         public static final double handD = 0.0;
+
+        public static final double elevatorMaxSpeed = 0.2; 
+        public static final double elevatorMinSpeed = -0.1; 
+    }
+
+    public static class ConversionValues {
+        public static final double sliderConversionFunction = .798;
+        public static final double elevatorConversionFunction = 0.000356;
+        public static final double wristConversionFunction = 0.0; //not final.
     }
 
     public static class CANPorts{
-        /*public static final int frontRightTurn = 0;
-        public static final int frontRightDrive = 0;
-        public static final int frontLeftTurn = 0;
-        public static final int frontLeftDrive = 0;
-        public static final int backRightTurn = 0; 
-        public static final int backRightDrive = 0; 
-        public static final int backLeftTurn = 0; 
-        public static final int backLeftDrive = 0;*/ 
-        /* for old robot (2022 robot) */
-        /*public static final int frontRightDrive = 23;
-        public static final int rearRightDrive = 1;
-        public static final int frontLeftDrive = 15;
-        public static final int rearLeftDrive = 14;
-        */
-        public static final int elevatorLeft = 13; // don't have yet 
+        public static final int elevatorLeft = 16; // don't have yet 
         public static final int elevatorRight = 0; //final
-        public static final int slider = 19; //final
-        public static final int wrist = 18; //final
-        public static final int wristCancoder = 1000; //not final
-        public static final int hand = 17; //final
+        public static final int slider = 19; //final 19
+        public static final int wristMotor = 18; //final
+        public static final int wristCancoder = 2;
+        public static final int hand = 17; //final 17
     }
 
     /*public static class ButtonMap{
@@ -290,14 +294,26 @@ public final class Constants {
     }*/
     public static class Subsys{
         public static final double elevatorLow = 0.0;
-        public static final double elevatorMid = 0.0; //may not need in final.
-        public static final double elevatorHigh = 30.0;
+        public static final double elevatorMid = 13.0; //may not need in final.
+        public static final double elevatorHigh = 89000; //could go lower.
         public static final double sliderIn = 0.0;
-        public static final double sliderOut = 11; //final
-        public static final double wristGround = 0.0;
-        public static final double wristLow = 5.0;
-        public static final double wristMid = 10.0;
-        public static final double wristHigh = 20.0;
+        public static final double sliderOut = 8.5; //final in inches
+        public static final double wristGround = -141.6769; //convert to encoder counts later
+        public static final double wristLow = 5.0; //convert to encoder counts later
+        public static final double wristMid = 25.0; //convert to encoder counts later
+        public static final double wristHigh = 90.0; //convert to encoder counts later
+        public static final double wristAbsEncoderOffset = 0.0;
+        /* Motion Magic Constants */
+        public static final int timeOutMs = 10;
+        public static final double wristUpperLimit = -185.0; //this is in encoder counts from motion magic
+        public static final double wristLowerLimit = 1204; //this is in encoder counts from motion magic
+        public static final double wristThreshold = 2.0; //not final
+        public static final double elevatorUpperLimit = 90000; //final
+        public static final double elevatorLowerLimit = 0.0; //final
+        public static final double elevatorThreshold = 1000; //final (maybe)
+        public static final double elevatorArbitraryFeedForward = 0.06687;
+        public static final double wristArbitraryFeedForward = 0.0;
+
     }
 
     public static class RampConstants{

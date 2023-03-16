@@ -23,7 +23,7 @@ public class MoveSlider extends CommandBase {
     }
 
     public boolean isFinished(){
-        if (Math.abs(sliderSubsystem.getDistance() - sliderDistance) < Constants.doubleThreshold){
+        if (Math.abs(sliderSubsystem.getDistance() - sliderDistance) < Constants.sliderThreshold){
             return true; 
         } else {
             return false;
