@@ -1,30 +1,17 @@
 package frc.robot.subsystems;
 
-import com.revrobotics.AbsoluteEncoder;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.revrobotics.SparkMaxAbsoluteEncoder;
-import com.revrobotics.SparkMaxPIDController;
-import com.revrobotics.CANSparkMax.IdleMode;
-
 import java.util.function.DoubleSupplier;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.sensors.CANCoder;
 
-import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -52,8 +39,8 @@ public class Elevator extends SubsystemBase {
 
         motorTwo.follow(motorOne);
         motorOne.setSelectedSensorPosition(0.0);
-        motorOne.setNeutralMode(NeutralMode.Brake);
-        motorTwo.setNeutralMode(NeutralMode.Brake);
+        motorOne.setNeutralMode(NeutralMode.Coast); //was on brake
+        motorTwo.setNeutralMode(NeutralMode.Coast); //was on brake
         
         /* Motion Magic Configs for Elevator Motor */
         motorOne.configForwardSoftLimitEnable(true);
@@ -74,19 +61,21 @@ public class Elevator extends SubsystemBase {
         motorOne.configMotionCruiseVelocity(6400, 0);
         
         /* Slot 0 for going up the elevator */
-        motorOne.config_kP(0, Constants.PIDValues.elevatorOneP); //0.1047
-        motorOne.config_kI(0, 0.0);
-        motorOne.config_kD(0, 0.0);
-        motorOne.config_kF(0, Constants.PIDValues.elevatorOneF); //0.05863
+        motorOne.config_kP(0, Constants.PIDValues.elevatorUpP); //0.1047
+        motorOne.config_kI(0, Constants.PIDValues.elevatorUpI);
+        motorOne.config_kD(0, Constants.PIDValues.elevatorUpD);
+        motorOne.config_kF(0, Constants.PIDValues.elevatorUpF); //0.05863
         motorOne.configAllowableClosedloopError(0, 0);
+        
+        /*Slow 1 for going down elevator */
+        motorOne.config_kP(1, Constants.PIDValues.elevatorDownP); //0.1047
+        motorOne.config_kI(1, Constants.PIDValues.elevatorDownI);
+        motorOne.config_kD(1, Constants.PIDValues.elevatorDownD);
+        motorOne.configAllowableClosedloopError(1, 0);
+        //motorOne.configClosedLoopPeakOutput(1, 0.45);
         /*
         // Slot 1 for going down the elevator.
-        motorOne.config_kP(1, Constants.PIDValues.elevatorOnePDown);
-        motorOne.config_kP(1, Constants.PIDValues.elevatorOneI);
-        motorOne.config_kP(1, Constants.PIDValues.elevatorOneD);
-        motorOne.config_kF(1, Constants.PIDValues.elevatorOneF);
-        motorOne.configClosedLoopPeakOutput(0, 0.45); */
-        //m_encoder.setInverted(true);
+         */
 
         /*PIDs for wrist motor */
         wristMotor.config_kP(0, 1.0);
@@ -96,6 +85,8 @@ public class Elevator extends SubsystemBase {
         
         wristMotor.set(ControlMode.PercentOutput, 0.0);
         wristMotor.setInverted(true);
+        wristMotor.setNeutralMode(NeutralMode.Brake);
+
         /* Motion Magic Configs for Wrist */
         wristMotor.configClosedLoopPeakOutput(0, 0.1);
         wristMotor.configForwardSoftLimitEnable(true);
@@ -120,14 +111,23 @@ public class Elevator extends SubsystemBase {
     }
 
     public CommandBase elevatorMotionMagic(double finalPosition){
+        /* if true we're going down if false we're going up. */
+        if (finalPosition < motorOne.getSelectedSensorPosition()) 
+        {
+            motorOne.selectProfileSlot(1, 0);
+        }
+        else
+        {
+            motorOne.selectProfileSlot(0, 0);
+        } 
         return runOnce(() -> motorOne.set(TalonFXControlMode.MotionMagic, finalPosition, DemandType.ArbitraryFeedForward, Constants.Subsys.elevatorArbitraryFeedForward))
         .andThen(Commands.waitUntil(() -> motorOne.getActiveTrajectoryPosition() < finalPosition + Constants.Subsys.elevatorThreshold 
-        && motorOne.getActiveTrajectoryPosition() > finalPosition - Constants.Subsys.elevatorThreshold).withTimeout(1.5))
+        && motorOne.getActiveTrajectoryPosition() > finalPosition - Constants.Subsys.elevatorThreshold).withTimeout(3))
         .andThen(runOnce(() -> motorOne.set(TalonFXControlMode.PercentOutput, Constants.Subsys.elevatorArbitraryFeedForward)));
     }
 
     public CommandBase wristMotionMagic(double finalPositionInDegrees) {
-        return runOnce(() -> {System.out.println("GO NOW======="); wristMoving = true; wristMotor.set(TalonFXControlMode.MotionMagic, (finalPositionInDegrees * 11.4) + .603, DemandType.ArbitraryFeedForward, 0.0);})
+        return runOnce(() -> {System.out.println("GO NOW======="); wristMoving = true; wristMotor.set(TalonFXControlMode.MotionMagic, convertDegreesToCts(finalPositionInDegrees), DemandType.ArbitraryFeedForward, 0.0);})
         .andThen(Commands.waitUntil(() -> Math.abs(wristEncoder.getAbsolutePosition() - finalPositionInDegrees) < Constants.Subsys.wristThreshold).withTimeout(8.0))
         .andThen(runOnce(() -> {wristMoving = false;}));
     }
@@ -152,17 +152,17 @@ public class Elevator extends SubsystemBase {
         withName("driveWrist");
     }
    
-    public void move(double height){
+    /*public void move(double height){
         //height /= Constants.ConversionValues.elevatorConversionFunction; //uses encoder counts.
         double difference = height - getHeight(); 
-        double output = difference * Constants.PIDValues.elevatorOneP;
-        output += Constants.PIDValues.elevatorOneF; 
+        double output = difference * Constants.PIDValues.elevatorUpP;
+        output += Constants.PIDValues.elevatorUpF; 
         if (output > Constants.PIDValues.elevatorMaxSpeed)
             output = Constants.PIDValues.elevatorMaxSpeed;
         else if (output < Constants.PIDValues.elevatorMinSpeed)
             output = Constants.PIDValues.elevatorMinSpeed;
         motorOne.set(ControlMode.PercentOutput, output);
-    }
+    }*/
 
     public CommandBase drive()
     {
@@ -186,6 +186,10 @@ public class Elevator extends SubsystemBase {
         return height;
     }
 
+    public double convertDegreesToCts(double degrees) {
+        return (degrees * 11.4) + .603;
+    }
+
     public void periodic() {
         SmartDashboard.putNumber("height", getHeight());
         //SmartDashboard.putNumber("elevatorPosition", m_encoder.getPosition());
@@ -201,7 +205,7 @@ public class Elevator extends SubsystemBase {
             else if (wristEncoder.getAbsolutePosition() > 50)
                 wristMotor.set(TalonFXControlMode.PercentOutput, 0.22186 * Math.cos(Math.toRadians(wristEncoder.getAbsolutePosition())));
             else
-                wristMotor.set(TalonFXControlMode.PercentOutput, 0.08086 * Math.cos(Math.toRadians(wristEncoder.getAbsolutePosition())));
+                wristMotor.set(TalonFXControlMode.PercentOutput, 0.0788 * Math.cos(Math.toRadians(wristEncoder.getAbsolutePosition())));
         }
     }
 }

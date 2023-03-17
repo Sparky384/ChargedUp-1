@@ -38,19 +38,20 @@ public class RScore2 extends SequentialCommandGroup {
         RScore1.followTrajectoryCommand(s_Swerve, s_Elevator, s_Slider, s_Wrist, s_Hand),
         
         /* Prime piece for intaking. put limelight here if using it. */
-        new ParallelCommandGroup(new MoveSlider(s_Slider, Constants.Subsys.sliderOut), new RotateWrist(s_Wrist, Constants.Subsys.wristLow)),
+        //new ParallelCommandGroup(new MoveSlider(s_Slider, Constants.Subsys.sliderOut), new RotateWrist(s_Wrist, Constants.Subsys.wristLow)),
 
         /* intake new piece */
-        new IntakeAuto(s_Hand),
+        //new IntakeAuto(s_Hand),
 
         /* Move to goal for 2nd score and put elevator up in preperation. */
-        new ParallelCommandGroup(new MoveElevator(s_Elevator, Constants.Subsys.elevatorHigh), RScore2nd.followTrajectoryCommand(false, s_Swerve)),
+        //new ParallelCommandGroup(new MoveElevator(s_Elevator, Constants.Subsys.elevatorHigh), RScore2nd.followTrajectoryCommand(false, s_Swerve)),
+        RScore2nd.followTrajectoryCommand(false, s_Swerve) //delete later
         
         /* Score 2nd piece */
-        new OuttakeAuto(s_Hand),
+        //new OuttakeAuto(s_Hand),
 
         /* Intakes slider and wrist into robot. */
-        new ParallelCommandGroup(new MoveSlider(s_Slider, Constants.Subsys.sliderIn),new RotateWrist(s_Wrist, Constants.Subsys.wristHigh))
+        //new ParallelCommandGroup(new MoveSlider(s_Slider, Constants.Subsys.sliderIn),new RotateWrist(s_Wrist, Constants.Subsys.wristHigh))
         /* DO NOT MOVE TO NEXT PIECE AS RAMP AUTO CAN BE CALLED AFTER THIS */
         );
     }

@@ -44,11 +44,12 @@ public class RScore2Ramp extends SequentialCommandGroup {
             RScore2.followTrajectoryCommand(s_Swerve, s_Elevator, s_Slider, s_Wrist, s_Hand),
             
             /* Drop elevator while moving to ramp. */
-            new ParallelCommandGroup(new MoveElevator(s_Elevator, Constants.Subsys.elevatorLow), RRampFrom2nd.followTrajectoryCommand(false, s_Swerve)),
+            //new ParallelCommandGroup(new MoveElevator(s_Elevator, Constants.Subsys.elevatorLow), RRampFrom2nd.followTrajectoryCommand(false, s_Swerve)),
+            RRampFrom2nd.followTrajectoryCommand(false, s_Swerve)
             
             /* Drive onto ramp then balance indefinitely */
-            new DriveOnRamp(s_Swerve, true),
-            new GyroStabalize(s_Swerve)
+            //new DriveOnRamp(s_Swerve, true),
+            //new GyroStabalize(s_Swerve)
         );
     }
 }

@@ -41,11 +41,12 @@ public class RUltimate extends SequentialCommandGroup{
         RScore3.followTrajectoryCommand(s_Swerve, s_Elevator, s_Slider, s_Wrist, s_Hand),
 
         /* Put elevator down and move towards ramp */
-        new ParallelCommandGroup(new MoveElevator(s_Elevator, Constants.Subsys.elevatorLow), RRampFinal.followTrajectoryCommand(false, s_Swerve)),
-        
+        //new ParallelCommandGroup(new MoveElevator(s_Elevator, Constants.Subsys.elevatorLow), RRampFinal.followTrajectoryCommand(false, s_Swerve)),
+        RRampFinal.followTrajectoryCommand(false, s_Swerve) //delete later
+
         /* Drive up ramp and balance indefinitely. */
-        new DriveOnRamp(s_Swerve, true),
-        new GyroStabalize(s_Swerve)
+        //new DriveOnRamp(s_Swerve, true),
+        //new GyroStabalize(s_Swerve)
         );
     }
 }

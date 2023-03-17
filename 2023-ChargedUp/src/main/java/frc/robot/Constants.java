@@ -18,7 +18,7 @@ public final class Constants {
     public static final double wristThreshold = 1.0;
     public static final double sliderThreshold = 1.0;
     public static final double elevatorThreshold = 0.2;
-    public static final double rampThreshold = 20.0; // in degrees
+    public static final double rampThreshold = 9.0; // in degrees
 
     public static final double elevatorSpeedLimit = 0.3;
     public static final double elevatorDownSpeedLimit = 0.0;
@@ -100,9 +100,9 @@ public final class Constants {
         /* Drive Motor Characterization Values 
          * Divide SYSID values by 12 to convert from volts to percent output for CTRE */
         //TODO: This must be tuned to specific robot
-        public static final double driveKS = (0.082009 / 12); //original (0.32 /12) | grabbed 0.082009 from SISID
-        public static final double driveKV = (2.3358 / 12); //original (1.51 /12) | grabbed 2.3358 from SISID
-        public static final double driveKA = (0.18379 / 12); //original (0.27 /12) | grabbed 0.18379 from SISID
+        public static final double driveKS = (0.18882 / 12); //original (0.32 /12) | grabbed 0.082009 from SISID
+        public static final double driveKV = (2.6515 / 12); //original (1.51 /12) | grabbed 2.3358 from SISID
+        public static final double driveKA = (0.37384 / 12); //original (0.27 /12) | grabbed 0.18379 from SISID
 
         /* Swerve Profiling Values */
         /** Meters per Second */
@@ -123,7 +123,7 @@ public final class Constants {
             public static final int driveMotorID = 10;
             public static final int angleMotorID = 11;
             public static final int canCoderID = 36; //not sure yet
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(117.07);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(118.125);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
@@ -133,7 +133,7 @@ public final class Constants {
             public static final int driveMotorID = 8;
             public static final int angleMotorID = 9;
             public static final int canCoderID = 37; //not sure yet
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(3.86);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(2.182);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
@@ -143,7 +143,7 @@ public final class Constants {
             public static final int driveMotorID = 12;
             public static final int angleMotorID = 13;
             public static final int canCoderID = 34; //not sure yet
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(250.92);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(247.939);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
@@ -153,7 +153,7 @@ public final class Constants {
             public static final int driveMotorID = 6;
             public static final int angleMotorID = 7;
             public static final int canCoderID = 35; //not sure yet
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(247.23);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(245.918);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
@@ -166,8 +166,8 @@ public final class Constants {
         public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
 
         /* Pathplanner Speed Constants */
-        public static final double kPathMaxAcceleration = 1.0; //1.0 was default
-        public static final double kPathMaxVelocity = 1.0; //1.0 was default   0.3
+        public static final double kPathMaxAcceleration = 2.5; //1.0 was default
+        public static final double kPathMaxVelocity = 2.5; //1.0 was default   0.3
 
         /* Intake and Outtake timers. */
         public static final double kAutoShootTimer = 0.0; //timer in seconds
@@ -182,9 +182,9 @@ public final class Constants {
          */
         /* pathplanner controller PIDs. Make sure these have "final" in them when not tuning. */
         public static final double kPPathXController = 1.0; //0.05
-        public static final double kPPathYController = 0.27;
+        public static final double kPPathYController = 0.23;
 
-        public static final double kPPathThetaController = 0.9; //.9 looked good on swerveboard bot.
+        public static final double kPPathThetaController = 1.575; //.9 looked good on swerveboard bot.
         public static final double kIPathThetaController = 0.0;
 
         // for changing PIDs for Auto with Smartdashboard. remove "final" from variable. Comment ones not being used.
@@ -220,16 +220,17 @@ public final class Constants {
         public static final double backLeftDriveI = 0.0; 
         public static final double backLeftDriveD = 0.0;
 
-        public static final double elevatorOneP = 0.1047; //.08
-        public static final double elevatorOneI = 0.0;
-        public static final double elevatorOneD = 0.0;
-        public static final double elevatorOneF = 0.05863; //FF was .06687
-        public static final double elevatorTwoP = 0.5;
-        public static final double elevatorTwoI = 0.0;
-        public static final double elevatorTwoD = 0.0;
+        public static final double elevatorUpP = 0.090; //.08
+        public static final double elevatorUpI = 0.0;
+        public static final double elevatorUpD = 0.0;
+        public static final double elevatorUpF = 0.05863; //FF was .06687
+        public static final double elevatorDownP = 0.035;
+        public static final double elevatorDownI = 0.0;
+        public static final double elevatorDownD = 0.0;
 
-        public static final double sliderP = 0.32;
-        public static final double sliderI = 0.0;
+        public static final double sliderP = 0.295;
+        public static final double sliderI = 0.001;
+        public static final double sliderIZone = 0.3;
         public static final double sliderD = 0.0;
 
         public static final double wristP = 0.02; 
@@ -293,32 +294,32 @@ public final class Constants {
 
     }*/
     public static class Subsys{
-        public static final double elevatorLow = 0.0;
-        public static final double elevatorMid = 13.0; //may not need in final.
-        public static final double elevatorHigh = 89000; //could go lower.
-        public static final double sliderIn = 0.0;
-        public static final double sliderOut = 8.5; //final in inches
-        public static final double wristGround = -141.6769; //convert to encoder counts later
-        public static final double wristLow = 5.0; //convert to encoder counts later
-        public static final double wristMid = 25.0; //convert to encoder counts later
-        public static final double wristHigh = 90.0; //convert to encoder counts later
+        public static final double elevatorLow = 2500;
+        public static final double elevatorMid = 2500; //in counts
+        public static final double elevatorHigh = 59800; //in counts
+        public static final double sliderIn = 0.05;
+        public static final double sliderOut = 10.75; //final in inches
+        public static final double wristGround = -6.3; //should be in degrees.
+        public static final double wristLow = 14.941; //should be in degrees.
+        public static final double wristMid = 25.0; //should be in degrees.
+        public static final double wristHigh = 90.0; //should be in degrees.
         public static final double wristAbsEncoderOffset = 0.0;
         /* Motion Magic Constants */
         public static final int timeOutMs = 10;
         public static final double wristUpperLimit = -185.0; //this is in encoder counts from motion magic
         public static final double wristLowerLimit = 1204; //this is in encoder counts from motion magic
         public static final double wristThreshold = 2.0; //not final
-        public static final double elevatorUpperLimit = 90000; //final
+        public static final double elevatorUpperLimit = 90370; //final
         public static final double elevatorLowerLimit = 0.0; //final
-        public static final double elevatorThreshold = 1000; //final (maybe)
+        public static final double elevatorThreshold = 500; //final (maybe)
         public static final double elevatorArbitraryFeedForward = 0.06687;
         public static final double wristArbitraryFeedForward = 0.0;
 
     }
 
     public static class RampConstants{
-        public static final double P = 0.0; // P as in PID
-        public static final double maxRampSpeed = 0.0; // percentage
+        public static final double P = 0.029; // P as in PID
+        public static final double maxRampSpeed = 0.35; // percentage
     }
 
     public static class LimelightConstants {

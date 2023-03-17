@@ -9,7 +9,10 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 
+import java.security.MessageDigest;
+
 import com.ctre.phoenix.sensors.Pigeon2;
+import com.ctre.phoenix.sensors.WPI_Pigeon2;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -32,6 +35,7 @@ public class Swerve extends SubsystemBase {
 
     private final Pigeon2 gyro = new Pigeon2(Constants.Swerve.pigeonID);
     private GenericEntry gyroAngle;
+    private double initRoll;
 
     public Swerve() {
         /* Pigeon Startup code */
@@ -62,6 +66,7 @@ public class Swerve extends SubsystemBase {
         resetModulesToAbsolute();
 
         swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw(), getModulePositions());
+        initRoll = gyro.getRoll();
     }
 
     public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
@@ -83,7 +88,7 @@ public class Swerve extends SubsystemBase {
         for(SwerveModule mod : mSwerveMods){
             mod.setDesiredState(swerveModuleStates[mod.moduleNumber], isOpenLoop);
         }
-    }    
+    }
 
     /* Used by SwerveControllerCommand in Auto */
     public void setModuleStates(SwerveModuleState[] desiredStates) {
@@ -135,8 +140,8 @@ public class Swerve extends SubsystemBase {
         : Rotation2d.fromDegrees(gyro.getYaw());
     }
 
-    public double getPitch() {
-        return gyro.getPitch(); 
+    public double getRoll() {
+        return gyro.getRoll() - initRoll; 
     }
 
     public void resetModulesToAbsolute(){
@@ -151,6 +156,7 @@ public class Swerve extends SubsystemBase {
 
         SmartDashboard.putNumber("Robot Header ", getYaw().getDegrees());
         gyroAngle.setDouble(gyro.getYaw());
+        SmartDashboard.putNumber("gyroRoll", getRoll());
 
         for(SwerveModule mod : mSwerveMods){
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " cancoder", Math.toDegrees(mod.getCanCoder().getRadians()));

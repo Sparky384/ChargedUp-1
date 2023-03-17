@@ -37,19 +37,20 @@ public class RScore1 extends SequentialCommandGroup{
         //limelight center target - maybe and if so put in parallel command with elevator setup.
 
         /* move elevator up to reach the first pole/cube. */
-        new MoveElevator(s_Elevator, Constants.Subsys.elevatorHigh), //may already have elevator to height. otherwise bring up elevator.
+        //new MoveElevator(s_Elevator, Constants.Subsys.elevatorHigh), //may already have elevator to height. otherwise bring up elevator.
         
         /* deploy slider and set wrist down for initial piece scoring */
-        new ParallelCommandGroup(new MoveSlider(s_Slider, Constants.Subsys.sliderOut), new RotateWrist(s_Wrist, Constants.Subsys.wristLow)),
+        //new ParallelCommandGroup(new MoveSlider(s_Slider, Constants.Subsys.sliderOut), new RotateWrist(s_Wrist, Constants.Subsys.wristLow)),
         
         /* Score Piece */
-        new OuttakeAuto(s_Hand),
+        //new OuttakeAuto(s_Hand),
         
         /* Move slider and wrist back into robot. */
-        new ParallelCommandGroup(new MoveSlider(s_Slider, Constants.Subsys.sliderIn), new RotateWrist(s_Wrist, Constants.Subsys.wristHigh)),
+        //new ParallelCommandGroup(new MoveSlider(s_Slider, Constants.Subsys.sliderIn), new RotateWrist(s_Wrist, Constants.Subsys.wristHigh)),
 
         /* drive and put elevator down to get ready for next object pickup. */
-        new ParallelCommandGroup(new MoveElevator(s_Elevator, Constants.Subsys.elevatorLow), RPickup2nd.followTrajectoryCommand(true, s_Swerve)) 
+        //new ParallelCommandGroup(new MoveElevator(s_Elevator, Constants.Subsys.elevatorLow), RPickup2nd.followTrajectoryCommand(true, s_Swerve))
+        RPickup2nd.followTrajectoryCommand(true, s_Swerve) //delete later
         );
     }
 }

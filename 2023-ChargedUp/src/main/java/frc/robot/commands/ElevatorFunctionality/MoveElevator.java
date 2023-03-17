@@ -33,7 +33,7 @@ public class MoveElevator extends CommandBase {
     public void execute() {
         SmartDashboard.putNumber("elevatorHeight", elevatorSubsystem.getHeight());
         SmartDashboard.putBoolean("running", true);
-        elevatorSubsystem.move(elevatorHeight); 
+        //elevatorSubsystem.move(elevatorHeight); 
         System.out.println("execute");
     }
 

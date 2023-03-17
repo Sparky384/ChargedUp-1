@@ -27,8 +27,10 @@ public class Slider extends SubsystemBase{
         m_pidController = motorOne.getPIDController();
         m_pidController.setP(Constants.PIDValues.sliderP);
         m_pidController.setI(Constants.PIDValues.sliderI);
+        m_pidController.setIZone(Constants.PIDValues.sliderIZone);
+        m_pidController.setIMaxAccum(0.2, 0);
         m_pidController.setD(Constants.PIDValues.sliderD);
-        m_pidController.setOutputRange(-0.7, 0.7);
+        m_pidController.setOutputRange(-0.35, 0.35);
         // initialize SPARK MAX with CAN ID
         m_encoder = motorOne.getEncoder();
         m_pidController.setFeedbackDevice(m_encoder);

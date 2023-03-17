@@ -21,8 +21,10 @@ public class Intake extends CommandBase{
       return false;
     }
 
+    @Override
     public void end(boolean interrupted) 
     {
-        handSubsystem.stop();   
+        System.out.println("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
+        handSubsystem.keepIn();   
     }
 }
