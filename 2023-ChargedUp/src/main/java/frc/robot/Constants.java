@@ -224,7 +224,7 @@ public final class Constants {
         public static final double elevatorUpI = 0.0;
         public static final double elevatorUpD = 0.0;
         public static final double elevatorUpF = 0.05863; //FF was .06687
-        public static final double elevatorDownP = 0.035;
+        public static final double elevatorDownP = 0.0;
         public static final double elevatorDownI = 0.0;
         public static final double elevatorDownD = 0.0;
 
@@ -294,14 +294,14 @@ public final class Constants {
 
     }*/
     public static class Subsys{
-        public static final double elevatorLow = 2500;
-        public static final double elevatorMid = 2500; //in counts
+        public static final double elevatorLow = 50;
+        public static final double elevatorMid = 50; //in counts
         public static final double elevatorHigh = 59800; //in counts
         public static final double sliderIn = 0.05;
         public static final double sliderOut = 10.75; //final in inches
         public static final double wristGround = -6.3; //should be in degrees.
         public static final double wristLow = 14.941; //should be in degrees.
-        public static final double wristMid = 25.0; //should be in degrees.
+        public static final double wristMid = 19.75; //should be in degrees.
         public static final double wristHigh = 90.0; //should be in degrees.
         public static final double wristAbsEncoderOffset = 0.0;
         /* Motion Magic Constants */

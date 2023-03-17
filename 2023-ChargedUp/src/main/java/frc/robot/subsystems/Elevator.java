@@ -39,8 +39,8 @@ public class Elevator extends SubsystemBase {
 
         motorTwo.follow(motorOne);
         motorOne.setSelectedSensorPosition(0.0);
-        motorOne.setNeutralMode(NeutralMode.Coast); //was on brake
-        motorTwo.setNeutralMode(NeutralMode.Coast); //was on brake
+        motorOne.setNeutralMode(NeutralMode.Brake); //was on brake
+        motorTwo.setNeutralMode(NeutralMode.Brake); //was on brake
         
         /* Motion Magic Configs for Elevator Motor */
         motorOne.configForwardSoftLimitEnable(true);
@@ -110,20 +110,27 @@ public class Elevator extends SubsystemBase {
         motorOne.set(ControlMode.PercentOutput, 0.0); 
     }
 
-    public CommandBase elevatorMotionMagic(double finalPosition){
+    public CommandBase elevatorMotionMagic(double finalPosition)
+    {
         /* if true we're going down if false we're going up. */
+        double feed;
         if (finalPosition < motorOne.getSelectedSensorPosition()) 
         {
+            feed = Constants.Subsys.elevatorArbitraryFeedForward * 0;
             motorOne.selectProfileSlot(1, 0);
+            motorOne.set(ControlMode.PercentOutput, 0.0);
+            return runOnce(() -> {});
         }
         else
         {
+            motorOne.setNeutralMode(NeutralMode.Brake);
+            feed = Constants.Subsys.elevatorArbitraryFeedForward;
             motorOne.selectProfileSlot(0, 0);
+            return runOnce(() -> motorOne.set(TalonFXControlMode.MotionMagic, finalPosition, DemandType.ArbitraryFeedForward, feed))
+            .andThen(Commands.waitUntil(() -> motorOne.getActiveTrajectoryPosition() < finalPosition + Constants.Subsys.elevatorThreshold 
+            && motorOne.getActiveTrajectoryPosition() > finalPosition - Constants.Subsys.elevatorThreshold).withTimeout(3))
+            .andThen(runOnce(() -> motorOne.set(TalonFXControlMode.PercentOutput, Constants.Subsys.elevatorArbitraryFeedForward)));
         } 
-        return runOnce(() -> motorOne.set(TalonFXControlMode.MotionMagic, finalPosition, DemandType.ArbitraryFeedForward, Constants.Subsys.elevatorArbitraryFeedForward))
-        .andThen(Commands.waitUntil(() -> motorOne.getActiveTrajectoryPosition() < finalPosition + Constants.Subsys.elevatorThreshold 
-        && motorOne.getActiveTrajectoryPosition() > finalPosition - Constants.Subsys.elevatorThreshold).withTimeout(3))
-        .andThen(runOnce(() -> motorOne.set(TalonFXControlMode.PercentOutput, Constants.Subsys.elevatorArbitraryFeedForward)));
     }
 
     public CommandBase wristMotionMagic(double finalPositionInDegrees) {
