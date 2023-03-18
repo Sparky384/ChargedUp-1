@@ -207,7 +207,6 @@ public class PPSwerveControllerCommand extends CommandBase {
 
   @Override
   public void initialize() {
-    SmartDashboard.putData("PPSwerveControllerCommand_field", this.field);
     this.field.getObject("traj").setTrajectory(this.trajectory);
 
     this.timer.reset();
@@ -232,15 +231,6 @@ public class PPSwerveControllerCommand extends CommandBase {
     PathPlannerServer.sendPathFollowingData(
         new Pose2d(desiredState.poseMeters.getTranslation(), desiredState.holonomicRotation),
         currentPose);
-    /*
-    SmartDashboard.putNumber(
-        "PPSwerveControllerCommand_xError", currentPose.getX() - desiredState.poseMeters.getX());
-    SmartDashboard.putNumber(
-        "PPSwerveControllerCommand_yError", currentPose.getY() - desiredState.poseMeters.getY());
-    SmartDashboard.putNumber(
-        "PPSwerveControllerCommand_rotationError",
-        currentPose.getRotation().getRadians() - desiredState.holonomicRotation.getRadians());
-      */
     ChassisSpeeds targetChassisSpeeds = this.controller.calculate(currentPose, desiredState);
 
     if (this.useKinematics) {

@@ -31,7 +31,6 @@ public class GyroStabalize extends CommandBase {
         if (Math.abs(s_swerve.getRoll()) < 3.5)
             output = 0;
         
-        SmartDashboard.putNumber("gyro output", output);
         s_swerve.drive(new Translation2d(output, 0).times(Constants.Swerve.maxSpeed), 
         0, 
         false, 

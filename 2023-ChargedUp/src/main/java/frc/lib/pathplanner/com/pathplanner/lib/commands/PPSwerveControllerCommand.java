@@ -208,7 +208,6 @@ public class PPSwerveControllerCommand extends CommandBase {
 
   @Override
   public void initialize() {
-    SmartDashboard.putData("PPSwerveControllerCommand_field", this.field);
     this.field.getObject("traj").setTrajectory(this.trajectory);
 
     this.timer.reset();
@@ -233,27 +232,9 @@ public class PPSwerveControllerCommand extends CommandBase {
     PathPlannerServer.sendPathFollowingData(
         new Pose2d(desiredState.poseMeters.getTranslation(), desiredState.holonomicRotation),
         currentPose);
-
-    /* SmartDashboards in path planner
-    SmartDashboard.putNumber(
-        "PPSwerveControllerCommand_xError", currentPose.getX() - desiredState.poseMeters.getX());
-    SmartDashboard.putNumber(
-        "PPSwerveControllerCommand_yError", currentPose.getY() - desiredState.poseMeters.getY());
-    SmartDashboard.putNumber(
-        "PPSwerveControllerCommand_rotationError",
-        currentPose.getRotation().getRadians() - desiredState.holonomicRotation.getRadians());
-    */
     
     /* Made by Sparky. */
     ChassisSpeeds targetChassisSpeeds = this.controller.calculate(currentPose, desiredState);
-    SmartDashboard.putNumber("currentPoseX", currentPose.getX());
-    SmartDashboard.putNumber("currentPoseY", currentPose.getY());
-    SmartDashboard.putNumber("desiredPoseX", desiredState.poseMeters.getX());
-    SmartDashboard.putNumber("desiredPoseY", desiredState.poseMeters.getY());
-    SmartDashboard.putNumber("chassis", targetChassisSpeeds.vxMetersPerSecond);
-   
-
-
 
     if (this.useKinematics) {
       SwerveModuleState[] targetModuleStates =

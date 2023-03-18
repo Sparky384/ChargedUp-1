@@ -19,6 +19,8 @@ import frc.robot.commands.SliderFunctionality.MoveSlider;
 import frc.robot.commands.WristFunctionality.*;
 import frc.robot.commands.DriveOnRamp;
 import frc.robot.commands.GyroStabalize;
+import frc.robot.commands.Stow;
+import frc.robot.commands.ToHigh;
 import frc.robot.paths.JustRamp;
 import frc.robot.subsystems.*;
 
@@ -38,23 +40,9 @@ public class Score1Ramp extends SequentialCommandGroup {
         s_Hand = hand;
 
         return new SequentialCommandGroup(
-            //limelight center target - maybe and if so put in parallel command with elevator setup.
-
-            new MoveElevator(s_Elevator, Constants.Subsys.elevatorHigh), //may already have elevator to height. otherwise bring up elevator.
-    
-            /* deploy slider and set wrist down for initial piece scoring */
-            new ParallelCommandGroup(new MoveSlider(s_Slider, Constants.Subsys.sliderOut), new RotateWrist(s_Wrist, Constants.Subsys.wristLow)),
-            
-            /* Score Piece */
+            ToHigh.getToHigh(s_Elevator, s_Slider),
             new OuttakeAuto(s_Hand),
-            
-            /* Move slider and wrist back into robot. */
-            new ParallelCommandGroup(new MoveSlider(s_Slider, Constants.Subsys.sliderIn), new RotateWrist(s_Wrist, Constants.Subsys.wristHigh)),
-    
-            /* drive and put elevator down to get ready for next object pickup. */
-            new ParallelCommandGroup(new MoveElevator(s_Elevator, Constants.Subsys.elevatorLow), JustRamp.followTrajectoryCommand(true, s_Swerve)),
-
-            /* Drive up ramp backward and balance. */
+            Stow.getStowCommand(s_Slider, s_Elevator),
             new DriveOnRamp(s_Swerve, true),
             new GyroStabalize(s_Swerve)
         );

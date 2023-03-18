@@ -86,11 +86,6 @@ public final class Constants {
 
         // for changing PIDs for Drive with Smartdashboard. remove "final" from variable. Comment ones not being used.
         /*public static void smartDashboardDrivePIDs() {
-            SmartDashboard.putNumber("DriveKP", driveKP);
-            SmartDashboard.putNumber("DriveKI", driveKI);
-            SmartDashboard.putNumber("DriveKD", driveKD);
-            SmartDashboard.putNumber("DriveKF", driveKF);
-    
             driveKP = SmartDashboard.getNumber("DriveKP", driveKP);
             driveKI = SmartDashboard.getNumber("DriveKI", driveKI);
             driveKD = SmartDashboard.getNumber("DriveKD", driveKD);
@@ -189,11 +184,6 @@ public final class Constants {
 
         // for changing PIDs for Auto with Smartdashboard. remove "final" from variable. Comment ones not being used.
         /*public static void smartDashboardAutoPIDs() {
-            SmartDashboard.putNumber("Theta P", kPPathThetaController);
-            SmartDashboard.putNumber("Theta I", kIPathThetaController);
-            SmartDashboard.putNumber("Path X", kPPathXController);
-            SmartDashboard.putNumber("Path Y", kPPathYController);
-    
             kPPathThetaController = SmartDashboard.getNumber("Theta P", kPPathThetaController);
             kIPathThetaController = SmartDashboard.getNumber("Theta I", kIPathThetaController);
             kPPathXController = SmartDashboard.getNumber("Path X", kPPathXController);
@@ -301,7 +291,7 @@ public final class Constants {
         public static final double sliderOut = 10.75; //final in inches
         public static final double wristGround = -6.3; //should be in degrees.
         public static final double wristLow = 14.941; //should be in degrees.
-        public static final double wristMid = 19.75; //should be in degrees.
+        public static final double wristMid = 38.408; //should be in degrees.
         public static final double wristHigh = 90.0; //should be in degrees.
         public static final double wristAbsEncoderOffset = 0.0;
         /* Motion Magic Constants */

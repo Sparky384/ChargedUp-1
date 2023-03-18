@@ -43,7 +43,6 @@ public class Wrist extends SubsystemBase{
 
     public void driveToAngle(double angle){
         //angle /= Constants.ConversionValues.wristConversionFunction; //uses encoder counts - could be switched to .00630366 without /= just =
-        //SmartDashboard.putNumber("driveToWristAngle", angle);
         //motor.set(ControlMode.PercentOutput, angle);
     }
 
@@ -54,8 +53,5 @@ public class Wrist extends SubsystemBase{
     }
 
     public void periodic() {
-        //SmartDashboard.putNumber("wristAngle", getAngle());
-        //SmartDashboard.putNumber("elevatorPosition", m_encoder.getPosition());
-        //SmartDashboard.putNumber("wristSensorPosition", motor.getSelectedSensorPosition());
     }
 }

@@ -198,13 +198,6 @@ public class Elevator extends SubsystemBase {
     }
 
     public void periodic() {
-        SmartDashboard.putNumber("height", getHeight());
-        //SmartDashboard.putNumber("elevatorPosition", m_encoder.getPosition());
-        SmartDashboard.putNumber("elevatorSpeed", getHeight());
-        SmartDashboard.putBoolean("w", wristMoving);
-        SmartDashboard.putNumber("wangle", wristEncoder.getAbsolutePosition());
-        SmartDashboard.putNumber("wcos", Math.cos(Math.toRadians(wristEncoder.getAbsolutePosition())));
-        SmartDashboard.putNumber("w2", 0.08086 * Math.cos(Math.toRadians(wristEncoder.getAbsolutePosition())));
         if (!wristMoving)
         {
             if (wristEncoder.getAbsolutePosition() > 100)

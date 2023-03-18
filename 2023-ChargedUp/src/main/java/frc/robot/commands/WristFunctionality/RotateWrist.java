@@ -19,8 +19,6 @@ public class RotateWrist extends CommandBase {
     }
 
     public void execute() {
-        SmartDashboard.putNumber("wristDistance", wristSubsystem.getAngle());
-        SmartDashboard.putBoolean("wristRunning", true);
         wristSubsystem.driveToAngle(wristAngle); 
 
     }
@@ -35,7 +33,6 @@ public class RotateWrist extends CommandBase {
     @Override
     public void end(boolean interruped) {
         wristSubsystem.stop();
-        SmartDashboard.putBoolean("wristRunning", false);
     }
 
 }

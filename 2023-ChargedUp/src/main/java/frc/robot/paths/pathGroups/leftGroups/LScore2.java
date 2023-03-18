@@ -13,7 +13,12 @@ import frc.robot.subsystems.*;
 import frc.lib.pathplanner.com.pathplanner.lib.PathConstraints;
 import frc.robot.Constants;
 import frc.robot.paths.rightPaths.RPickup2nd;
+import frc.robot.paths.leftPaths.LPickup2nd;
 import frc.robot.paths.leftPaths.LScore2nd;
+import frc.robot.paths.leftPaths.LScore3rd;
+import frc.robot.commands.Stow;
+import frc.robot.commands.ToGround;
+import frc.robot.commands.ToHigh;
 import frc.robot.commands.ElevatorFunctionality.MoveElevator;
 import frc.robot.commands.SliderFunctionality.MoveSlider;
 import frc.robot.commands.WristFunctionality.*;
@@ -34,24 +39,15 @@ public class LScore2 extends SequentialCommandGroup {
         s_Hand = hand;
 
         return new SequentialCommandGroup(
-        /* after this call: elevator is low and we're on the next object's point. */
-        LScore1.followTrajectoryCommand(s_Swerve, s_Elevator, s_Slider, s_Wrist, s_Hand),
-        
-        /* Prime piece for intaking. put limelight here if using it. */
-        new ParallelCommandGroup(new MoveSlider(s_Slider, Constants.Subsys.sliderOut), new RotateWrist(s_Wrist, Constants.Subsys.wristLow)),
-
-        /* intake new piece */
-        new IntakeAuto(s_Hand),
-
-        /* Move to goal for 2nd score and put elevator up in preperation. */
-        new ParallelCommandGroup(new MoveElevator(s_Elevator, Constants.Subsys.elevatorHigh), LScore2nd.followTrajectoryCommand(false, s_Swerve)),
-        
-        /* Score 2nd piece */
-        new OuttakeAuto(s_Hand),
-
-        /* Intakes slider and wrist into robot. */
-        new ParallelCommandGroup(new MoveSlider(s_Slider, Constants.Subsys.sliderIn),new RotateWrist(s_Wrist, Constants.Subsys.wristHigh))
-        /* DO NOT MOVE TO NEXT PIECE AS RAMP AUTO CAN BE CALLED AFTER THIS */
+            ToHigh.getToHigh(s_Elevator, s_Slider),
+            new OuttakeAuto(s_Hand),
+            LPickup2nd.followTrajectoryCommand(true, s_Swerve), //delete later
+            ToGround.getToGround(s_Elevator, s_Slider),
+            new IntakeAuto(hand),
+            Stow.getStowCommand(s_Slider, s_Elevator),
+            LScore3rd.followTrajectoryCommand(false, s_Swerve),
+            ToHigh.getToHigh(s_Elevator, s_Slider),
+            new OuttakeAuto(s_Hand)
         );
     }
 }

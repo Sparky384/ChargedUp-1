@@ -23,7 +23,6 @@ public class Hand extends SubsystemBase
 
     public void stop()
     {
-        System.out.println("stop");
         motor.stopMotor();
     }
 
