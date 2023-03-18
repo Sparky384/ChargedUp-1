@@ -58,8 +58,5 @@ public class Limelight extends SubsystemBase
     @Override
     public void periodic()
     {
-        SmartDashboard.putNumber("Lime1LimelightX", getDistance(Constants.LimelightConstants.LimelightCameras.LIME1));
-        SmartDashboard.putNumber("Lime1LimelightY", getY(Constants.LimelightConstants.LimelightCameras.LIME1));
-        SmartDashboard.putNumber("Lime1LimelightDistance", getDistance(Constants.LimelightConstants.LimelightCameras.LIME1));
     }
 }

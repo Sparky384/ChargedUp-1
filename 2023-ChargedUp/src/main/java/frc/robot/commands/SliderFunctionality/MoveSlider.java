@@ -17,8 +17,6 @@ public class MoveSlider extends CommandBase {
     }
 
     public void execute() {
-        SmartDashboard.putNumber("sliderDistance", sliderSubsystem.getDistance());
-        SmartDashboard.putBoolean("sliderRunner", true);
         sliderSubsystem.move(sliderDistance); 
     }
 
@@ -32,6 +30,5 @@ public class MoveSlider extends CommandBase {
     @Override
     public void end(boolean interruped){
         sliderSubsystem.stop();
-        SmartDashboard.putBoolean("sliderRunner", false);
     }
 }

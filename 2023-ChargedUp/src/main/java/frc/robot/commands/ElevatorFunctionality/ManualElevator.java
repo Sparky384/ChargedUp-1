@@ -29,7 +29,6 @@ public class ManualElevator extends CommandBase{
         // Apply deadband to stick
         double translationVal = MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband);
         translationVal *= Constants.elevatorSpeedLimit;
-        SmartDashboard.putNumber("elevator speed ", translationVal);
 
         if (s_Elevator.getHeight() >= Constants.Subsys.elevatorHigh && translationVal > 0)
             s_Elevator.drive(Constants.PIDValues.elevatorOneF);

@@ -59,7 +59,6 @@ public class SwerveModule {
         if(isOpenLoop){
             double percentOutput = desiredState.speedMetersPerSecond / Constants.Swerve.maxSpeed;
             mDriveMotor.set(ControlMode.PercentOutput, percentOutput);
-            SmartDashboard.putNumber("desiredSpeed", desiredState.speedMetersPerSecond);
             desiredSpeed = desiredState.speedMetersPerSecond;
         }
         else {

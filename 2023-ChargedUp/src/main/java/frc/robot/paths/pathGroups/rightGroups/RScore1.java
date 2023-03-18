@@ -14,6 +14,9 @@ import frc.robot.subsystems.*;
 import frc.lib.pathplanner.com.pathplanner.lib.PathConstraints;
 import frc.robot.Constants;
 import frc.robot.paths.rightPaths.RPickup2nd;
+import frc.robot.commands.Stow;
+import frc.robot.commands.ToGround;
+import frc.robot.commands.ToHigh;
 import frc.robot.commands.ElevatorFunctionality.MoveElevator;
 import frc.robot.commands.SliderFunctionality.MoveSlider;
 import frc.robot.commands.WristFunctionality.*;
@@ -34,22 +37,12 @@ public class RScore1 extends SequentialCommandGroup{
         s_Hand = hand;
 
         return new SequentialCommandGroup(
-        //limelight center target - maybe and if so put in parallel command with elevator setup.
-
-        /* move elevator up to reach the first pole/cube. */
-        new MoveElevator(s_Elevator, Constants.Subsys.elevatorHigh), //may already have elevator to height. otherwise bring up elevator.
-        
-        /* deploy slider and set wrist down for initial piece scoring */
-        new ParallelCommandGroup(new MoveSlider(s_Slider, Constants.Subsys.sliderOut), new RotateWrist(s_Wrist, Constants.Subsys.wristLow)),
-        
-        /* Score Piece */
-        new OuttakeAuto(s_Hand),
-        
-        /* Move slider and wrist back into robot. */
-        new ParallelCommandGroup(new MoveSlider(s_Slider, Constants.Subsys.sliderIn), new RotateWrist(s_Wrist, Constants.Subsys.wristHigh)),
-
-        /* drive and put elevator down to get ready for next object pickup. */
-        new ParallelCommandGroup(new MoveElevator(s_Elevator, Constants.Subsys.elevatorLow), RPickup2nd.followTrajectoryCommand(true, s_Swerve)) 
+            ToHigh.getToHigh(s_Elevator, s_Slider),
+            new OuttakeAuto(s_Hand),
+            RPickup2nd.followTrajectoryCommand(true, s_Swerve), //delete later
+            ToGround.getToGround(s_Elevator, s_Slider),
+            new IntakeAuto(hand),
+            Stow.getStowCommand(s_Slider, s_Elevator)
         );
     }
 }

@@ -1,15 +1,11 @@
 package frc.robot.subsystems;
 
-<<<<<<< HEAD
-import com.revrobotics.AbsoluteEncoder;
-=======
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.RemoteFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.sensors.CANCoder;
->>>>>>> bee1f90e1393beddf28525874a13500de5f2c1a9
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -47,7 +43,6 @@ public class Wrist extends SubsystemBase{
 
     public void driveToAngle(double angle){
         //angle /= Constants.ConversionValues.wristConversionFunction; //uses encoder counts - could be switched to .00630366 without /= just =
-        //SmartDashboard.putNumber("driveToWristAngle", angle);
         //motor.set(ControlMode.PercentOutput, angle);
     }
 
@@ -58,8 +53,5 @@ public class Wrist extends SubsystemBase{
     }
 
     public void periodic() {
-        //SmartDashboard.putNumber("wristAngle", getAngle());
-        //SmartDashboard.putNumber("elevatorPosition", m_encoder.getPosition());
-        //SmartDashboard.putNumber("wristSensorPosition", motor.getSelectedSensorPosition());
     }
 }

@@ -227,7 +227,6 @@ public class PPRamseteCommand extends CommandBase {
   public void initialize() {
     this.prevTime = -1;
 
-    //SmartDashboard.putData("PPRamseteCommand_field", this.field);
     this.field.getObject("traj").setTrajectory(this.trajectory);
 
     PathPlannerTrajectory.PathPlannerState initialState = this.trajectory.getInitialState();
@@ -274,16 +273,6 @@ public class PPRamseteCommand extends CommandBase {
     }
     this.field.setRobotPose(currentPose);
     PathPlannerServer.sendPathFollowingData(desiredState.poseMeters, currentPose);
-    /*
-    SmartDashboard.putNumber(
-        "PPRamseteCommand_xError", currentPose.getX() - desiredState.poseMeters.getX());
-    SmartDashboard.putNumber(
-        "PPRamseteCommand_yError", currentPose.getY() - desiredState.poseMeters.getY());
-    SmartDashboard.putNumber(
-        "PPRamseteCommand_rotationError",
-        currentPose.getRotation().getRadians()
-            - desiredState.poseMeters.getRotation().getRadians());
-    */
     DifferentialDriveWheelSpeeds targetWheelSpeeds =
         this.kinematics.toWheelSpeeds(this.controller.calculate(currentPose, desiredState));
 

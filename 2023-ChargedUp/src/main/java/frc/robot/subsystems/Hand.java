@@ -23,7 +23,6 @@ public class Hand extends SubsystemBase
 
     public void stop()
     {
-        System.out.println("stop");
         motor.stopMotor();
     }
 
@@ -32,9 +31,18 @@ public class Hand extends SubsystemBase
         System.out.println("Out");
         motor.set(0.5); //0.5
     }
+    
+    public void keepOut() {
+        motor.set(0.1);
+    }
+
     public void rollIn()
     {
         System.out.println("in");
         motor.set(-0.5); // -0.5
+    }
+
+    public void keepIn() {
+        motor.set(-0.1);
     }
 }
