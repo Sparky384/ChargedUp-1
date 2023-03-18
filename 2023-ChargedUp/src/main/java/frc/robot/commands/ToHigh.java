@@ -17,7 +17,7 @@ public class ToHigh
         return new ParallelCommandGroup(
             elevator.elevatorMotionMagic(Constants.Subsys.elevatorHigh),
             new MoveSlider(slider, Constants.Subsys.sliderOut),
-            wrist.wristMotionMagic(Constants.Subsys.wristMid)
+            wrist.wristMotionMagic(Constants.Subsys.wristHighGoal)
         );
     }
 }

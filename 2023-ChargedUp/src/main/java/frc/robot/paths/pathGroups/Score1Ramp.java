@@ -18,7 +18,9 @@ import frc.robot.commands.ElevatorFunctionality.MoveElevator;
 import frc.robot.commands.SliderFunctionality.MoveSlider;
 import frc.robot.commands.WristFunctionality.*;
 import frc.robot.commands.DriveOnRamp;
+import frc.robot.commands.DriveOverRamp;
 import frc.robot.commands.GyroStabalize;
+import frc.robot.commands.Pause;
 import frc.robot.commands.Stow;
 import frc.robot.commands.ToHigh;
 import frc.robot.paths.JustRamp;
@@ -30,6 +32,7 @@ public class Score1Ramp extends SequentialCommandGroup {
     private static Slider s_Slider;
     private static Wrist s_Wrist;
     private static Hand s_Hand;
+    
 
         // Assuming this method is part of a drivetrain subsystem that provides the necessary methods
     public static CommandBase followTrajectoryCommand(Swerve swerve, Elevator elevator, Slider slider, Wrist wrist, Hand hand) {
@@ -43,7 +46,9 @@ public class Score1Ramp extends SequentialCommandGroup {
             ToHigh.getToHigh(s_Elevator, s_Slider, wrist),
             new OuttakeAuto(s_Hand),
             Stow.getStowCommand(s_Elevator, s_Slider, wrist),
-            new DriveOnRamp(s_Swerve, true),
+            //new DriveOverRamp(s_Swerve, false),
+            new DriveOnRamp(s_Swerve, false),
+            //new Pause(0.75),
             new GyroStabalize(s_Swerve)
         );
     }

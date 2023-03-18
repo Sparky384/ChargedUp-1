@@ -56,6 +56,7 @@ public class RobotContainer {
     private final Trigger intakeBtn = pilot.rightTrigger();
     private final Trigger outtakeBtn = pilot.leftTrigger();
     private final Trigger rampBtn = pilot.a();
+    private final Trigger rampBtn2 = pilot.b();
     private final Trigger zeroGyroBtn = pilot.start();
     private final Trigger wristLowBtn = pilot.povDown();
     private final Trigger wristMidBtn = pilot.povRight();
@@ -135,9 +136,10 @@ public class RobotContainer {
         intakeBtn.whileTrue(new Intake(hand));
         outtakeBtn.whileTrue(new Outtake(hand));
         rampBtn.whileTrue(new SequentialCommandGroup(
-            new DriveOnRamp(swerve, false),
+            new DriveOverRamp(swerve, true),
             new GyroStabalize(swerve))
         );
+        rampBtn2.onTrue(new DriveOverRamp(swerve, false));
         wristHighBtn.onTrue(wrist.wristMotionMagic(Constants.Subsys.wristHigh));
         wristMidBtn.onTrue(wrist.wristMotionMagic(Constants.Subsys.wristMid));
         wristLowBtn.onTrue(wrist.wristMotionMagic(Constants.Subsys.wristGround));

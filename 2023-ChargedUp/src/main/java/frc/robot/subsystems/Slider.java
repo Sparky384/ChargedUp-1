@@ -63,5 +63,6 @@ public class Slider extends SubsystemBase{
         return distance;
     }
     public void periodic() {
+        SmartDashboard.putNumber("slider position", m_encoder.getPosition());
     }
 }

@@ -15,7 +15,7 @@ public class ToFeeder
     public static CommandBase getToFeeder(Elevator elevator, Slider slider, Wrist wrist)
     {
         return new ParallelCommandGroup(
-            elevator.elevatorMotionMagic(Constants.Subsys.elevatorHigh),
+            elevator.elevatorMotionMagic(Constants.Subsys.elevatorFeederStation),
             new MoveSlider(slider, Constants.Subsys.sliderIn),
             wrist.wristMotionMagic(Constants.Subsys.wristFeederStation)
         );

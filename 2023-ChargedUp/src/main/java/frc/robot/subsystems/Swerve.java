@@ -153,7 +153,7 @@ public class Swerve extends SubsystemBase {
     @Override
     public void periodic(){
         swerveOdometry.update(getYaw(), getModulePositions());  
-
+        SmartDashboard.putNumber("gyto", getRoll());
         gyroAngle.setDouble(gyro.getYaw());
 
         for(SwerveModule mod : mSwerveMods){

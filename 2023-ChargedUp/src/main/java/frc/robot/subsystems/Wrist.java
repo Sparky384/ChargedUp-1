@@ -99,6 +99,8 @@ wristMotor.config_kP(0, 1.0);
                 wristMotor.set(TalonFXControlMode.PercentOutput, 0.22186 * Math.cos(Math.toRadians(wristEncoder.getAbsolutePosition())));
             else if (wristEncoder.getAbsolutePosition() > 50)
                 wristMotor.set(TalonFXControlMode.PercentOutput, 0.22186 * Math.cos(Math.toRadians(wristEncoder.getAbsolutePosition())));
+            else if (wristEncoder.getAbsolutePosition() < 0)
+            wristMotor.set(TalonFXControlMode.PercentOutput, 0.061 * Math.cos(Math.toRadians(wristEncoder.getAbsolutePosition())));
             else
                 wristMotor.set(TalonFXControlMode.PercentOutput, 0.0788 * Math.cos(Math.toRadians(wristEncoder.getAbsolutePosition())));
         }

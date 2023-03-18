@@ -33,7 +33,7 @@ public class Hand extends SubsystemBase
     }
     
     public void keepOut() {
-        motor.set(0.1);
+        motor.set(0.0);
     }
 
     public void rollIn()

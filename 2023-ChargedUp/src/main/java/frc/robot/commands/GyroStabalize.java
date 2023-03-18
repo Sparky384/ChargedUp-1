@@ -17,7 +17,8 @@ public class GyroStabalize extends CommandBase {
     public void execute() {
         // - = going up
         SmartDashboard.putBoolean("gyro on", true);
-        double output = -(s_swerve.getRoll() * Constants.RampConstants.P);
+        double output = (s_swerve.getRoll() * Constants.RampConstants.P);
+
         if (output > 1.0)
             output = 1.0;
         if (output < -1.0)
@@ -28,9 +29,10 @@ public class GyroStabalize extends CommandBase {
         else if (output < -Constants.RampConstants.maxRampSpeed)
             output = -Constants.RampConstants.maxRampSpeed;
 
-        if (Math.abs(s_swerve.getRoll()) < 3.5)
+        if (Math.abs(s_swerve.getRoll()) < 5.5)
             output = 0;
-        
+        SmartDashboard.putNumber("output", output);
+
         s_swerve.drive(new Translation2d(output, 0).times(Constants.Swerve.maxSpeed), 
         0, 
         false, 

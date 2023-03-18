@@ -286,14 +286,16 @@ public final class Constants {
     public static class Subsys{
         public static final double elevatorLow = 50;
         public static final double elevatorMid = 50; //in counts
-        public static final double elevatorHigh = 59800; //in counts
+        public static final double elevatorFeederStation = 59800;
+        public static final double elevatorHigh = 89800; //in counts
         public static final double sliderIn = 0.05;
         public static final double sliderOut = 10.75; //final in inches
-        public static final double wristGround = -6.3; //should be in degrees.
+        public static final double wristGround = -13.184; //should be in degrees.
         public static final double wristLow = 14.941; //should be in degrees.
         public static final double wristMid = 38.408; //should be in degrees.
         public static final double wristFeederStation = 17.900;
-        public static final double wristHigh = 90.0; //should be in degrees.
+        public static final double wristHigh = 90.0;
+        public static final double wristHighGoal = 10.0; //should be in degrees.
         public static final double wristAbsEncoderOffset = 0.0;
         /* Motion Magic Constants */
         public static final int timeOutMs = 10;
@@ -309,8 +311,8 @@ public final class Constants {
     }
 
     public static class RampConstants{
-        public static final double P = 0.029; // P as in PID
-        public static final double maxRampSpeed = 0.35; // percentage
+        public static final double P = 0.0385; // P as in PID
+        public static final double maxRampSpeed = 0.25; // percentage
     }
 
     public static class LimelightConstants {
