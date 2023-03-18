@@ -15,6 +15,7 @@ import frc.lib.pathplanner.com.pathplanner.lib.PathConstraints;
 import frc.robot.Constants;
 import frc.robot.paths.rightPaths.RPickup2nd;
 import frc.robot.commands.Stow;
+import frc.robot.commands.TeleopSwerve;
 import frc.robot.commands.ToGround;
 import frc.robot.commands.ToHigh;
 import frc.robot.commands.ElevatorFunctionality.MoveElevator;
@@ -37,12 +38,10 @@ public class RScore1 extends SequentialCommandGroup{
         s_Hand = hand;
 
         return new SequentialCommandGroup(
-            ToHigh.getToHigh(s_Elevator, s_Slider),
+            ToHigh.getToHigh(s_Elevator, s_Slider, wrist),
             new OuttakeAuto(s_Hand),
-            RPickup2nd.followTrajectoryCommand(true, s_Swerve), //delete later
-            ToGround.getToGround(s_Elevator, s_Slider),
-            new IntakeAuto(hand),
-            Stow.getStowCommand(s_Slider, s_Elevator)
+            Stow.getStowCommand(s_Elevator, s_Slider, wrist)
+            //RPickup2nd.followTrajectoryCommand(true, s_Swerve) //delete later
         );
     }
 }

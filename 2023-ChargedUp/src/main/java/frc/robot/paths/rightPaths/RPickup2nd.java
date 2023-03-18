@@ -34,7 +34,7 @@ public class RPickup2nd extends SequentialCommandGroup {
                 new PIDController(Constants.AutoConstants.kPPathYController, 0, 0), // Y controller (usually the same values as X controller)
                 new PIDController(Constants.AutoConstants.kPPathThetaController, Constants.AutoConstants.kIPathThetaController, 0), // Rotation controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
                 s_Swerve::setModuleStates, // Module states consumer
-                false, // Path changes based on team color. We set it to false. Defaults to true.
+                true, // Path changes based on team color. We set it to false. Defaults to true.
                 s_Swerve // Requires this drive subsystem
             )
         );

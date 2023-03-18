@@ -37,12 +37,12 @@ public class LScore1 extends SequentialCommandGroup{
         s_Hand = hand;
 
         return new SequentialCommandGroup(
-            ToHigh.getToHigh(s_Elevator, s_Slider),
+            ToHigh.getToHigh(s_Elevator, s_Slider, wrist),
             new OuttakeAuto(s_Hand),
             LPickup2nd.followTrajectoryCommand(true, s_Swerve), //delete later
-            ToGround.getToGround(s_Elevator, s_Slider),
+            ToGround.getToGround(s_Elevator, s_Slider, wrist),
             new IntakeAuto(hand),
-            Stow.getStowCommand(s_Slider, s_Elevator)
+            Stow.getStowCommand(s_Elevator, s_Slider, wrist)
         );
     }
 }

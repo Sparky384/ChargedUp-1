@@ -133,7 +133,7 @@ public class Elevator extends SubsystemBase {
         } 
     }
 
-    public CommandBase wristMotionMagic(double finalPositionInDegrees) {
+    /*public CommandBase wristMotionMagic(double finalPositionInDegrees) {
         return runOnce(() -> {System.out.println("GO NOW======="); wristMoving = true; wristMotor.set(TalonFXControlMode.MotionMagic, convertDegreesToCts(finalPositionInDegrees), DemandType.ArbitraryFeedForward, 0.0);})
         .andThen(Commands.waitUntil(() -> Math.abs(wristEncoder.getAbsolutePosition() - finalPositionInDegrees) < Constants.Subsys.wristThreshold).withTimeout(8.0))
         .andThen(runOnce(() -> {wristMoving = false;}));
@@ -157,7 +157,7 @@ public class Elevator extends SubsystemBase {
         return run(() -> wristMotor.set(TalonFXControlMode.PercentOutput, stick.getAsDouble())).
         finallyDo(interrupted -> wristMotor.set(TalonFXControlMode.PercentOutput, 0.0)).
         withName("driveWrist");
-    }
+    }*/
    
     /*public void move(double height){
         //height /= Constants.ConversionValues.elevatorConversionFunction; //uses encoder counts.
@@ -193,12 +193,12 @@ public class Elevator extends SubsystemBase {
         return height;
     }
 
-    public double convertDegreesToCts(double degrees) {
+    /*public double convertDegreesToCts(double degrees) {
         return (degrees * 11.4) + .603;
-    }
+    }*/
 
     public void periodic() {
-        if (!wristMoving)
+        /*if (!wristMoving)
         {
             if (wristEncoder.getAbsolutePosition() > 100)
                 wristMotor.set(TalonFXControlMode.PercentOutput, 0.22186 * Math.cos(Math.toRadians(wristEncoder.getAbsolutePosition())));
@@ -206,7 +206,7 @@ public class Elevator extends SubsystemBase {
                 wristMotor.set(TalonFXControlMode.PercentOutput, 0.22186 * Math.cos(Math.toRadians(wristEncoder.getAbsolutePosition())));
             else
                 wristMotor.set(TalonFXControlMode.PercentOutput, 0.0788 * Math.cos(Math.toRadians(wristEncoder.getAbsolutePosition())));
-        }
+        }*/
     }
 }
 

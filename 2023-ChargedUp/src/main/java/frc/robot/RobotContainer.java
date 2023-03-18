@@ -102,9 +102,9 @@ public class RobotContainer {
         swerve.setDefaultCommand(
             new TeleopSwerve(
                 swerve, 
-                () -> -pilot.getLeftY(), 
-                () -> -pilot.getLeftX(), 
-                () -> -pilot.getRightX(), 
+                () -> pilot.getLeftY(), 
+                () -> pilot.getLeftX(), 
+                () -> pilot.getRightX(), 
                 () -> Constants.Swerve.robotcentric //pass in true for robotcentric false for fieldcentric
             )
         );
@@ -138,24 +138,24 @@ public class RobotContainer {
             new DriveOnRamp(swerve, false),
             new GyroStabalize(swerve))
         );
-        wristHighBtn.onTrue(elevator.wristMotionMagic(Constants.Subsys.wristHigh));
-        wristMidBtn.onTrue(elevator.wristMotionMagic(Constants.Subsys.wristMid));
-        wristLowBtn.onTrue(elevator.wristMotionMagic(Constants.Subsys.wristGround));
+        wristHighBtn.onTrue(wrist.wristMotionMagic(Constants.Subsys.wristHigh));
+        wristMidBtn.onTrue(wrist.wristMotionMagic(Constants.Subsys.wristMid));
+        wristLowBtn.onTrue(wrist.wristMotionMagic(Constants.Subsys.wristGround));
 
         //copilot
         sliderInBtn.onTrue(new MoveSlider(slider, Constants.Subsys.sliderIn));
         sliderOutBtn.onTrue(new MoveSlider(slider, Constants.Subsys.sliderOut));
         stopIntakeBtn.onTrue(new StopIntake(hand));
-        stowBtn.onTrue(new SequentialCommandGroup(
-            elevator.wristMotionMagic(Constants.Subsys.wristHigh),
+        stowBtn.onTrue(new ParallelCommandGroup(
+            wrist.wristMotionMagic(Constants.Subsys.wristHigh),
             new MoveSlider(slider, Constants.Subsys.sliderIn),
             elevator.elevatorMotionMagic(Constants.Subsys.elevatorLow)
         ));
-        toFeederBtn.onTrue(ToFeeder.getToFeeder(elevator, slider));
-        toHighBtn.onTrue(ToHigh.getToHigh(elevator, slider));
-        toMidBtn.onTrue(ToMid.getToMid(elevator, slider));
-        toLowBtn.onTrue(ToLow.getToLow(elevator, slider));
-        toGroundBtn.onTrue(ToGround.getToGround(elevator, slider));
+        toFeederBtn.onTrue(ToFeeder.getToFeeder(elevator, slider, wrist));
+        toHighBtn.onTrue(ToHigh.getToHigh(elevator, slider, wrist));
+        toMidBtn.onTrue(ToMid.getToMid(elevator, slider, wrist));
+        toLowBtn.onTrue(ToLow.getToLow(elevator, slider, wrist));
+        toGroundBtn.onTrue(ToGround.getToGround(elevator, slider, wrist));
         elevatorLowBtn.onTrue(elevator.elevatorMotionMagic(Constants.Subsys.elevatorLow));
         elevatorHighBtn.onTrue(elevator.elevatorMotionMagic(Constants.Subsys.elevatorHigh));
     }

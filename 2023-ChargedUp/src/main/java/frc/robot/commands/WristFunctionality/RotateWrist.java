@@ -7,17 +7,17 @@ import frc.robot.subsystems.Wrist;
 
 
 public class RotateWrist extends CommandBase {
-
+/*
     private Wrist wristSubsystem; 
     private double wristAngle;
-
+*/
     public RotateWrist (Wrist wrist, double initangle) {
 
-        wristAngle = initangle;
+       /*  wristAngle = initangle;
         wristSubsystem = wrist; 
-        addRequirements(wristSubsystem);
+        addRequirements(wristSubsystem);*/
     }
-
+/*
     public void execute() {
         wristSubsystem.driveToAngle(wristAngle); 
 
@@ -33,7 +33,7 @@ public class RotateWrist extends CommandBase {
     @Override
     public void end(boolean interruped) {
         wristSubsystem.stop();
-    }
+    }*/
 
 }
 

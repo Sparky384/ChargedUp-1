@@ -40,9 +40,9 @@ public class Score1Ramp extends SequentialCommandGroup {
         s_Hand = hand;
 
         return new SequentialCommandGroup(
-            ToHigh.getToHigh(s_Elevator, s_Slider),
+            ToHigh.getToHigh(s_Elevator, s_Slider, wrist),
             new OuttakeAuto(s_Hand),
-            Stow.getStowCommand(s_Slider, s_Elevator),
+            Stow.getStowCommand(s_Elevator, s_Slider, wrist),
             new DriveOnRamp(s_Swerve, true),
             new GyroStabalize(s_Swerve)
         );
