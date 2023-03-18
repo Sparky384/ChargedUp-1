@@ -53,9 +53,6 @@ public class RobotContainer {
 
     /* Final Robot Buttons */
     //Pilot
-    private final double translationAxis = pilot.getLeftY();
-    private final double strafeAxis = pilot.getLeftX();
-    private final double rotationAxis = pilot.getRightX();
     private final Trigger intakeBtn = pilot.rightTrigger();
     private final Trigger outtakeBtn = pilot.leftTrigger();
     private final Trigger rampBtn = pilot.a();
@@ -76,6 +73,8 @@ public class RobotContainer {
     private final Trigger sliderOutBtn = copilot.povUp();
     private final Trigger sliderInBtn = copilot.povDown();
     private final Trigger toGroundBtn = copilot.povRight();
+    private final Trigger elevatorHighBtn = copilot.start();
+    private final Trigger elevatorLowBtn = copilot.back();
     private final double elevatorJoystick = copilot.getLeftX();
 
     /* Smartdashboard Choosers */
@@ -97,6 +96,7 @@ public class RobotContainer {
         autoChooser.addOption("Score 1 Ramp", "4");
         autoChooser.addOption("RScore 2", "5");
         autoChooser.addOption("LScore 2", "6");
+        autoChooser.addOption("TEST ONLY*** Flip test", "7");
 
         //pilot controlling swerve
         swerve.setDefaultCommand(
@@ -129,9 +129,6 @@ public class RobotContainer {
      * edu.wpi.first.wpilibj2.command.button.}.
      */
     private void configureButtonBindings() {
-        //handIntake.whileTrue(new Intake(hand));
-        //handOuttake.whileTrue(new Outtake(hand));
-
         /* final configurations */
         //pilot
         zeroGyroBtn.onTrue(new InstantCommand(() -> swerve.zeroGyro()));
@@ -159,6 +156,8 @@ public class RobotContainer {
         toMidBtn.onTrue(ToMid.getToMid(elevator, slider));
         toLowBtn.onTrue(ToLow.getToLow(elevator, slider));
         toGroundBtn.onTrue(ToGround.getToGround(elevator, slider));
+        elevatorLowBtn.onTrue(elevator.elevatorMotionMagic(Constants.Subsys.elevatorLow));
+        elevatorHighBtn.onTrue(elevator.elevatorMotionMagic(Constants.Subsys.elevatorHigh));
     }
 
     /**
@@ -197,6 +196,10 @@ public class RobotContainer {
 
                 case "6":
                 selectedAuto = LScore2.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
+                break;
+
+                case "7":
+                selectedAuto = FlipTest.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
                 break;
             }
 
