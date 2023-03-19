@@ -118,7 +118,9 @@ public class RobotContainer {
                 () -> copilot.getRightY()
             )
         );*/
-        //elevator.setDefaultCommand(elevator.wristStick(() -> copilot.getLeftY()));
+        
+        //wrist.setDefaultCommand(wrist.wristStick(() -> copilot.getLeftY()));
+        
         // Configure the button bindings
         configureButtonBindings();
     }

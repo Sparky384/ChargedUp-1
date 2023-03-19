@@ -34,8 +34,8 @@ public class Wrist extends SubsystemBase{
         wristEncoder = new CANCoder(Constants.CANPorts.wristCancoder);
         wristMotor = new WPI_TalonFX(Constants.CANPorts.wristMotor);
         wristMoving = false;
-                wristMotor.setSensorPhase(true);
-wristMotor.config_kP(0, 1.0);
+        wristMotor.setSensorPhase(true);
+        wristMotor.config_kP(0, 1.0);
         wristMotor.config_kI(0, 0.0);
         wristMotor.config_kD(0, 2.5);
         wristMotor.config_kF(0, 0.0);
@@ -83,7 +83,8 @@ wristMotor.config_kP(0, 1.0);
     }
 
     public CommandBase wristStick(DoubleSupplier stick) {
-        return run(() -> wristMotor.set(TalonFXControlMode.PercentOutput, stick.getAsDouble())).
+        
+        return run(() -> {wristMotor.set(TalonFXControlMode.PercentOutput, (stick.getAsDouble()) / 2);}). //SmartDashboard.putNumber("wristStick", (stick.getAsDouble()) / 2); 
         finallyDo(interrupted -> wristMotor.set(TalonFXControlMode.PercentOutput, 0.0)).
         withName("driveWrist");
     }
@@ -100,7 +101,7 @@ wristMotor.config_kP(0, 1.0);
             else if (wristEncoder.getAbsolutePosition() > 50)
                 wristMotor.set(TalonFXControlMode.PercentOutput, 0.22186 * Math.cos(Math.toRadians(wristEncoder.getAbsolutePosition())));
             else if (wristEncoder.getAbsolutePosition() < 0)
-            wristMotor.set(TalonFXControlMode.PercentOutput, 0.061 * Math.cos(Math.toRadians(wristEncoder.getAbsolutePosition())));
+                wristMotor.set(TalonFXControlMode.PercentOutput, 0.061 * Math.cos(Math.toRadians(wristEncoder.getAbsolutePosition())));
             else
                 wristMotor.set(TalonFXControlMode.PercentOutput, 0.0788 * Math.cos(Math.toRadians(wristEncoder.getAbsolutePosition())));
         }

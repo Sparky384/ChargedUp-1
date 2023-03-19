@@ -318,7 +318,7 @@ public final class Constants {
     public static class LimelightConstants {
 
         public static class LimelightCameras {
-            public static final String LIME1 = "limelight-limeone"; //setup as goal camera for now
+            public static final String LIME1 = "limelight-local"; //setup as goal camera for now
             public static final String LIME2 = "limelight-limetwo"; //setup as element camera for now
 
         }
