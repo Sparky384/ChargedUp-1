@@ -119,7 +119,7 @@ public class RobotContainer {
             )
         );*/
         
-        //wrist.setDefaultCommand(wrist.wristStick(() -> copilot.getLeftY()));
+        //wrist.setDefaultCommand(wrist.wristStick(() -> copilot.getLeftY())); //for manual wrist control with stick
         
         // Configure the button bindings
         configureButtonBindings();

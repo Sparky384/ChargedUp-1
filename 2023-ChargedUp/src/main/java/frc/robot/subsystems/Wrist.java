@@ -44,7 +44,7 @@ public class Wrist extends SubsystemBase{
         wristMotor.setInverted(true);
         wristMotor.setNeutralMode(NeutralMode.Brake);
 
-        wristMotor.configClosedLoopPeakOutput(0, 0.1);
+        wristMotor.configClosedLoopPeakOutput(0, 0.1); //was 0.1
         wristMotor.configForwardSoftLimitEnable(true);
         wristMotor.configForwardSoftLimitThreshold(Constants.Subsys.wristLowerLimit); //800 119
         wristMotor.configReverseSoftLimitEnable(true);
@@ -93,6 +93,23 @@ public class Wrist extends SubsystemBase{
         return (degrees * 11.4) + .603;
     }
 
+    public double calculateFF(double currentAngle){
+        double armLength = Constants.Subsys.wristLengthMain; //need to switch to backup if using backup - in inches.
+        double armWeight = Constants.Subsys.wristWeightMain; //need to switch to backup if using backup - in lbs.
+
+        //Redline Motor
+        double motorOhms = Constants.Subsys.wristMotorOhms;
+        double motorTorque = Constants.Subsys.wristMotorTorque; //lb * in
+        double motorStallCurrent = Constants.Subsys.wristMotorStallCurrent; //Amps
+
+        double gearBox = Constants.Subsys.wristMotorGearbox;
+        double kT = (motorTorque/motorStallCurrent);
+
+        double kF = ((armLength * armWeight * motorOhms) / (kT * gearBox)) * Math.cos(Math.toRadians((currentAngle)));
+
+        return kF;
+    }
+
     public void periodic() {
         if (!wristMoving)
         {
@@ -105,6 +122,8 @@ public class Wrist extends SubsystemBase{
             else
                 wristMotor.set(TalonFXControlMode.PercentOutput, 0.0788 * Math.cos(Math.toRadians(wristEncoder.getAbsolutePosition())));
         }
+
+
     }
     
 }

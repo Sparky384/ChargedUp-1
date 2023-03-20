@@ -308,6 +308,20 @@ public final class Constants {
         public static final double elevatorArbitraryFeedForward = 0.06765;
         public static final double wristArbitraryFeedForward = 0.0;
 
+        //Wrist Feedforward Constants
+        public static final double wristLengthMain = 0.0;
+        public static final double wristWeightMain = 0.0;
+        public static final double wristWeightBackup = 0.0;
+        public static final double wristLengthBackup = 0.0;
+
+        public static final double wristMotorOhms = 0.0;
+        public static final double wristMotorTorque = 41.5;
+        public static final double wristMotorStallCurrent = 257;
+
+        public static final double wristMotorGearbox = 0.0;
+
+
+
     }
 
     public static class RampConstants{

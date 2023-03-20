@@ -118,7 +118,7 @@ public class Elevator extends SubsystemBase {
         {
             feed = Constants.Subsys.elevatorArbitraryFeedForward * 0;
             motorOne.selectProfileSlot(1, 0);
-            motorOne.set(ControlMode.PercentOutput, 0.0);
+            motorOne.set(ControlMode.PercentOutput, 0.0); //was 0.0
             return runOnce(() -> {});
         }
         else
@@ -132,44 +132,6 @@ public class Elevator extends SubsystemBase {
             .andThen(runOnce(() -> motorOne.set(TalonFXControlMode.PercentOutput, Constants.Subsys.elevatorArbitraryFeedForward)));
         } 
     }
-
-    /*public CommandBase wristMotionMagic(double finalPositionInDegrees) {
-        return runOnce(() -> {System.out.println("GO NOW======="); wristMoving = true; wristMotor.set(TalonFXControlMode.MotionMagic, convertDegreesToCts(finalPositionInDegrees), DemandType.ArbitraryFeedForward, 0.0);})
-        .andThen(Commands.waitUntil(() -> Math.abs(wristEncoder.getAbsolutePosition() - finalPositionInDegrees) < Constants.Subsys.wristThreshold).withTimeout(8.0))
-        .andThen(runOnce(() -> {wristMoving = false;}));
-    }
-
-    
-    public CommandBase wristUp() {
-        return run(() -> {wristMoving = true; wristMotor.set(TalonFXControlMode.PercentOutput, 0.2);}).
-        finallyDo(interrupted -> {wristMoving = false;}).
-        withName("driveWrist");
-    }
-    
-
-    public CommandBase wristDown() {
-        return run(() -> {wristMoving = true; wristMotor.set(TalonFXControlMode.PercentOutput, -0.2);}).
-        finallyDo(interrupted -> {wristMoving = false;}).
-        withName("driveWrist");
-    }
-
-    public CommandBase wristStick(DoubleSupplier stick) {
-        return run(() -> wristMotor.set(TalonFXControlMode.PercentOutput, stick.getAsDouble())).
-        finallyDo(interrupted -> wristMotor.set(TalonFXControlMode.PercentOutput, 0.0)).
-        withName("driveWrist");
-    }*/
-   
-    /*public void move(double height){
-        //height /= Constants.ConversionValues.elevatorConversionFunction; //uses encoder counts.
-        double difference = height - getHeight(); 
-        double output = difference * Constants.PIDValues.elevatorUpP;
-        output += Constants.PIDValues.elevatorUpF; 
-        if (output > Constants.PIDValues.elevatorMaxSpeed)
-            output = Constants.PIDValues.elevatorMaxSpeed;
-        else if (output < Constants.PIDValues.elevatorMinSpeed)
-            output = Constants.PIDValues.elevatorMinSpeed;
-        motorOne.set(ControlMode.PercentOutput, output);
-    }*/
 
     public CommandBase drive()
     {
@@ -193,20 +155,9 @@ public class Elevator extends SubsystemBase {
         return height;
     }
 
-    /*public double convertDegreesToCts(double degrees) {
-        return (degrees * 11.4) + .603;
-    }*/
 
     public void periodic() {
-        /*if (!wristMoving)
-        {
-            if (wristEncoder.getAbsolutePosition() > 100)
-                wristMotor.set(TalonFXControlMode.PercentOutput, 0.22186 * Math.cos(Math.toRadians(wristEncoder.getAbsolutePosition())));
-            else if (wristEncoder.getAbsolutePosition() > 50)
-                wristMotor.set(TalonFXControlMode.PercentOutput, 0.22186 * Math.cos(Math.toRadians(wristEncoder.getAbsolutePosition())));
-            else
-                wristMotor.set(TalonFXControlMode.PercentOutput, 0.0788 * Math.cos(Math.toRadians(wristEncoder.getAbsolutePosition())));
-        }*/
+        
     }
 }
 
