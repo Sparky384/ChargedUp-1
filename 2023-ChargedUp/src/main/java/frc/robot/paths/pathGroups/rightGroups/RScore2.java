@@ -44,7 +44,7 @@ public class RScore2 extends SequentialCommandGroup {
             ToGround.getToGround(s_Elevator, s_Slider, wrist),
             new IntakeAuto(hand),
             Stow.getStowCommand(s_Elevator, s_Slider, wrist),
-            RScore3rd.followTrajectoryCommand(false, s_Swerve),
+            RScore2nd.followTrajectoryCommand(false, s_Swerve),
             ToHigh.getToHigh(s_Elevator, s_Slider, wrist),
             new OuttakeAuto(s_Hand)
         );
