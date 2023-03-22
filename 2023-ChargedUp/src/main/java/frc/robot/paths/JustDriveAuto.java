@@ -34,9 +34,9 @@ public class JustDriveAuto extends SequentialCommandGroup {
                 trajectory, 
                 s_Swerve::getPose, // Pose supplier
                 Constants.Swerve.swerveKinematics, // SwerveDriveKinematics
-                new PIDController(Constants.AutoConstants.kPPathXController, 0, 0), // X controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
-                new PIDController(Constants.AutoConstants.kPPathYController, 0, 0), // Y controller (usually the same values as X controller)
-                new PIDController(Constants.AutoConstants.kPPathThetaController, Constants.AutoConstants.kIPathThetaController, 0), // Rotation controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
+                new PIDController(Constants.AutoConstants.PathplannerConstraints.Score1DriveOutPPathX, 0, 0), // X controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
+                new PIDController(Constants.AutoConstants.PathplannerConstraints.Score1DriveOutPPathY, 0, 0), // Y controller (usually the same values as X controller)
+                new PIDController(Constants.AutoConstants.PathplannerConstraints.Score1DriveOutPPathTheta, 0.0, 0), // Rotation controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
                 s_Swerve::setModuleStates, // Module states consumer
                 false, // Path changes based on team color. We set it to false. Defaults to true.
                 s_Swerve // Requires this drive subsystem

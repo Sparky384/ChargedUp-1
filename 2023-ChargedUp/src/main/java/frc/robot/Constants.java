@@ -194,6 +194,13 @@ public final class Constants {
         public static final TrapezoidProfile.Constraints kThetaControllerConstraints =
             new TrapezoidProfile.Constraints(
                 kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
+
+        public static final class PathplannerConstraints{
+            public static final double Score1DriveOutPPathX = 1.0;
+            public static final double Score1DriveOutPPathY = 0.23;
+            public static final double Score1DriveOutPPathTheta = 1.0;
+
+        }
     }
     public static final class PIDValues {
         public static final double frontRightTurnP = 0.0; 
