@@ -24,11 +24,9 @@ import frc.robot.commands.Pause;
 import frc.robot.commands.Stow;
 import frc.robot.commands.ToHigh;
 import frc.robot.paths.JustRamp;
-import frc.robot.paths.JustRampNew;
-import frc.robot.paths.JustRampNew2;
 import frc.robot.subsystems.*;
 
-public class Score1RampNew extends SequentialCommandGroup {
+public class CubeScore1Ramp extends SequentialCommandGroup {
     private static Swerve s_Swerve;
     private static Elevator s_Elevator;
     private static Slider s_Slider;
@@ -45,11 +43,10 @@ public class Score1RampNew extends SequentialCommandGroup {
         s_Hand = hand;
 
         return new SequentialCommandGroup(
-            //ToHigh.getToHigh(s_Elevator, s_Slider, wrist),
-            //new OuttakeAuto(s_Hand),
-            //Stow.getStowCommand(s_Elevator, s_Slider, wrist),
-            JustRampNew.followTrajectoryCommand(true, s_Swerve),
-            JustRampNew2.followTrajectoryCommand(true, s_Swerve),
+            ToHigh.getToHigh(s_Elevator, s_Slider, wrist), //this may change.
+            new IntakeAuto(s_Hand),
+            Stow.getStowCommand(s_Elevator, s_Slider, wrist),
+            new DriveOnRamp(s_Swerve, false),
             new GyroStabalize(s_Swerve)
         );
     }

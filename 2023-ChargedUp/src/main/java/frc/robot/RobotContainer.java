@@ -15,7 +15,10 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.paths.JustDriveAuto;
+import frc.robot.paths.pathGroups.CubeScore1Ramp;
+import frc.robot.paths.pathGroups.Score1DriveOut;
 import frc.robot.paths.pathGroups.Score1Ramp;
+import frc.robot.paths.pathGroups.Score1RampNew;
 import frc.robot.paths.pathGroups.rightGroups.*;
 import frc.robot.paths.pathGroups.leftGroups.*;
 import frc.robot.paths.JustRamp;
@@ -94,10 +97,15 @@ public class RobotContainer {
         autoChooser.addOption("Just Drive", "1");
         autoChooser.addOption("RScore 1", "2");
         autoChooser.addOption("LScore 1", "3");
-        autoChooser.addOption("Score 1 Ramp", "4");
+        autoChooser.addOption("Cone Score 1 Ramp", "4");
         autoChooser.addOption("RScore 2", "5");
         autoChooser.addOption("LScore 2", "6");
-        autoChooser.addOption("TEST ONLY*** Flip test", "7");
+        autoChooser.addOption("Cone R Score 2", "7");
+        autoChooser.addOption("Score 1 Ramp New", "8");
+        autoChooser.addOption("Cube Score 1 Ramp", "9");
+        autoChooser.addOption("Score and Drive", "10");
+
+        //autoChooser.addOption("TEST ONLY*** Flip test", "7");
 
         //pilot controlling swerve
         swerve.setDefaultCommand(
@@ -137,10 +145,12 @@ public class RobotContainer {
         zeroGyroBtn.onTrue(new InstantCommand(() -> swerve.zeroGyro()));
         intakeBtn.whileTrue(new Intake(hand));
         outtakeBtn.whileTrue(new Outtake(hand));
+        
         rampBtn.whileTrue(new SequentialCommandGroup(
             new DriveOverRamp(swerve, true),
             new GyroStabalize(swerve))
         );
+        
         rampBtn2.onTrue(new DriveOverRamp(swerve, false));
         wristHighBtn.onTrue(wrist.wristMotionMagic(Constants.Subsys.wristHigh));
         wristMidBtn.onTrue(wrist.wristMotionMagic(Constants.Subsys.wristMid));
@@ -150,11 +160,13 @@ public class RobotContainer {
         sliderInBtn.onTrue(new MoveSlider(slider, Constants.Subsys.sliderIn));
         sliderOutBtn.onTrue(new MoveSlider(slider, Constants.Subsys.sliderOut));
         stopIntakeBtn.onTrue(new StopIntake(hand));
+        
         stowBtn.onTrue(new ParallelCommandGroup(
             wrist.wristMotionMagic(Constants.Subsys.wristHigh),
             new MoveSlider(slider, Constants.Subsys.sliderIn),
             elevator.elevatorMotionMagic(Constants.Subsys.elevatorLow)
         ));
+        
         toFeederBtn.onTrue(ToFeeder.getToFeeder(elevator, slider, wrist));
         toHighBtn.onTrue(ToHigh.getToHigh(elevator, slider, wrist));
         toMidBtn.onTrue(ToMid.getToMid(elevator, slider, wrist));
@@ -203,7 +215,19 @@ public class RobotContainer {
                 break;
 
                 case "7":
-                selectedAuto = FlipTest.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
+                selectedAuto = ConeRScore2.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
+                break;
+                
+                case "8":
+                selectedAuto = Score1RampNew.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
+                break;
+                
+                case "9":
+                selectedAuto = CubeScore1Ramp.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
+                break;
+                
+                case "10":
+                selectedAuto = Score1DriveOut.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
                 break;
             }
 

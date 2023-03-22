@@ -6,7 +6,7 @@ import frc.robot.subsystems.Hand;
 public class Outtake extends CommandBase{
 
     private Hand handSubsystem; 
-
+    //intakes cubes. Outtakes cones.
     public Outtake(Hand hand) {
         handSubsystem = hand;
         addRequirements(handSubsystem);

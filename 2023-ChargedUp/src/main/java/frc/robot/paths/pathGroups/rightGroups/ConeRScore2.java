@@ -42,7 +42,7 @@ public class ConeRScore2 extends SequentialCommandGroup {
         return new SequentialCommandGroup(
             ToHigh.getToHigh(s_Elevator, s_Slider, wrist),
             new OuttakeAuto(s_Hand),
-            ConeRPickup2nd.followTrajectoryCommand(true, s_Swerve), //delete later
+            ConeRPickup2nd.followTrajectoryCommand(true, s_Swerve),
             ToGround.getToGround(s_Elevator, s_Slider, wrist),
             new IntakeAuto(hand),
             Stow.getStowCommand(s_Elevator, s_Slider, wrist),

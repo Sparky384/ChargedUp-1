@@ -26,6 +26,7 @@ public class Hand extends SubsystemBase
         motor.stopMotor();
     }
 
+    //intake for cubes
     public void shoot()
     {
         System.out.println("Out");
@@ -36,6 +37,7 @@ public class Hand extends SubsystemBase
         motor.set(0.0);
     }
 
+    //intake for cones.
     public void rollIn()
     {
         System.out.println("in");

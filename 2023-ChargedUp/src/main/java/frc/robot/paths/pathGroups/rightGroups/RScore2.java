@@ -39,14 +39,14 @@ public class RScore2 extends SequentialCommandGroup {
 
         return new SequentialCommandGroup(
             ToHigh.getToHigh(s_Elevator, s_Slider, wrist),
-            new OuttakeAuto(s_Hand),
+            new IntakeAuto(s_Hand), //assumes we start with cube so this is actually outtake for cube.
             RPickup2nd.followTrajectoryCommand(true, s_Swerve), //delete later
             ToGround.getToGround(s_Elevator, s_Slider, wrist),
-            new IntakeAuto(hand),
+            new IntakeAuto(hand), //picking up cone.
             Stow.getStowCommand(s_Elevator, s_Slider, wrist),
             RScore2nd.followTrajectoryCommand(false, s_Swerve),
             ToHigh.getToHigh(s_Elevator, s_Slider, wrist),
-            new OuttakeAuto(s_Hand)
+            new OuttakeAuto(s_Hand) //placing/scoring cone.
         );
     }
 }

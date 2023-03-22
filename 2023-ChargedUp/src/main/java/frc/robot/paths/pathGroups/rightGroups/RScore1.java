@@ -39,7 +39,7 @@ public class RScore1 extends SequentialCommandGroup{
 
         return new SequentialCommandGroup(
             ToHigh.getToHigh(s_Elevator, s_Slider, wrist),
-            new OuttakeAuto(s_Hand),
+            new IntakeAuto(s_Hand), //assumes we start with cube so this is outtake for cube
             Stow.getStowCommand(s_Elevator, s_Slider, wrist)
         );
     }
