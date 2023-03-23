@@ -45,9 +45,9 @@ public class FullRamp extends SequentialCommandGroup {
 
         return new SequentialCommandGroup(
             ToHigh.getToHigh(s_Elevator, s_Slider, wrist),
-            new OuttakeAuto(s_Hand),
+            new OuttakeAuto(s_Hand, Constants.AutoConstants.kAutoShootTimer),
             Stow.getStowCommand(s_Elevator, s_Slider, wrist),
-            new Drive(s_Swerve, -0.4, 0, 2.5),
+            new Drive(s_Swerve, -0.4, 0, 2.5, 0.0),
             new Pause(1.2),
             new DriveOnRamp(s_Swerve, true),
             new GyroStabalize(s_Swerve)

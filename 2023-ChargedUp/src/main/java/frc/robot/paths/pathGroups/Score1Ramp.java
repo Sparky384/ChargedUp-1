@@ -44,7 +44,7 @@ public class Score1Ramp extends SequentialCommandGroup {
 
         return new SequentialCommandGroup(
             ToHigh.getToHigh(s_Elevator, s_Slider, wrist),
-            new OuttakeAuto(s_Hand), //outtake for cone.
+            new OuttakeAuto(s_Hand, Constants.AutoConstants.kAutoShootTimer), //outtake for cone.
             Stow.getStowCommand(s_Elevator, s_Slider, wrist),
             //new DriveOverRamp(s_Swerve, false),
             new DriveOnRamp(s_Swerve, false),

@@ -1,4 +1,4 @@
-package frc.robot.paths.pathGroups;
+package frc.robot.paths.pathGroups.rightGroups;
 
 import frc.lib.pathplanner.com.pathplanner.lib.PathPlanner;
 import frc.lib.pathplanner.com.pathplanner.lib.PathPlannerTrajectory;
@@ -14,16 +14,18 @@ import frc.robot.subsystems.*;
 import frc.lib.pathplanner.com.pathplanner.lib.PathConstraints;
 import frc.robot.Constants;
 import frc.robot.commands.Drive;
+import frc.robot.commands.DriveTo;
 import frc.robot.commands.Stow;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.commands.ToGround;
 import frc.robot.commands.ToHigh;
-import frc.robot.paths.ConePath;
+import frc.robot.commands.TurnTo;
+import frc.robot.paths.rightPaths.*;
 import frc.robot.commands.ElevatorFunctionality.MoveElevator;
 import frc.robot.commands.SliderFunctionality.MoveSlider;
 import frc.robot.commands.WristFunctionality.*;
 
-public class Cone extends SequentialCommandGroup{
+public class Right2Score extends SequentialCommandGroup{
     private static Swerve s_Swerve;
     private static Elevator s_Elevator;
     private static Slider s_Slider;
@@ -39,11 +41,12 @@ public class Cone extends SequentialCommandGroup{
         s_Hand = hand;
 
         return new SequentialCommandGroup(
-            ToHigh.getToHigh(s_Elevator, s_Slider, wrist),
-            new OuttakeAuto(s_Hand, Constants.AutoConstants.kAutoShootTimer), //assumes we start with cube so this is outtake for cube
-            new MoveSlider(s_Slider, Constants.Subsys.sliderIn, 0),
-            Stow.getStowCommand(s_Elevator, s_Slider, wrist),
-            new Drive(s_Swerve, -0.4, 0.0, 2.25, 0.0)
+            new IntakeAuto(s_Hand), //assumes we start with cube so this is outtake for cube
+            new DriveTo(s_Swerve, 2.0, -3.0, 0.4, 0.4),
+            new DriveTo(s_Swerve, -150.0, 0.0, 0.4, 0.0),
+            new TurnTo(s_Swerve, 15),
+            ToGround.getToGround(s_Elevator, s_Slider, s_Wrist),
+            new ParallelCommandGroup(new OuttakeAuto(s_Hand, 1.75), new Drive(s_Swerve, 0.22, 0.0, 1.5, 0.0))
         );
     }
 }

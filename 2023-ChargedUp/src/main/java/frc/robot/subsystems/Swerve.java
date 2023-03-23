@@ -133,9 +133,8 @@ public class Swerve extends SubsystemBase {
         gyro.setYaw(0);
     }
 
-    public void reset() {
-        gyro.setYaw(0);
-        swerveOdometry.resetPosition(getYaw(), getModulePositions(), new Pose2d());
+    public void setAngle(double angle) {
+        gyro.setYaw(angle);
     }
     
     /* Gets pigeon angle in degrees */
@@ -158,7 +157,9 @@ public class Swerve extends SubsystemBase {
     @Override
     public void periodic(){
         swerveOdometry.update(getYaw(), getModulePositions());  
-        SmartDashboard.putNumber("gyto", getRoll());
+        SmartDashboard.putNumber("gyroYaw", getYaw().getDegrees());
+        SmartDashboard.putNumber("gyro", gyro.getYaw());
+        SmartDashboard.putString("pose", getPose().getX() + "  " + getPose().getY());
         gyroAngle.setDouble(gyro.getYaw());
 
         for(SwerveModule mod : mSwerveMods){

@@ -44,6 +44,13 @@ public class Hand extends SubsystemBase
         motor.set(-0.5); // -0.5
     }
 
+    public void outtakeCube()
+    {
+        System.out.println("shootingCube");
+        motor.set(-1); // -0.5
+    }
+
+
     public void keepIn() {
         motor.set(-0.1);
     }

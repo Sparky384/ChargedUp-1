@@ -9,56 +9,47 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Swerve;
 
-public class Drive extends CommandBase {
+public class TurnTo extends CommandBase {
 
-    private Timer timer;
     private Swerve s_Swerve;
-    private double x;
-    private double y;
     private double theta;
-    private double time;
 
-    public Drive(Swerve s, double xIn, double yIn, double timeIn, double angle) 
+    public TurnTo(Swerve s, double angle) 
     {
         s_Swerve = s;
         addRequirements(s_Swerve);
-        x = xIn;
-        y = yIn;
-        time = timeIn;
         theta = angle;
-        timer = new Timer();
     }
 
     public void initialize()
     {
-        timer.stop();
-        timer.reset();
-        timer.start();
     }
 
     public void execute() 
     {
-        s_Swerve.drive(new Translation2d(-x, y).times(Constants.Swerve.maxSpeed),
-            theta, 
+        var drive = 0.1;
+        if (theta > s_Swerve.getYaw().getDegrees())
+            drive = -0.1;
+        s_Swerve.drive(new Translation2d(0, 0),
+            drive, 
             false, 
             true);
     }
 
     public boolean isFinished() 
     {
-        System.out.println(timer.get() + "    " + time);
-        if (timer.hasElapsed(time))
+        if (Math.abs(s_Swerve.getYaw().getDegrees() - theta) < Constants.AutoConstants.angleThreshold)
             return true;
-        else
+        else 
             return false;
+        
     }
 
     public void end(boolean interrupted)
     {
-        s_Swerve.drive(new Translation2d(0.0, 0.0).times(Constants.Swerve.maxSpeed),
+        s_Swerve.drive(new Translation2d(0.0, 0.0),
             0, 
             false, 
             true);
-        System.out.println("I HATE LIFEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
     }
 }

@@ -9,12 +9,14 @@ import frc.robot.subsystems.Hand;
 public class OuttakeAuto extends CommandBase{
     
     Timer timer = new Timer();
+    private double time;
 
     private Hand handSubsystem; 
 
-    public OuttakeAuto(Hand hand) {
+    public OuttakeAuto(Hand hand, double t) {
         handSubsystem = hand;
         addRequirements(handSubsystem);
+        time = t;
     }
 
     public void initialize() {
@@ -28,7 +30,7 @@ public class OuttakeAuto extends CommandBase{
     }
 
     public boolean isFinished() {
-      if (timer.hasElapsed(Constants.AutoConstants.kAutoShootTimer))
+      if (timer.hasElapsed(time))
         return true;
       else
         return false;

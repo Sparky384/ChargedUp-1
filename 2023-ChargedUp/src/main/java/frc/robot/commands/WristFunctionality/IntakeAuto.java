@@ -26,7 +26,7 @@ public class IntakeAuto extends CommandBase{
 
     @Override
     public void execute() {
-        handSubsystem.rollIn(); 
+        handSubsystem.outtakeCube(); 
     }
 
     @Override

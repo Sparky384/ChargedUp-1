@@ -31,6 +31,7 @@ import frc.robot.commands.SliderFunctionality.MoveSlider;
 import frc.robot.commands.WristFunctionality.Intake;
 import frc.robot.commands.WristFunctionality.Outtake;
 import frc.robot.commands.WristFunctionality.RotateWrist;
+import frc.robot.commands.WristFunctionality.ShootCube;
 import frc.robot.commands.WristFunctionality.StopIntake;
 import frc.robot.subsystems.*;
 
@@ -57,12 +58,14 @@ public class RobotContainer {
     //Pilot
     private final Trigger intakeBtn = pilot.rightTrigger();
     private final Trigger outtakeBtn = pilot.leftTrigger();
+    private final Trigger shootCubeBtn = pilot.rightBumper();
     private final Trigger rampBtn = pilot.a();
     private final Trigger rampBtn2 = pilot.b();
     private final Trigger zeroGyroBtn = pilot.start();
     private final Trigger wristLowBtn = pilot.povDown();
     private final Trigger wristMidBtn = pilot.povRight();
     private final Trigger wristHighBtn = pilot.povUp();
+    //private final Trigger setAngle = pilot.x();
 
     // mid; ele low sli in wrist = 38.408
     // ho; ele hi sli out wrist low
@@ -79,6 +82,7 @@ public class RobotContainer {
     private final Trigger elevatorHighBtn = copilot.start();
     private final Trigger elevatorLowBtn = copilot.back();
     private final double elevatorJoystick = copilot.getLeftX();
+    
 
     /* Smartdashboard Choosers */
     private SendableChooser<String> autoChooser;
@@ -97,6 +101,7 @@ public class RobotContainer {
         autoChooser.addOption("CubeRight", "2");
         autoChooser.addOption("Cone", "3");
         autoChooser.addOption("Ramp", "4");
+        autoChooser.addOption("2ScoreRight", "5");
         
         //pilot controlling swerve
         swerve.setDefaultCommand(
@@ -136,6 +141,7 @@ public class RobotContainer {
         zeroGyroBtn.onTrue(new InstantCommand(() -> swerve.zeroGyro()));
         intakeBtn.whileTrue(new Intake(hand));
         outtakeBtn.whileTrue(new Outtake(hand));
+        shootCubeBtn.whileTrue(new ShootCube(hand));
         
         rampBtn.whileTrue(new SequentialCommandGroup(
             new DriveOverRamp(swerve, true),
@@ -146,6 +152,7 @@ public class RobotContainer {
         wristHighBtn.onTrue(wrist.wristMotionMagic(Constants.Subsys.wristHigh));
         wristMidBtn.onTrue(wrist.wristMotionMagic(Constants.Subsys.wristMid));
         wristLowBtn.onTrue(wrist.wristMotionMagic(Constants.Subsys.wristGround));
+        //setAngle.onTrue(new InstantCommand(() -> swerve.setAngle(180))); was testing command keeping in case we want to test it again.
 
         //copilot
         sliderInBtn.onTrue(new MoveSlider(slider, Constants.Subsys.sliderIn, 0.0));
@@ -173,7 +180,7 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-            swerve.reset();
+            swerve.setAngle(180);
 
             // Chooser for different autonomous functions.
             switch(autoChooser.getSelected()) {
@@ -203,6 +210,10 @@ public class RobotContainer {
                 case "4":
                 //selectedAuto = ScoreRamp.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
                 selectedAuto = FullRamp.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
+                break;
+                
+                case "5":
+                selectedAuto = Right2Score.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
                 break;
 
             }

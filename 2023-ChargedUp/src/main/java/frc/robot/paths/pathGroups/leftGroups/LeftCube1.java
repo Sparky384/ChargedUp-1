@@ -39,12 +39,12 @@ public class LeftCube1 extends SequentialCommandGroup{
         s_Hand = hand;
 
         return new SequentialCommandGroup(
-            ToHigh.getToHigh(s_Elevator, s_Slider, wrist),
+            //ToHigh.getToHigh(s_Elevator, s_Slider, wrist),
             new IntakeAuto(s_Hand), //assumes we start with cube so this is outtake for cube
-            new MoveSlider(s_Slider, Constants.Subsys.sliderIn, 0),
-            Stow.getStowCommand(s_Elevator, s_Slider, wrist),
-            new Drive(s_Swerve, -0.1, 0.2, 0.5),
-            new Drive(s_Swerve, -0.4, 0.0, 2.0)
+            //new MoveSlider(s_Slider, Constants.Subsys.sliderIn, 0),
+            //Stow.getStowCommand(s_Elevator, s_Slider, wrist),
+            new Drive(s_Swerve, -0.1, 0.2, 0.5, 0.0),
+            new Drive(s_Swerve, -0.4, 0.0, 2.0, 0.0)
         );
     }
 }

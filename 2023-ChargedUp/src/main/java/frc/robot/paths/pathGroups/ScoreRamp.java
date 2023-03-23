@@ -44,7 +44,7 @@ public class ScoreRamp extends SequentialCommandGroup {
 
         return new SequentialCommandGroup(
             ToHigh.getToHigh(s_Elevator, s_Slider, wrist),
-            new OuttakeAuto(s_Hand),
+            new OuttakeAuto(s_Hand, Constants.AutoConstants.kAutoShootTimer),
             Stow.getStowCommand(s_Elevator, s_Slider, wrist),
             new DriveOnRamp(s_Swerve, false),
             new GyroStabalize(s_Swerve)

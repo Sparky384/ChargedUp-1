@@ -166,6 +166,7 @@ public final class Constants {
 
         /* Intake and Outtake timers. */
         public static final double kAutoShootTimer = 0.5; //timer in seconds
+        public static final double angleThreshold = 0.5;
 
 
     
@@ -296,7 +297,7 @@ public final class Constants {
         public static final double elevatorHigh = 89800; //in counts
         public static final double sliderIn = 0.05;
         public static final double sliderOut = 10.75; //final in inches
-        public static final double wristGround = -13.184; //should be in degrees.
+        public static final double wristGround = -14.184; //should be in degrees.
         public static final double wristLow = 14.941; //should be in degrees.
         public static final double wristMid = 38.408; //should be in degrees.
         public static final double wristFeederStation = 17.900;
