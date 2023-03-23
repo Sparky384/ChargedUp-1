@@ -2,6 +2,7 @@ package frc.robot;
 
 import com.ctre.phoenix.platform.can.AutocacheState;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -14,14 +15,12 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.paths.JustDriveAuto;
-import frc.robot.paths.pathGroups.CubeScore1Ramp;
-import frc.robot.paths.pathGroups.Score1DriveOut;
-import frc.robot.paths.pathGroups.Score1Ramp;
-import frc.robot.paths.pathGroups.Score1RampNew;
-import frc.robot.paths.pathGroups.rightGroups.*;
+import frc.robot.paths.leftPaths.CubeLeft;
+//import frc.robot.paths.JustDriveAuto;
+import frc.robot.paths.pathGroups.*;
 import frc.robot.paths.pathGroups.leftGroups.*;
-import frc.robot.paths.JustRamp;
+import frc.robot.paths.pathGroups.rightGroups.*;
+//import frc.robot.paths.JustRamp;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
@@ -94,19 +93,11 @@ public class RobotContainer {
         // auto chooser final
         autoChooser.setDefaultOption("Do Nothing", "0");
         autoChooser.addOption("Do Nothing", "0");
-        autoChooser.addOption("Just Drive", "1");
-        autoChooser.addOption("RScore 1", "2");
-        autoChooser.addOption("LScore 1", "3");
-        autoChooser.addOption("Cone Score 1 Ramp", "4");
-        autoChooser.addOption("RScore 2", "5");
-        autoChooser.addOption("LScore 2", "6");
-        autoChooser.addOption("Cone R Score 2", "7");
-        autoChooser.addOption("Score 1 Ramp New", "8");
-        autoChooser.addOption("Cube Score 1 Ramp", "9");
-        autoChooser.addOption("Score and Drive", "10");
-
-        //autoChooser.addOption("TEST ONLY*** Flip test", "7");
-
+        autoChooser.addOption("CubeLeft", "1");
+        autoChooser.addOption("CubeRight", "2");
+        autoChooser.addOption("Cone", "3");
+        autoChooser.addOption("Ramp", "4");
+        
         //pilot controlling swerve
         swerve.setDefaultCommand(
             new TeleopSwerve(
@@ -157,13 +148,13 @@ public class RobotContainer {
         wristLowBtn.onTrue(wrist.wristMotionMagic(Constants.Subsys.wristGround));
 
         //copilot
-        sliderInBtn.onTrue(new MoveSlider(slider, Constants.Subsys.sliderIn));
-        sliderOutBtn.onTrue(new MoveSlider(slider, Constants.Subsys.sliderOut));
+        sliderInBtn.onTrue(new MoveSlider(slider, Constants.Subsys.sliderIn, 0.0));
+        sliderOutBtn.onTrue(new MoveSlider(slider, Constants.Subsys.sliderOut, 0.0));
         stopIntakeBtn.onTrue(new StopIntake(hand));
         
         stowBtn.onTrue(new ParallelCommandGroup(
             wrist.wristMotionMagic(Constants.Subsys.wristHigh),
-            new MoveSlider(slider, Constants.Subsys.sliderIn),
+            new MoveSlider(slider, Constants.Subsys.sliderIn, 0.0),
             elevator.elevatorMotionMagic(Constants.Subsys.elevatorLow)
         ));
         
@@ -182,6 +173,7 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
+            swerve.reset();
 
             // Chooser for different autonomous functions.
             switch(autoChooser.getSelected()) {
@@ -189,46 +181,30 @@ public class RobotContainer {
                 case "0":
                 selectedAuto = null;
                 break;
-
+                
                 case "1":
-                selectedAuto = JustDriveAuto.followTrajectoryCommand(true, swerve);
+                if (DriverStation.getAlliance() == DriverStation.Alliance.Red)
+                    selectedAuto = RightCube.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
+                else
+                    selectedAuto = LeftCube1.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
                 break;
 
                 case "2":
-                selectedAuto = RScore1.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
+                if (DriverStation.getAlliance() == DriverStation.Alliance.Red)
+                    selectedAuto = LeftCube1.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
+                else
+                    selectedAuto = RightCube.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
                 break;
-
+                
                 case "3":
-                selectedAuto = LScore1.followTrajectoryCommand(swerve, elevator, slider, wrist, hand); 
+                selectedAuto = Cone.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
                 break;
-
+                
                 case "4":
-                selectedAuto = Score1Ramp.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
+                //selectedAuto = ScoreRamp.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
+                selectedAuto = FullRamp.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
                 break;
 
-                case "5":
-                selectedAuto = RScore2.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
-                break;
-
-                case "6":
-                selectedAuto = LScore2.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
-                break;
-
-                case "7":
-                selectedAuto = ConeRScore2.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
-                break;
-                
-                case "8":
-                selectedAuto = Score1RampNew.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
-                break;
-                
-                case "9":
-                selectedAuto = CubeScore1Ramp.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
-                break;
-                
-                case "10":
-                selectedAuto = Score1DriveOut.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
-                break;
             }
 
         return selectedAuto;

@@ -132,6 +132,11 @@ public class Swerve extends SubsystemBase {
     public void zeroGyro() {
         gyro.setYaw(0);
     }
+
+    public void reset() {
+        gyro.setYaw(0);
+        swerveOdometry.resetPosition(getYaw(), getModulePositions(), new Pose2d());
+    }
     
     /* Gets pigeon angle in degrees */
     public Rotation2d getYaw() {

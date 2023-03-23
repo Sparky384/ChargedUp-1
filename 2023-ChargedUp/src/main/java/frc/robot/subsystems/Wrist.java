@@ -35,16 +35,16 @@ public class Wrist extends SubsystemBase{
         wristMotor = new WPI_TalonFX(Constants.CANPorts.wristMotor);
         wristMoving = false;
         wristMotor.setSensorPhase(true);
-        wristMotor.config_kP(0, 1.0);
+        wristMotor.config_kP(0, 1.2);
         wristMotor.config_kI(0, 0.0);
-        wristMotor.config_kD(0, 2.5);
+        wristMotor.config_kD(0, 3.2);
         wristMotor.config_kF(0, 0.0);
         
         wristMotor.set(ControlMode.PercentOutput, 0.0);
         wristMotor.setInverted(true);
         wristMotor.setNeutralMode(NeutralMode.Brake);
 
-        wristMotor.configClosedLoopPeakOutput(0, 0.1); //was 0.1
+        wristMotor.configClosedLoopPeakOutput(0, 0.28); //was 0.1
         wristMotor.configForwardSoftLimitEnable(true);
         wristMotor.configForwardSoftLimitThreshold(Constants.Subsys.wristLowerLimit); //800 119
         wristMotor.configReverseSoftLimitEnable(true);

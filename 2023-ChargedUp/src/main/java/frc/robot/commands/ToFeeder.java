@@ -16,7 +16,7 @@ public class ToFeeder
     {
         return new ParallelCommandGroup(
             elevator.elevatorMotionMagic(Constants.Subsys.elevatorFeederStation),
-            new MoveSlider(slider, Constants.Subsys.sliderIn),
+            new MoveSlider(slider, Constants.Subsys.sliderIn, 0.0),
             wrist.wristMotionMagic(Constants.Subsys.wristFeederStation)
         );
     }

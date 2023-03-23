@@ -16,7 +16,7 @@ public class ToLow
     {
         return new ParallelCommandGroup(
             elevator.elevatorMotionMagic(Constants.Subsys.elevatorLow),
-            new MoveSlider(slider, Constants.Subsys.sliderIn),
+            new MoveSlider(slider, Constants.Subsys.sliderIn, 0.0),
             wrist.wristMotionMagic(Constants.Subsys.wristLow)
         );
     }

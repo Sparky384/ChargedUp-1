@@ -46,7 +46,7 @@ public class Score1RampNew extends SequentialCommandGroup {
 
         return new SequentialCommandGroup(
             //ToHigh.getToHigh(s_Elevator, s_Slider, wrist),
-            //new OuttakeAuto(s_Hand),
+            //new OuttakeAuto(s_Hand), //outtake for cone.
             //Stow.getStowCommand(s_Elevator, s_Slider, wrist),
             JustRampNew.followTrajectoryCommand(true, s_Swerve),
             JustRampNew2.followTrajectoryCommand(true, s_Swerve),

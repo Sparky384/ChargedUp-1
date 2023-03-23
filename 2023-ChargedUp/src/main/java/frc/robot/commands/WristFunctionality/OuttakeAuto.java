@@ -18,6 +18,7 @@ public class OuttakeAuto extends CommandBase{
     }
 
     public void initialize() {
+        timer.stop();
         timer.reset();
         timer.start();
     }

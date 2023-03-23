@@ -17,6 +17,7 @@ import frc.robot.Constants;
 import frc.robot.commands.ElevatorFunctionality.MoveElevator;
 import frc.robot.commands.SliderFunctionality.MoveSlider;
 import frc.robot.commands.WristFunctionality.*;
+import frc.robot.commands.Drive;
 import frc.robot.commands.DriveOnRamp;
 import frc.robot.commands.DriveOverRamp;
 import frc.robot.commands.GyroStabalize;
@@ -26,7 +27,7 @@ import frc.robot.commands.ToHigh;
 import frc.robot.paths.JustRamp;
 import frc.robot.subsystems.*;
 
-public class Score1Ramp extends SequentialCommandGroup {
+public class FullRamp extends SequentialCommandGroup {
     private static Swerve s_Swerve;
     private static Elevator s_Elevator;
     private static Slider s_Slider;
@@ -44,11 +45,11 @@ public class Score1Ramp extends SequentialCommandGroup {
 
         return new SequentialCommandGroup(
             ToHigh.getToHigh(s_Elevator, s_Slider, wrist),
-            new OuttakeAuto(s_Hand), //outtake for cone.
+            new OuttakeAuto(s_Hand),
             Stow.getStowCommand(s_Elevator, s_Slider, wrist),
-            //new DriveOverRamp(s_Swerve, false),
-            new DriveOnRamp(s_Swerve, false),
-            //new Pause(0.75),
+            new Drive(s_Swerve, -0.4, 0, 2.5),
+            new Pause(1.2),
+            new DriveOnRamp(s_Swerve, true),
             new GyroStabalize(s_Swerve)
         );
     }

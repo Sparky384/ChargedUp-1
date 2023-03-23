@@ -165,8 +165,7 @@ public final class Constants {
         public static final double kPathMaxVelocity = 2.5; //1.0 was default   0.3
 
         /* Intake and Outtake timers. */
-        public static final double kAutoShootTimer = 1.0; //timer in seconds
-        public static final double kAutoIntakeTimer = 0.0; //timer in seconds
+        public static final double kAutoShootTimer = 0.5; //timer in seconds
 
 
     
@@ -312,7 +311,7 @@ public final class Constants {
         public static final double elevatorUpperLimit = 90370; //final
         public static final double elevatorLowerLimit = 0.0; //final
         public static final double elevatorThreshold = 500; //final (maybe)
-        public static final double elevatorArbitraryFeedForward = 0.06765;
+        public static final double elevatorArbitraryFeedForward = 0.07000;
         public static final double wristArbitraryFeedForward = 0.0;
 
         //Wrist Feedforward Constants

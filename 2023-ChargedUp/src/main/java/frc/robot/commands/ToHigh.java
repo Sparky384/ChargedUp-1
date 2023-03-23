@@ -16,7 +16,7 @@ public class ToHigh
     {
         return new ParallelCommandGroup(
             elevator.elevatorMotionMagic(Constants.Subsys.elevatorHigh),
-            new MoveSlider(slider, Constants.Subsys.sliderOut),
+            new MoveSlider(slider, Constants.Subsys.sliderOut, 1.25), //delay is in seconds
             wrist.wristMotionMagic(Constants.Subsys.wristHighGoal)
         );
     }

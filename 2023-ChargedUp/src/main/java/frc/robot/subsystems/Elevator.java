@@ -57,8 +57,8 @@ public class Elevator extends SubsystemBase {
         motorOne.configPeakOutputForward(1, Constants.Subsys.timeOutMs);
         motorOne.configPeakOutputReverse(-1, Constants.Subsys.timeOutMs);
         
-        motorOne.configMotionAcceleration(6400, 0);
-        motorOne.configMotionCruiseVelocity(6400, 0);
+        motorOne.configMotionAcceleration(9000, 0);
+        motorOne.configMotionCruiseVelocity(9000, 0);
         
         /* Slot 0 for going up the elevator */
         motorOne.config_kP(0, Constants.PIDValues.elevatorUpP); //0.1047

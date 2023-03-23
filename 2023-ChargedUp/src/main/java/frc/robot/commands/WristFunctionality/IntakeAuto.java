@@ -19,6 +19,7 @@ public class IntakeAuto extends CommandBase{
 
     @Override
     public void initialize() {
+        timer.stop();
         timer.reset();
         timer.start();
     }
@@ -30,7 +31,7 @@ public class IntakeAuto extends CommandBase{
 
     @Override
     public boolean isFinished() {
-      if (timer.hasElapsed(Constants.AutoConstants.kAutoIntakeTimer))
+      if (timer.hasElapsed(Constants.AutoConstants.kAutoShootTimer))
         return true;
       else 
         return false;

@@ -16,7 +16,7 @@ public class Stow
     {
         return new ParallelCommandGroup(
             wrist.wristMotionMagic(Constants.Subsys.wristHigh),
-            new MoveSlider(slider, Constants.Subsys.sliderIn),
+            new MoveSlider(slider, Constants.Subsys.sliderIn, 0.0),
             elevator.elevatorMotionMagic(Constants.Subsys.elevatorLow)
         );
     }
