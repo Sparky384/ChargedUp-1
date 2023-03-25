@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.paths.Score1RampCube;
 import frc.robot.paths.leftPaths.CubeLeft;
 //import frc.robot.paths.JustDriveAuto;
 import frc.robot.paths.pathGroups.*;
@@ -100,9 +101,11 @@ public class RobotContainer {
         autoChooser.addOption("CubeLeft", "1");
         autoChooser.addOption("CubeRight", "2");
         autoChooser.addOption("Cone", "3");
-        autoChooser.addOption("Ramp", "4");
-        autoChooser.addOption("2ScoreRight", "5");
-        
+        autoChooser.addOption("Ramp Cone", "4");
+        autoChooser.addOption("Ramp Cube", "5");
+        autoChooser.addOption("**TEST ONLY** 2 SCORE RIGHT", "6");
+        autoChooser.addOption("**TEST ONLY** OVER RAMP", "7");
+
         //pilot controlling swerve
         swerve.setDefaultCommand(
             new TeleopSwerve(
@@ -208,12 +211,19 @@ public class RobotContainer {
                 break;
                 
                 case "4":
-                //selectedAuto = ScoreRamp.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
-                selectedAuto = FullRamp.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
+                selectedAuto = ScoreRamp.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
+                break;
+
+                case "5":
+                selectedAuto = Score1RampCube.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
                 break;
                 
-                case "5":
+                case "6":
                 selectedAuto = Right2Score.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
+                break;
+
+                case "7":
+                selectedAuto = FullRamp.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
                 break;
 
             }

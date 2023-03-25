@@ -302,7 +302,7 @@ public final class Constants {
         public static final double wristMid = 38.408; //should be in degrees.
         public static final double wristFeederStation = 17.900;
         public static final double wristHigh = 90.0;
-        public static final double wristHighGoal = 10.0; //should be in degrees.
+        public static final double wristHighGoal = 0.0; //should be in degrees.
         public static final double wristAbsEncoderOffset = 0.0;
         /* Motion Magic Constants */
         public static final int timeOutMs = 10;
@@ -332,7 +332,7 @@ public final class Constants {
     }
 
     public static class RampConstants{
-        public static final double P = 0.0385; // P as in PID
+        public static final double P = 0.0395; // P as in PID, 385
         public static final double maxRampSpeed = 0.25; // percentage
     }
 

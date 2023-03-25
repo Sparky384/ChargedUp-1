@@ -1,4 +1,4 @@
-package frc.robot.paths.pathGroups;
+package frc.robot.paths;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.lib.pathplanner.com.pathplanner.lib.PathPlanner;
@@ -24,11 +24,9 @@ import frc.robot.commands.Pause;
 import frc.robot.commands.Stow;
 import frc.robot.commands.ToHigh;
 import frc.robot.paths.JustRamp;
-import frc.robot.paths.JustRampNew;
-import frc.robot.paths.JustRampNew2;
 import frc.robot.subsystems.*;
 
-public class Score1RampNew extends SequentialCommandGroup {
+public class Score1RampCube extends SequentialCommandGroup {
     private static Swerve s_Swerve;
     private static Elevator s_Elevator;
     private static Slider s_Slider;
@@ -45,11 +43,11 @@ public class Score1RampNew extends SequentialCommandGroup {
         s_Hand = hand;
 
         return new SequentialCommandGroup(
-            //ToHigh.getToHigh(s_Elevator, s_Slider, wrist),
-            //new OuttakeAuto(s_Hand), //outtake for cone.
-            //Stow.getStowCommand(s_Elevator, s_Slider, wrist),
-            JustRampNew.followTrajectoryCommand(true, s_Swerve),
-            JustRampNew2.followTrajectoryCommand(true, s_Swerve),
+            new IntakeAuto(hand),
+            Stow.getStowCommand(s_Elevator, s_Slider, wrist),
+            //new DriveOverRamp(s_Swerve, false),
+            new DriveOnRamp(s_Swerve, false),
+            //new Pause(0.75),
             new GyroStabalize(s_Swerve)
         );
     }

@@ -12,15 +12,18 @@ public class ShootCube extends CommandBase{
         addRequirements(handSubsystem);
     }
 
+    @Override
     public void execute() {
-        handSubsystem.shoot(); 
+        handSubsystem.outtakeCube(); 
     }
 
+    @Override
     public boolean isFinished() {
-      return false;
+        return false;
     }
 
+    @Override
     public void end(boolean interrupted) {
-        handSubsystem.keepOut();
+        handSubsystem.stop();   
     }
 }
