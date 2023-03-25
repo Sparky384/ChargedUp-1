@@ -43,7 +43,7 @@ public class Cone extends SequentialCommandGroup{
             new OuttakeAuto(s_Hand, Constants.AutoConstants.kAutoShootTimer), //assumes we start with cube so this is outtake for cube
             new MoveSlider(s_Slider, Constants.Subsys.sliderIn, 0),
             Stow.getStowCommand(s_Elevator, s_Slider, wrist),
-            new Drive(s_Swerve, -0.4, 0.0, 2.25, 0.0)
+            new Drive(s_Swerve, -0.4, 0.0, 2.45, 0.0)
         );
     }
 }

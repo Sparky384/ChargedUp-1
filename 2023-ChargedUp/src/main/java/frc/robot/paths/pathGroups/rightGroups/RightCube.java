@@ -44,7 +44,7 @@ public class RightCube extends SequentialCommandGroup{
             //new MoveSlider(s_Slider, Constants.Subsys.sliderIn, 0),
             //Stow.getStowCommand(s_Elevator, s_Slider, wrist),
             new Drive(s_Swerve, -0.1, -0.2, 0.5, 0.0),
-            new Drive(s_Swerve, -0.4, -0.0, 2.0, 0.0)
+            new Drive(s_Swerve, -0.4, -0.0, 2.3, 0.0)
         );
     }
 }

@@ -17,6 +17,7 @@ import frc.robot.Constants;
 import frc.robot.commands.ElevatorFunctionality.MoveElevator;
 import frc.robot.commands.SliderFunctionality.MoveSlider;
 import frc.robot.commands.WristFunctionality.*;
+import frc.robot.commands.Drive;
 import frc.robot.commands.DriveOnRamp;
 import frc.robot.commands.DriveOverRamp;
 import frc.robot.commands.GyroStabalize;
@@ -44,10 +45,9 @@ public class Score1RampCube extends SequentialCommandGroup {
 
         return new SequentialCommandGroup(
             new IntakeAuto(hand),
-            Stow.getStowCommand(s_Elevator, s_Slider, wrist),
-            //new DriveOverRamp(s_Swerve, false),
-            new DriveOnRamp(s_Swerve, false),
-            //new Pause(0.75),
+            new Drive(s_Swerve, -0.40, 0, 3, 0.0),
+            new Pause(1.25),
+            new DriveOnRamp(s_Swerve, true),
             new GyroStabalize(s_Swerve)
         );
     }

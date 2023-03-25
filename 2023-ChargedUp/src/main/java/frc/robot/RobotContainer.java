@@ -193,17 +193,19 @@ public class RobotContainer {
                 break;
                 
                 case "1":
-                if (DriverStation.getAlliance() == DriverStation.Alliance.Red)
+                selectedAuto = LeftCube1.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
+                /*if (DriverStation.getAlliance() == DriverStation.Alliance.Red)
                     selectedAuto = RightCube.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
                 else
-                    selectedAuto = LeftCube1.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
+                    selectedAuto = LeftCube1.followTrajectoryCommand(swerve, elevator, slider, wrist, hand); */
                 break;
 
                 case "2":
-                if (DriverStation.getAlliance() == DriverStation.Alliance.Red)
+                selectedAuto = RightCube.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
+                /*if (DriverStation.getAlliance() == DriverStation.Alliance.Red)
                     selectedAuto = LeftCube1.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
                 else
-                    selectedAuto = RightCube.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
+                    selectedAuto = RightCube.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);*/
                 break;
                 
                 case "3":
