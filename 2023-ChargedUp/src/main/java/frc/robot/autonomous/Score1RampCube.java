@@ -1,4 +1,4 @@
-package frc.robot.paths;
+package frc.robot.autonomous;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.lib.pathplanner.com.pathplanner.lib.PathPlanner;

@@ -1,4 +1,4 @@
-package frc.robot.paths.pathGroups.rightGroups;
+package frc.robot.autonomous;
 
 import frc.lib.pathplanner.com.pathplanner.lib.PathPlanner;
 import frc.lib.pathplanner.com.pathplanner.lib.PathPlannerTrajectory;
@@ -23,7 +23,7 @@ import frc.robot.commands.ElevatorFunctionality.MoveElevator;
 import frc.robot.commands.SliderFunctionality.MoveSlider;
 import frc.robot.commands.WristFunctionality.*;
 
-public class RightCube extends SequentialCommandGroup{
+public class LeftCube1 extends SequentialCommandGroup{
     private static Swerve s_Swerve;
     private static Elevator s_Elevator;
     private static Slider s_Slider;
@@ -43,8 +43,8 @@ public class RightCube extends SequentialCommandGroup{
             new IntakeAuto(s_Hand), //assumes we start with cube so this is outtake for cube
             //new MoveSlider(s_Slider, Constants.Subsys.sliderIn, 0),
             //Stow.getStowCommand(s_Elevator, s_Slider, wrist),
-            new Drive(s_Swerve, -0.1, -0.2, 0.5, 0.0),
-            new Drive(s_Swerve, -0.4, -0.0, 2.3, 0.0)
+            new Drive(s_Swerve, -0.1, 0.2, 0.5, 0.0),
+            new Drive(s_Swerve, -0.4, 0.0, 2.3, 0.0)
         );
     }
 }

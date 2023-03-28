@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.paths.Score1RampCube;
 import frc.robot.paths.leftPaths.CubeLeft;
 //import frc.robot.paths.JustDriveAuto;
 import frc.robot.paths.pathGroups.*;
@@ -24,7 +23,11 @@ import frc.robot.paths.pathGroups.rightGroups.*;
 //import frc.robot.paths.JustRamp;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-
+import frc.robot.autonomous.Cone;
+import frc.robot.autonomous.LeftCube1;
+import frc.robot.autonomous.RightCube;
+import frc.robot.autonomous.Score1RampCube;
+import frc.robot.autonomous.ScoreRamp;
 import frc.robot.commands.*;
 import frc.robot.commands.ElevatorFunctionality.ManualElevator;
 import frc.robot.commands.ElevatorFunctionality.MoveElevator;
@@ -194,18 +197,10 @@ public class RobotContainer {
                 
                 case "1":
                 selectedAuto = LeftCube1.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
-                /*if (DriverStation.getAlliance() == DriverStation.Alliance.Red)
-                    selectedAuto = RightCube.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
-                else
-                    selectedAuto = LeftCube1.followTrajectoryCommand(swerve, elevator, slider, wrist, hand); */
                 break;
 
                 case "2":
                 selectedAuto = RightCube.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
-                /*if (DriverStation.getAlliance() == DriverStation.Alliance.Red)
-                    selectedAuto = LeftCube1.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
-                else
-                    selectedAuto = RightCube.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);*/
                 break;
                 
                 case "3":
