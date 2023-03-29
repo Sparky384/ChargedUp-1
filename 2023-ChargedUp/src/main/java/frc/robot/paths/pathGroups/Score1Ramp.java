@@ -17,12 +17,12 @@ import frc.robot.Constants;
 import frc.robot.commands.ElevatorFunctionality.MoveElevator;
 import frc.robot.commands.SliderFunctionality.MoveSlider;
 import frc.robot.commands.WristFunctionality.*;
-import frc.robot.commands.DriveOnRamp;
-import frc.robot.commands.DriveOverRamp;
-import frc.robot.commands.GyroStabalize;
 import frc.robot.commands.Pause;
-import frc.robot.commands.Stow;
-import frc.robot.commands.ToHigh;
+import frc.robot.commands.CommandGroups.Stow;
+import frc.robot.commands.CommandGroups.ToHigh;
+import frc.robot.commands.DriveFunctionality.DriveOnRamp;
+import frc.robot.commands.DriveFunctionality.DriveOverRamp;
+import frc.robot.commands.DriveFunctionality.GyroStabalize;
 import frc.robot.paths.JustRamp;
 import frc.robot.subsystems.*;
 

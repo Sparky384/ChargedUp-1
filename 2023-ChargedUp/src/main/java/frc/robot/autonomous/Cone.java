@@ -1,25 +1,12 @@
 package frc.robot.autonomous;
 
-import frc.lib.pathplanner.com.pathplanner.lib.PathPlanner;
-import frc.lib.pathplanner.com.pathplanner.lib.PathPlannerTrajectory;
-import frc.lib.pathplanner.com.pathplanner.lib.commands.PPSwerveControllerCommand;
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 import frc.robot.subsystems.*;
-import frc.lib.pathplanner.com.pathplanner.lib.PathConstraints;
 import frc.robot.Constants;
-import frc.robot.commands.Drive;
-import frc.robot.commands.Stow;
-import frc.robot.commands.TeleopSwerve;
-import frc.robot.commands.ToGround;
-import frc.robot.commands.ToHigh;
-import frc.robot.paths.ConePath;
-import frc.robot.commands.ElevatorFunctionality.MoveElevator;
+import frc.robot.commands.DriveFunctionality.Drive;
+import frc.robot.commands.CommandGroups.*;
 import frc.robot.commands.SliderFunctionality.MoveSlider;
 import frc.robot.commands.WristFunctionality.*;
 
@@ -39,10 +26,10 @@ public class Cone extends SequentialCommandGroup{
         s_Hand = hand;
 
         return new SequentialCommandGroup(
-            ToHigh.getToHigh(s_Elevator, s_Slider, wrist),
+            ToHigh.getToHigh(s_Elevator, s_Slider, s_Wrist),
             new OuttakeAuto(s_Hand, Constants.AutoConstants.kAutoShootTimer), //assumes we start with cube so this is outtake for cube
             new MoveSlider(s_Slider, Constants.Subsys.sliderIn, 0),
-            Stow.getStowCommand(s_Elevator, s_Slider, wrist),
+            Stow.getStowCommand(s_Elevator, s_Slider, s_Wrist),
             new Drive(s_Swerve, -0.4, 0.0, 2.45, 0.0)
         );
     }

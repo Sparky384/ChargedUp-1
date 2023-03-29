@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.DriveFunctionality;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -15,7 +15,6 @@ public class GyroStabalize extends CommandBase {
     }
 
     public void execute() {
-        // - = going up
         SmartDashboard.putBoolean("gyro on", true);
         double output = (s_swerve.getRoll() * Constants.RampConstants.P);
 

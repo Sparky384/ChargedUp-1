@@ -1,6 +1,5 @@
-package frc.robot.commands;
+package frc.robot.commands.CommandGroups;
 
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.Constants;
@@ -16,7 +15,7 @@ public class ToHigh
     {
         return new ParallelCommandGroup(
             elevator.elevatorMotionMagic(Constants.Subsys.elevatorHigh),
-            new MoveSlider(slider, Constants.Subsys.sliderOut, 1.65), //delay is in seconds, 1.25
+            new MoveSlider(slider, Constants.Subsys.sliderOut, 1.65), 
             wrist.wristMotionMagic(Constants.Subsys.wristHighGoal)
         );
     }

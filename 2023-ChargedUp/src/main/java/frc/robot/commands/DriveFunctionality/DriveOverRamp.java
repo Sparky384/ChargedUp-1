@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.DriveFunctionality;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.Timer;

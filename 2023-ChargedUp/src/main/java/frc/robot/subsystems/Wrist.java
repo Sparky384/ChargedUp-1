@@ -4,22 +4,12 @@ import java.util.function.DoubleSupplier;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.RemoteFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.sensors.CANCoder;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.revrobotics.SparkMaxAbsoluteEncoder;
-import com.revrobotics.SparkMaxPIDController;
 
-import edu.wpi.first.wpilibj.motorcontrol.Spark;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -44,11 +34,11 @@ public class Wrist extends SubsystemBase{
         wristMotor.setInverted(true);
         wristMotor.setNeutralMode(NeutralMode.Brake);
 
-        wristMotor.configClosedLoopPeakOutput(0, 0.28); //was 0.1
+        wristMotor.configClosedLoopPeakOutput(0, 0.28); 
         wristMotor.configForwardSoftLimitEnable(true);
-        wristMotor.configForwardSoftLimitThreshold(Constants.Subsys.wristLowerLimit); //800 119
+        wristMotor.configForwardSoftLimitThreshold(Constants.Subsys.wristLowerLimit); 
         wristMotor.configReverseSoftLimitEnable(true);
-        wristMotor.configReverseSoftLimitThreshold(Constants.Subsys.wristUpperLimit); //-400 1534
+        wristMotor.configReverseSoftLimitThreshold(Constants.Subsys.wristUpperLimit);
         
         wristMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, Constants.Subsys.timeOutMs);
         wristMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, Constants.Subsys.timeOutMs);
@@ -84,7 +74,7 @@ public class Wrist extends SubsystemBase{
 
     public CommandBase wristStick(DoubleSupplier stick) {
         
-        return run(() -> {wristMotor.set(TalonFXControlMode.PercentOutput, (stick.getAsDouble()) / 2);}). //SmartDashboard.putNumber("wristStick", (stick.getAsDouble()) / 2); 
+        return run(() -> {wristMotor.set(TalonFXControlMode.PercentOutput, (stick.getAsDouble()) / 2);}). 
         finallyDo(interrupted -> wristMotor.set(TalonFXControlMode.PercentOutput, 0.0)).
         withName("driveWrist");
     }
@@ -94,8 +84,8 @@ public class Wrist extends SubsystemBase{
     }
 
     public double calculateFF(double currentAngle){
-        double armLength = Constants.Subsys.wristLengthMain; //need to switch to backup if using backup - in inches.
-        double armWeight = Constants.Subsys.wristWeightMain; //need to switch to backup if using backup - in lbs.
+        double armLength = Constants.Subsys.wristLengthMain; 
+        double armWeight = Constants.Subsys.wristWeightMain; 
 
         //Redline Motor
         double motorOhms = Constants.Subsys.wristMotorOhms;

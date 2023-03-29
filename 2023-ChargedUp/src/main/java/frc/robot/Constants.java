@@ -257,39 +257,6 @@ public final class Constants {
         public static final int hand = 17; //final 17
     }
 
-    /*public static class ButtonMap{
-        public static class Pilot{
-            public static final int toggleLED = XboxController.Button.kBack.value;
-            public static final int driveOnRampSequence = XboxController.Button.kStart.value;
-            public static final int pickupObject = XboxController.Button.kA.value;
-            public static final int dropObject = XboxController.Button.kB.value;
-            public static final int slowDrive = 1; //this will obviously turn into our RT value once it's made if we even put it here.
-            public static final int autoTrackLeft = XboxController.Button.kLeftBumper.value;
-            public static final int autoTrackRight = XboxController.Button.kRightBumper.value;
-        }
-        public static class Copilot{
-            //public static final int zeroGyro = XboxController.Button.kX.value;
-
-            /* finalized button values. */
-            /*public static final int sliderIn = XboxController.Button.kBack.value;
-            public static final int sliderOut = XboxController.Button.kStart.value;
-            public static final int elevatorLow = XboxController.Button.kB.value;
-            public static final int elevatorMid = XboxController.Button.kX.value;
-            public static final int elevatorHigh = XboxController.Button.kY.value;
-            public static final int lowGoalLimelight = XboxController.Button.kLeftStick.value;
-            public static final int highGoalLimelight = XboxController.Button.kB.value;
-            public static final int coneLimelight = 1; //turn to LT once made
-            public static final int cubeLimelight = 1; //turn to RT once made
-            public static final int handIntake = XboxController.Button.kLeftBumper.value;
-            public static final int handOuttake = XboxController.Button.kRightBumper.value;
-            //replace button values with dPad values in this order: Up, Right, Left, Down
-            public static final int wristHigh = 1;
-            public static final int wristMid = 1;
-            public static final int wristLow = 1;
-            public static final int wristGround = 1;
-        }
-
-    }*/
     public static class Subsys{
         public static final double elevatorLow = 50;
         public static final double elevatorMid = 50; //in counts

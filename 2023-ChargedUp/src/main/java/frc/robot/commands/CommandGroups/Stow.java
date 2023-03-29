@@ -1,10 +1,8 @@
-package frc.robot.commands;
+package frc.robot.commands.CommandGroups;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
 import frc.robot.commands.SliderFunctionality.MoveSlider;
-import frc.robot.commands.WristFunctionality.RotateWrist;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Slider;
 import frc.robot.subsystems.Wrist;

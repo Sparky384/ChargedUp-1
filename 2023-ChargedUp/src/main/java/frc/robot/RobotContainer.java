@@ -15,27 +15,22 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.paths.leftPaths.CubeLeft;
-//import frc.robot.paths.JustDriveAuto;
 import frc.robot.paths.pathGroups.*;
-import frc.robot.paths.pathGroups.leftGroups.*;
-import frc.robot.paths.pathGroups.rightGroups.*;
-//import frc.robot.paths.JustRamp;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import frc.robot.autonomous.Cone;
-import frc.robot.autonomous.LeftCube1;
-import frc.robot.autonomous.RightCube;
-import frc.robot.autonomous.Score1RampCube;
-import frc.robot.autonomous.ScoreRamp;
 import frc.robot.commands.*;
+import frc.robot.commands.CommandGroups.ToFeeder;
+import frc.robot.commands.CommandGroups.ToGround;
+import frc.robot.commands.CommandGroups.ToHigh;
+import frc.robot.commands.CommandGroups.ToLow;
+import frc.robot.commands.CommandGroups.ToMid;
+import frc.robot.commands.DriveFunctionality.DriveOverRamp;
+import frc.robot.commands.DriveFunctionality.GyroStabalize;
+import frc.robot.commands.DriveFunctionality.TeleopSwerve;
 import frc.robot.commands.ElevatorFunctionality.ManualElevator;
 import frc.robot.commands.ElevatorFunctionality.MoveElevator;
 import frc.robot.commands.SliderFunctionality.MoveSlider;
 import frc.robot.commands.WristFunctionality.Intake;
 import frc.robot.commands.WristFunctionality.Outtake;
 import frc.robot.commands.WristFunctionality.RotateWrist;
-import frc.robot.commands.WristFunctionality.ShootCube;
 import frc.robot.commands.WristFunctionality.StopIntake;
 import frc.robot.subsystems.*;
 
@@ -69,10 +64,7 @@ public class RobotContainer {
     private final Trigger wristLowBtn = pilot.povDown();
     private final Trigger wristMidBtn = pilot.povRight();
     private final Trigger wristHighBtn = pilot.povUp();
-    //private final Trigger setAngle = pilot.x();
 
-    // mid; ele low sli in wrist = 38.408
-    // ho; ele hi sli out wrist low
     //copilot
     private final Trigger stopIntakeBtn = copilot.rightBumper();
     private final Trigger stowBtn = copilot.leftBumper();
@@ -85,29 +77,36 @@ public class RobotContainer {
     private final Trigger toGroundBtn = copilot.povRight();
     private final Trigger elevatorHighBtn = copilot.start();
     private final Trigger elevatorLowBtn = copilot.back();
-    private final double elevatorJoystick = copilot.getLeftX();
     
-
     /* Smartdashboard Choosers */
-    private SendableChooser<String> autoChooser;
+    private SendableChooser<autoChooserEnum> autoChooser;
     
-
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
-    public RobotContainer() {        
+    enum autoChooserEnum{
+        DO_NOTHING,
+        CUBE_LEFT,
+        CUBE_RIGHT,
+        CONE,
+        RAMP_CONE,
+        RAMP_CUBE;
+    }
+
+
+    public RobotContainer() {   
+             
         /* Autonomous chooser */
-        autoChooser = new SendableChooser<String>();
+        autoChooser = new SendableChooser<>();
         SmartDashboard.putData("Autonomous Mode Chooser", autoChooser);
 
+
         // auto chooser final
-        autoChooser.setDefaultOption("Do Nothing", "0");
-        autoChooser.addOption("Do Nothing", "0");
-        autoChooser.addOption("CubeLeft", "1");
-        autoChooser.addOption("CubeRight", "2");
-        autoChooser.addOption("Cone", "3");
-        autoChooser.addOption("Ramp Cone", "4");
-        autoChooser.addOption("Ramp Cube", "5");
-        autoChooser.addOption("**TEST ONLY** 2 SCORE RIGHT", "6");
-        autoChooser.addOption("**TEST ONLY** OVER RAMP", "7");
+        autoChooser.setDefaultOption("Do Nothing", autoChooserEnum.DO_NOTHING);
+        autoChooser.addOption("Do Nothing", autoChooserEnum.DO_NOTHING);
+        autoChooser.addOption("CubeLeft", autoChooserEnum.CUBE_LEFT);
+        autoChooser.addOption("CubeRight", autoChooserEnum.CUBE_RIGHT);
+        autoChooser.addOption("Cone", autoChooserEnum.CONE);
+        autoChooser.addOption("Ramp Cone", autoChooserEnum.RAMP_CONE);
+        autoChooser.addOption("Ramp Cube", autoChooserEnum.RAMP_CUBE);
 
         //pilot controlling swerve
         swerve.setDefaultCommand(
@@ -120,18 +119,6 @@ public class RobotContainer {
             )
         );
 
-        // Copilot Manual Elevator
-
-        /*elevator.setDefaultCommand(
-            new ManualElevator(
-                elevator,
-                () -> copilot.getRightY()
-            )
-        );*/
-        
-        //wrist.setDefaultCommand(wrist.wristStick(() -> copilot.getLeftY())); //for manual wrist control with stick
-        
-        // Configure the button bindings
         configureButtonBindings();
     }
 
@@ -191,38 +178,29 @@ public class RobotContainer {
             // Chooser for different autonomous functions.
             switch(autoChooser.getSelected()) {
 
-                case "0":
+                case DO_NOTHING:
                 selectedAuto = null;
                 break;
                 
-                case "1":
+                case CUBE_LEFT:
                 selectedAuto = LeftCube1.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
                 break;
 
-                case "2":
+                case CUBE_RIGHT:
                 selectedAuto = RightCube.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
                 break;
                 
-                case "3":
+                case CONE:
                 selectedAuto = Cone.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
                 break;
                 
-                case "4":
+                case RAMP_CONE:
                 selectedAuto = ScoreRamp.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
                 break;
 
-                case "5":
+                case RAMP_CUBE:
                 selectedAuto = Score1RampCube.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
                 break;
-                
-                case "6":
-                selectedAuto = Right2Score.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
-                break;
-
-                case "7":
-                selectedAuto = FullRamp.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
-                break;
-
             }
 
         return selectedAuto;
