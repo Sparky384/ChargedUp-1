@@ -1,6 +1,5 @@
 package frc.robot.commands;
 
-import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Swerve;
@@ -22,13 +21,12 @@ public class AutoCenter extends CommandBase
         camera = cam;
 
         addRequirements(swerve);
-        // does not need to require limelight, all it does is read from it never write to it
     }
 
     @Override
     public void execute()
     {
-        if (lime.getX(camera) < lime.errorNum) // no target seen
+        if (lime.getX(camera) < lime.errorNum) 
         {
             double translationVal = 0.6;
             if (!right)

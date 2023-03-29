@@ -1,25 +1,12 @@
 package frc.robot.autonomous;
 
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 import frc.robot.subsystems.*;
-import frc.robot.Constants;
-import frc.robot.commands.Drive;
-import frc.robot.commands.Pause;
-import frc.robot.commands.Stow;
-import frc.robot.commands.TeleopSwerve;
-import frc.robot.commands.ToGround;
-import frc.robot.commands.ToHigh;
-import frc.robot.paths.rightPaths.*;
-import frc.robot.commands.ElevatorFunctionality.MoveElevator;
-import frc.robot.commands.SliderFunctionality.MoveSlider;
+import frc.robot.commands.CommandGroups.Stow;
 import frc.robot.commands.WristFunctionality.*;
-import frc.robot.commands.Pause;
 
 import frc.robot.paths.rightPaths.Blue2ScoreRightPickup;
 import frc.robot.paths.rightPaths.Blue2ScoreRightScore;

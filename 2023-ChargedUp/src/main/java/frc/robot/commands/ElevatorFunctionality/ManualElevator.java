@@ -1,15 +1,5 @@
 package frc.robot.commands.ElevatorFunctionality;
 
-import frc.robot.Constants;
-import frc.robot.subsystems.Elevator;
-
-import java.util.function.BooleanSupplier;
-import java.util.function.DoubleSupplier;
-
-import javax.lang.model.util.ElementScanner14;
-
-import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class ManualElevator extends CommandBase{

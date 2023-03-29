@@ -1,31 +1,19 @@
 package frc.robot.autonomous;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 
 import frc.robot.subsystems.Swerve;
 import frc.robot.Constants;
-import frc.robot.commands.ElevatorFunctionality.MoveElevator;
-import frc.robot.commands.SliderFunctionality.MoveSlider;
 import frc.robot.commands.WristFunctionality.*;
-import frc.robot.commands.DriveOnRamp;
-import frc.robot.commands.DriveOverRamp;
-import frc.robot.commands.GyroStabalize;
-import frc.robot.commands.Pause;
-import frc.robot.commands.Stow;
-import frc.robot.commands.ToHigh;
+import frc.robot.commands.DriveFunctionality.*;
+import frc.robot.commands.CommandGroups.*;
 import frc.robot.subsystems.*;
 
 public class ScoreRamp extends SequentialCommandGroup {
     private static Swerve s_Swerve;
     private static Elevator s_Elevator;
     private static Slider s_Slider;
-    private static Wrist s_Wrist;
     private static Hand s_Hand;
     
 
@@ -34,7 +22,6 @@ public class ScoreRamp extends SequentialCommandGroup {
         s_Swerve = swerve;
         s_Elevator = elevator;
         s_Slider = slider;
-        s_Wrist = wrist;
         s_Hand = hand;
 
         return new SequentialCommandGroup(

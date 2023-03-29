@@ -1,7 +1,6 @@
 package frc.robot.commands.ElevatorFunctionality;
 
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Elevator;
@@ -20,22 +19,17 @@ public class MoveElevator extends CommandBase {
         addRequirements(elevatorSubsystem);
         timer.stop();
         timer.reset();
-        System.out.println("MoveElevator");
     }
 
     public void initialize() {
         timer.stop();
         timer.reset();
-        System.out.println("initialize");
     }
 
     public void execute() {
-        //elevatorSubsystem.move(elevatorHeight); 
-        System.out.println("execute");
     }
 
     public boolean isFinished(){
-        System.out.println("isFinished");
         if (elevatorSubsystem.getHeight() > 20)
             return true;
 
