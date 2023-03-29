@@ -18,14 +18,13 @@ public class Drive extends CommandBase {
     private double theta;
     private double time;
 
-    public Drive(Swerve s, double xIn, double yIn, double timeIn, double angle) 
+    public Drive(Swerve s, double xIn, double yIn, double timeIn) 
     {
         s_Swerve = s;
         addRequirements(s_Swerve);
         x = xIn;
         y = yIn;
         time = timeIn;
-        theta = angle;
         timer = new Timer();
     }
 
@@ -39,7 +38,7 @@ public class Drive extends CommandBase {
     public void execute() 
     {
         s_Swerve.drive(new Translation2d(-x, y).times(Constants.Swerve.maxSpeed),
-            theta, 
+            0.0, 
             false, 
             true);
     }

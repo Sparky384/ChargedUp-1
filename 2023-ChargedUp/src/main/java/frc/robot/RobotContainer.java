@@ -15,19 +15,9 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.paths.leftPaths.CubeLeft;
-//import frc.robot.paths.JustDriveAuto;
-import frc.robot.paths.pathGroups.*;
-import frc.robot.paths.pathGroups.leftGroups.*;
-import frc.robot.paths.pathGroups.rightGroups.*;
-//import frc.robot.paths.JustRamp;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import frc.robot.autonomous.Cone;
-import frc.robot.autonomous.LeftCube1;
-import frc.robot.autonomous.RightCube;
-import frc.robot.autonomous.Score1RampCube;
-import frc.robot.autonomous.ScoreRamp;
+import frc.robot.autonomous.*;
 import frc.robot.commands.*;
 import frc.robot.commands.ElevatorFunctionality.ManualElevator;
 import frc.robot.commands.ElevatorFunctionality.MoveElevator;
@@ -106,8 +96,10 @@ public class RobotContainer {
         autoChooser.addOption("Cone", "3");
         autoChooser.addOption("Ramp Cone", "4");
         autoChooser.addOption("Ramp Cube", "5");
-        autoChooser.addOption("**TEST ONLY** 2 SCORE RIGHT", "6");
-        autoChooser.addOption("**TEST ONLY** OVER RAMP", "7");
+        autoChooser.addOption("2 Score Cube Right", "6"); //uses only blue side at the moment.
+        autoChooser.addOption("2 Score Cube Right Ramp ", "7"); //uses only blue side at the moment.
+        //autoChooser.addOption("**TEST ONLY** 2 SCORE RIGHT", "6");
+        //autoChooser.addOption("**TEST ONLY** OVER RAMP", "7");
 
         //pilot controlling swerve
         swerve.setDefaultCommand(
@@ -216,11 +208,11 @@ public class RobotContainer {
                 break;
                 
                 case "6":
-                selectedAuto = Right2Score.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
+                selectedAuto = Blue2ScoreRight.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
                 break;
 
                 case "7":
-                selectedAuto = FullRamp.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
+                selectedAuto = Blue2ScoreRightRampAuto.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
                 break;
 
             }

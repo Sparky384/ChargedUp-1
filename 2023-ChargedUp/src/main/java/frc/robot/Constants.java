@@ -176,11 +176,11 @@ public final class Constants {
          * Values appear to be affecting how quickly the motors can change. (maybe)
          */
         /* pathplanner controller PIDs. Make sure these have "final" in them when not tuning. */
-        public static final double kPPathXController = 1.0; //0.05
-        public static final double kPPathYController = 0.23;
+        public static final double kPPathXController = 1.0; //1.0
+        public static final double kPPathYController = 1.0; //0.23
 
-        public static final double kPPathThetaController = 1.575; //.9 looked good on swerveboard bot.
-        public static final double kIPathThetaController = 0.0;
+        public static final double kPPathThetaController = 1.0; //1.575
+        public static final double kIPathThetaController = 0.0; //0.0
 
         // for changing PIDs for Auto with Smartdashboard. remove "final" from variable. Comment ones not being used.
         /*public static void smartDashboardAutoPIDs() {

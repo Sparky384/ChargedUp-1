@@ -1,20 +1,20 @@
-package frc.robot.paths.leftPaths;
+package frc.robot.paths;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.lib.pathplanner.com.pathplanner.lib.PathConstraints;
-import frc.lib.pathplanner.com.pathplanner.lib.PathPlanner;
-import frc.lib.pathplanner.com.pathplanner.lib.PathPlannerTrajectory;
-import frc.lib.pathplanner.com.pathplanner.lib.commands.PPSwerveControllerCommand;
+import com.pathplanner.lib.PathPlanner;
+import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.commands.PPSwerveControllerCommand;
+import com.pathplanner.lib.PathConstraints;
 import frc.robot.Constants;
 import frc.robot.subsystems.Swerve;
 
-public class CubeLeft extends SequentialCommandGroup {
+public class DistrictTest extends SequentialCommandGroup {
     private static Swerve s_Swerve;
 
-    static PathPlannerTrajectory trajectory = PathPlanner.loadPath("BlueCubeLeft", new PathConstraints(Constants.AutoConstants.kPathMaxVelocity, Constants.AutoConstants.kPathMaxAcceleration));
+    static PathPlannerTrajectory trajectory = PathPlanner.loadPath("districttest", new PathConstraints(Constants.AutoConstants.kPathMaxVelocity, Constants.AutoConstants.kPathMaxAcceleration));
 
         // Assuming this method is part of a drivetrain subsystem that provides the necessary methods
     public static CommandBase followTrajectoryCommand(boolean isFirstPath, Swerve s) {
@@ -23,6 +23,11 @@ public class CubeLeft extends SequentialCommandGroup {
             new InstantCommand(() -> {
             // Reset odometry for the first path you run during auto
             if(isFirstPath){
+                /*
+                PathPlannerTrajectory transformed = PathPlannerTrajectory.transformTrajectoryForAlliance(trajectory, DriverStation.getAlliance());
+                s_Swerve.resetOdometry(transformed.getInitialHolonomicPose());
+                */
+
                 s_Swerve.resetOdometry(trajectory.getInitialHolonomicPose());
             }
             }),
