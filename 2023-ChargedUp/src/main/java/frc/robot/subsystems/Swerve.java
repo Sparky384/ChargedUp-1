@@ -154,7 +154,7 @@ public class Swerve extends SubsystemBase {
         SmartDashboard.putNumber("gyro roll", getRoll());
         gyroAngle.setDouble(gyro.getYaw());
 
-        for(SwerveModule mod : mSwerveMods){
+        for(SwerveModule mod : mSwerveMods){ //smartdashboard stuff for individual mods go here.
         }
     }
 }

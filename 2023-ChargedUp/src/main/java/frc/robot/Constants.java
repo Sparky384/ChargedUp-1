@@ -22,6 +22,9 @@ public final class Constants {
 
     public static final double elevatorSpeedLimit = 0.3;
     public static final double elevatorDownSpeedLimit = 0.0;
+    public static final double SlowBtnSpeed = 0.3; //in percent
+
+    
 
     public static final class Swerve {
         public static final int pigeonID = 20;

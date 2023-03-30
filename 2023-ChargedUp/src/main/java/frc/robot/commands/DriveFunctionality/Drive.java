@@ -13,7 +13,6 @@ public class Drive extends CommandBase {
     private Swerve s_Swerve;
     private double x;
     private double y;
-    private double theta;
     private double time;
 
     public Drive(Swerve s, double xIn, double yIn, double timeIn) 
