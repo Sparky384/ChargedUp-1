@@ -28,7 +28,7 @@ public class Hand extends SubsystemBase
     {
         motor.set(0.5); 
     }
-    
+
     public void keepOut() {
         motor.set(0.0);
     }
@@ -39,12 +39,13 @@ public class Hand extends SubsystemBase
         motor.set(-0.5); 
     }
 
+    //shoots cube into high node.
     public void outtakeCube()
     {
         motor.set(-1); 
     }
 
-
+    //continue intake after cone intake is run
     public void keepIn() {
         motor.set(-0.1);
     }

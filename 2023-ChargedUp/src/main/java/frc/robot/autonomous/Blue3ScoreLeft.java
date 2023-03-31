@@ -10,13 +10,23 @@ import frc.robot.paths.leftPaths.Blue3ScoreLeftScore;
 
 public class Blue3ScoreLeft extends SequentialCommandGroup{
     private static Swerve s_Swerve;
+    private static Elevator s_Elevator;
+    private static Slider s_Slider;
+    private static Wrist s_Wrist;
+    private static Hand s_Hand;
 
         // Assuming this method is part of a drivetrain subsystem that provides the necessary methods
     public static CommandBase followTrajectoryCommand(Swerve swerve, Elevator elevator, Slider slider, Wrist wrist, Hand hand) {
         s_Swerve = swerve;
+        s_Elevator = elevator;
+        s_Slider = slider;
+        s_Wrist = wrist;
+        s_Hand = hand;
 
         return new SequentialCommandGroup(
             //new IntakeAuto(s_Hand), //assumes we start with cube so this is outtake for cube
+
+            Blue2ScoreLeft.followTrajectoryCommand(s_Swerve, s_Elevator, s_Slider, s_Wrist, s_Hand),
             
             Blue3ScoreLeftPickup.followTrajectoryCommand(true, s_Swerve), //goes to pickup cone.
             

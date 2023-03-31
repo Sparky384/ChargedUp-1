@@ -29,6 +29,8 @@ public class Blue3ScoreLeftRampAuto extends SequentialCommandGroup{
 
         return new SequentialCommandGroup(
             //new IntakeAuto(s_Hand), //assumes we start with cube so this is outtake for cube
+
+            Blue2ScoreLeft.followTrajectoryCommand(s_Swerve, s_Elevator, s_Slider, s_Wrist, s_Hand),
             
             Blue3ScoreLeftPickup.followTrajectoryCommand(true, s_Swerve), //goes to pickup cone.
             

@@ -54,7 +54,7 @@ public class Elevator extends SubsystemBase {
         motorOne.config_kF(0, Constants.PIDValues.elevatorUpF); //0.05863
         motorOne.configAllowableClosedloopError(0, 0);
         
-        /*Slow 1 for going down elevator */
+        /* Slot 1 for going down elevator */
         motorOne.config_kP(1, Constants.PIDValues.elevatorDownP); 
         motorOne.config_kI(1, Constants.PIDValues.elevatorDownI);
         motorOne.config_kD(1, Constants.PIDValues.elevatorDownD);
@@ -67,7 +67,7 @@ public class Elevator extends SubsystemBase {
 
     public CommandBase elevatorMotionMagic(double finalPosition)
     {
-        /* if true we're going down if false we're going up. */
+        /* if true elevator's going down, if false elevator's going up. */
         double feed;
         if (finalPosition < motorOne.getSelectedSensorPosition()) 
         {

@@ -2,10 +2,9 @@ package frc.robot.autonomous;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-
+import frc.robot.paths.DistrictTest;
 import frc.robot.subsystems.*;
 
-import frc.robot.paths.rightPaths.Blue2ScoreRightScore;
 
 public class DistrictTestAuto extends SequentialCommandGroup{
     private static Swerve s_Swerve;
@@ -15,7 +14,8 @@ public class DistrictTestAuto extends SequentialCommandGroup{
         s_Swerve = swerve;
 
         return new SequentialCommandGroup(
-        Blue2ScoreRightScore.followTrajectoryCommand(false, s_Swerve)
+            DistrictTest.followTrajectoryCommand(true, s_Swerve)
         );
     }
+    
 }

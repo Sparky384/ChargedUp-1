@@ -92,15 +92,15 @@ public class RobotContainer {
         CONE,
         RAMP_CONE,
         RAMP_CUBE,
-        BLUE_2SCORE_RIGHT,
-        BLUE_2SCORE_RIGHT_RAMP,
+        //BLUE_2SCORE_RIGHT,
+        //BLUE_2SCORE_RIGHT_RAMP,
         DISTRICT_TEST,
-        BLUE_2SCORE_LEFT,
-        BLUE_2SCORE_LEFT_RAMP,
-        BLUE_3SCORE_RIGHT,
-        BLUE_3SCORE_RIGHT_RAMP,
-        BLUE_3SCORE_LEFT,
-        BLUE_3SCORE_LEFT_RAMP;
+        //BLUE_2SCORE_LEFT,
+        //BLUE_2SCORE_LEFT_RAMP,
+        //BLUE_3SCORE_RIGHT,
+        //BLUE_3SCORE_RIGHT_RAMP,
+        //BLUE_3SCORE_LEFT,
+        //BLUE_3SCORE_LEFT_RAMP;
     }
 
 
@@ -119,7 +119,7 @@ public class RobotContainer {
         autoChooser.addOption("Cone", autoChooserEnum.CONE);
         autoChooser.addOption("Ramp Cone", autoChooserEnum.RAMP_CONE);
         autoChooser.addOption("Ramp Cube", autoChooserEnum.RAMP_CUBE);
-        
+        /*
         autoChooser.addOption("Blue 2 Score Right", autoChooserEnum.BLUE_2SCORE_RIGHT);
         autoChooser.addOption("Blue 2 Score Right Ramp", autoChooserEnum.BLUE_2SCORE_RIGHT_RAMP);
         autoChooser.addOption("Blue 2 Score Left", autoChooserEnum.BLUE_2SCORE_LEFT);
@@ -129,6 +129,7 @@ public class RobotContainer {
         autoChooser.addOption("Blue 3 Score Right Ramp", autoChooserEnum.BLUE_3SCORE_RIGHT_RAMP);
         autoChooser.addOption("Blue 3 Score Left", autoChooserEnum.BLUE_3SCORE_LEFT);
         autoChooser.addOption("Blue 3 Score Left Ramp", autoChooserEnum.BLUE_3SCORE_LEFT_RAMP);
+        */
         autoChooser.addOption("District Test", autoChooserEnum.DISTRICT_TEST);
 
         //pilot controlling swerve
@@ -236,7 +237,7 @@ public class RobotContainer {
                 selectedAuto = Score1RampCube.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
                 break;
                 
-                case BLUE_2SCORE_RIGHT:
+                /*case BLUE_2SCORE_RIGHT:
                 selectedAuto = Blue2ScoreRight.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
                 break;
 
@@ -266,7 +267,7 @@ public class RobotContainer {
                 
                 case BLUE_3SCORE_LEFT_RAMP:
                 selectedAuto = Blue3ScoreLeftRampAuto.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
-                break;
+                break; */
 
                 case DISTRICT_TEST:
                 selectedAuto = DistrictTestAuto.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
