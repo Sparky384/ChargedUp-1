@@ -182,7 +182,7 @@ public final class Constants {
         public static final double kPPathXController = 1.0; //1.0
         public static final double kPPathYController = 1.0; //0.23
 
-        public static final double kPPathThetaController = 1.0; //1.575
+        public static final double kPPathThetaController = 0.15; //1.575
         public static final double kIPathThetaController = 0.0; //0.0
 
         // for changing PIDs for Auto with Smartdashboard. remove "final" from variable. Comment ones not being used.

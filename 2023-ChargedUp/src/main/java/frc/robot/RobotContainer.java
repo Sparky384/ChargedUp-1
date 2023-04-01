@@ -208,7 +208,7 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-            swerve.setAngle(180);
+            //swerve.setAngle(180);
 
             // Chooser for different autonomous functions.
             switch(autoChooser.getSelected()) {

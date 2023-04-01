@@ -102,6 +102,16 @@ public class Swerve extends SubsystemBase {
         return swerveOdometry.getPoseMeters();
     }
 
+    public Pose2d getPosePP() {
+        Pose2d p = getPose();
+        double deg = p.getRotation().getDegrees();
+        if (deg < 0)
+            deg += 180;
+        else
+            deg -= 180;
+        return new Pose2d(p.getX(), p.getY(), new Rotation2d(Math.toRadians(180)));
+    }
+
     public void resetOdometry(Pose2d pose) {
         swerveOdometry.resetPosition(getYaw(), getModulePositions(), pose);
     }
@@ -151,7 +161,9 @@ public class Swerve extends SubsystemBase {
     @Override
     public void periodic(){
         swerveOdometry.update(getYaw(), getModulePositions());  
-        SmartDashboard.putNumber("gyro roll", getRoll());
+        SmartDashboard.putNumber("gyro", getYaw().getDegrees());
+        SmartDashboard.putNumber("pose rot", getPose().getRotation().getDegrees());
+        SmartDashboard.putNumber("PP Pose", getPosePP().getRotation().getDegrees());
         gyroAngle.setDouble(gyro.getYaw());
 
         for(SwerveModule mod : mSwerveMods){ //smartdashboard stuff for individual mods go here.
