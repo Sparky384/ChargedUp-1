@@ -19,8 +19,8 @@ import frc.robot.subsystems.Swerve;
 public class DistrictTest extends SequentialCommandGroup {
     private static Swerve s_Swerve;
 
-    private static HashMap<String, Command> hashMap;
-    static PathPlannerTrajectory trajectory = PathPlanner.loadPath("districttest", new PathConstraints(0.3, 0.3));
+    //private static HashMap<String, Command> hashMap;
+    static PathPlannerTrajectory trajectory = PathPlanner.loadPath("districttest", new PathConstraints(Constants.AutoConstants.kPathMaxVelocity, Constants.AutoConstants.kPathMaxAcceleration));
 
     // Assuming this method is part of a drivetrain subsystem that provides the necessary methods
     public static CommandBase followTrajectoryCommand(boolean isFirstPath, Swerve s) {

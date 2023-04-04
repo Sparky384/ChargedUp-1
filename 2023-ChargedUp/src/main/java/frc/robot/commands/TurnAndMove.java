@@ -1,8 +1,5 @@
-package frc.robot.commands.DriveFunctionality;
-
-
+package frc.robot.commands;
 import javax.xml.crypto.dsig.Transform;
-
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -15,40 +12,81 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Swerve;
 
-public class DriveToPosition extends CommandBase {
+public class TurnAndMove extends CommandBase {
 
     private Swerve s_Swerve;
     private Pose2d target;
     private PIDController xPid;
     private PIDController yPid;
+    private double theta;
+    private PIDController thetaPid;
+    private double overdrive;
     private double time;
     private Timer timer;
 
-    public DriveToPosition(Swerve s, Pose2d tgt, double timeout) 
+    public TurnAndMove(Swerve s, Pose2d tgt, double angle, double timeout) 
     {
         s_Swerve = s;
         addRequirements(s_Swerve);
         target = tgt.div(39.37); //coverting inches to meters
+        theta = angle;
+        overdrive = 0.0;
         time = timeout;
         timer = new Timer();
     }
 
     public void initialize()
     {
-        // make pid
+        // DRIVE
+
+        // make moving PID
         xPid = new PIDController(Constants.AutoConstants.DriveToPositionXP, 0, Constants.AutoConstants.DriveToPositionXD);
         yPid = new PIDController(Constants.AutoConstants.DriveToPositionYP, 0, Constants.AutoConstants.DriveToPositionYD);
         //set setpoint targetxy
         xPid.setSetpoint(target.getX());
         yPid.setSetpoint(target.getY());
         //s_Swerve.resetOdometry(new Pose2d(new Translation2d(0.0, 0.0), new Rotation2d(0.0)));
+
+        
+        // TURNING
+
+        double curAngle = get180();
+        
+        if (curAngle > 170)
+        {
+            overdrive = -10;
+        } else if (curAngle < -170) {
+            overdrive = 10;
+        }
+
+        theta += overdrive;
+        
+        //make turning PID
+        thetaPid = new PIDController(Constants.AutoConstants.TurnToP, 0.0, 0.0);
+        //Set Target Point
+        thetaPid.setSetpoint(theta);
         timer.stop();
         timer.reset();
         timer.start();
     }
 
+    public double get180()
+    {
+        double curAngle = s_Swerve.getYaw().getDegrees();
+        // reduce the angle  
+        curAngle = curAngle % 360; 
+        // force it to be the positive remainder, so that 0 <= angle < 360  
+        curAngle = (curAngle + 360) % 360;  
+        // force into the minimum absolute value residue class, so that -180 < angle <= 180  
+        if (curAngle > 180)  
+            curAngle -= 360;  
+
+        return curAngle;
+    }
+
     public void execute() 
     {
+        // DRIVE
         Pose2d cur = s_Swerve.getPose();
         Translation2d change = new Translation2d(xPid.calculate(cur.getX()), yPid.calculate(cur.getY()));
         Translation2d drivePose = normalizeSpeed(change);
@@ -56,10 +94,33 @@ public class DriveToPosition extends CommandBase {
         SmartDashboard.putString("curPose", Units.metersToInches(cur.getX()) + "  " + Units.metersToInches(cur.getY()));
         SmartDashboard.putString("targetPose", Units.metersToInches(target.getX()) + "  " + Units.metersToInches(target.getY()));
 
+        // TURN
+        double curAngle = get180();
+        curAngle += overdrive;
+
+        SmartDashboard.putNumber("curAngleTurnTo", curAngle);
+        double changeAngle = thetaPid.calculate(curAngle);
+        double driveAngle = normalizeAngle(changeAngle);
+        
+        driveAngle *= -1;
+        if (overdrive > 0 && Math.abs(curAngle) > 100 && driveAngle > 0)
+            driveAngle *= -1;
+        if (overdrive < 0 && Math.abs(curAngle) > 100 && driveAngle < 0)
+            driveAngle *= -1;
+
         s_Swerve.drive(drivePose.times(Constants.Swerve.maxSpeed),
-        0.0, 
-        true, 
-        true);
+            driveAngle, 
+            true, 
+            true);
+    }
+
+    public double normalizeAngle(double angle) {
+        
+        if (angle > 0.15 )          
+            return angle = 0.15;
+        else if (angle < -0.15)          
+            return angle = -0.15;
+        return angle;
     }
 
     public Translation2d normalizeSpeed(Translation2d translation) {
@@ -68,7 +129,7 @@ public class DriveToPosition extends CommandBase {
         {
             double hi = Math.max(translation.getX(), translation.getY());
             
-            return new Translation2d(translation.getX() / Math.abs(hi), translation.getY() / Math.abs(hi));
+            return new Translation2d(translation.getX() / hi, translation.getY() / hi);
         }
         return new Translation2d(translation.getX(), translation.getY());
     }
@@ -80,9 +141,8 @@ public class DriveToPosition extends CommandBase {
     public boolean isFinished() 
     {
         Pose2d initial = s_Swerve.getPose();
-        SmartDashboard.putNumber("Distance", calculateDistance(initial.getX(), initial.getY(), target.getX(), target.getY()));
-
-        if (Math.abs(calculateDistance(initial.getX(), initial.getY(), target.getX(), target.getY())) < Constants.AutoConstants.DriveToPositionThreshold) //0.0254 just being some random threshold. = to 1 inch
+        if (Math.abs(calculateDistance(initial.getX(), initial.getY(), target.getX(), target.getY())) < Constants.AutoConstants.DriveToPositionThreshold &&
+        Math.abs(s_Swerve.getYaw().getDegrees() - theta) < Constants.AutoConstants.angleThreshold) //0.0254 just being some random threshold. = to 1 inch
             return true;
         else if (timer.hasElapsed(time))
             return true;

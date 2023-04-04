@@ -158,14 +158,22 @@ public final class Constants {
     }
 
     public static final class AutoConstants { //TODO: The below constants are used in the example auto, and must be tuned to specific robot
-        public static final double kMaxSpeedMetersPerSecond = 1;
-        public static final double kMaxAccelerationMetersPerSecondSquared = 1;
+        public static final double kMaxSpeedMetersPerSecond = 1.0;
+        public static final double kMaxAccelerationMetersPerSecondSquared = 1.0;
         public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
         public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
 
+        /* Manual Auto Constants */
+        public static final double DriveToPositionThreshold = Units.inchesToMeters(1.0);
+        public static final double DriveToPositionXP = 0.6;
+        public static final double DriveToPositionYP = 0.6;
+        public static final double DriveToPositionXD = 0;
+        public static final double DriveToPositionYD = 0;
+        public static final double TurnToP = 0.0075;
+
         /* Pathplanner Speed Constants */
-        public static final double kPathMaxAcceleration = 2.5; //1.0 was default
-        public static final double kPathMaxVelocity = 2.5; //1.0 was default   0.3
+        public static final double kPathMaxAcceleration = 0.3; //1.0 was default
+        public static final double kPathMaxVelocity = 0.3; //1.0 was default   0.3
 
         /* Intake and Outtake timers. */
         public static final double kAutoShootTimer = 0.5; //timer in seconds
@@ -182,7 +190,7 @@ public final class Constants {
         public static final double kPPathXController = 1.0; //1.0
         public static final double kPPathYController = 1.0; //0.23
 
-        public static final double kPPathThetaController = 0.15; //1.575
+        public static final double kPPathThetaController = 0.05; //1.575  10
         public static final double kIPathThetaController = 0.0; //0.0
 
         // for changing PIDs for Auto with Smartdashboard. remove "final" from variable. Comment ones not being used.
@@ -268,6 +276,7 @@ public final class Constants {
         public static final double sliderIn = 0.05;
         public static final double sliderOut = 10.75; //final in inches
         public static final double wristGround = -14.184; //should be in degrees.
+        public static final double wristGroundAuto = -15.2; //should be in degrees.
         public static final double wristLow = 14.941; //should be in degrees.
         public static final double wristMid = 38.408; //should be in degrees.
         public static final double wristFeederStation = 17.900;

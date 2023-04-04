@@ -92,10 +92,11 @@ public class RobotContainer {
         CONE,
         RAMP_CONE,
         RAMP_CUBE,
-        //BLUE_2SCORE_RIGHT,
+        BLUE_2SCORE_RIGHT,
         //BLUE_2SCORE_RIGHT_RAMP,
         DISTRICT_TEST,
-        //BLUE_2SCORE_LEFT,
+        PID,
+        BLUE_2SCORE_LEFT,
         //BLUE_2SCORE_LEFT_RAMP,
         //BLUE_3SCORE_RIGHT,
         //BLUE_3SCORE_RIGHT_RAMP,
@@ -119,6 +120,7 @@ public class RobotContainer {
         autoChooser.addOption("Cone", autoChooserEnum.CONE);
         autoChooser.addOption("Ramp Cone", autoChooserEnum.RAMP_CONE);
         autoChooser.addOption("Ramp Cube", autoChooserEnum.RAMP_CUBE);
+        autoChooser.addOption("PID", autoChooserEnum.PID);
         /*
         autoChooser.addOption("Blue 2 Score Right", autoChooserEnum.BLUE_2SCORE_RIGHT);
         autoChooser.addOption("Blue 2 Score Right Ramp", autoChooserEnum.BLUE_2SCORE_RIGHT_RAMP);
@@ -208,7 +210,7 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-            //swerve.setAngle(180);
+            swerve.setAngle(180);
 
             // Chooser for different autonomous functions.
             switch(autoChooser.getSelected()) {
@@ -237,15 +239,19 @@ public class RobotContainer {
                 selectedAuto = Score1RampCube.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
                 break;
                 
-                /*case BLUE_2SCORE_RIGHT:
-                selectedAuto = Blue2ScoreRight.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
+                case PID:
+                selectedAuto = Blue2ScoreLeftManual.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
+                break;
+                
+                case BLUE_2SCORE_RIGHT:
+                selectedAuto = Blue2ScoreRightManual.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
                 break;
 
                 case BLUE_2SCORE_LEFT:
-                selectedAuto = Blue2ScoreLeft.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
+                selectedAuto = Blue2ScoreLeftManual.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
                 break;
                 
-                case BLUE_2SCORE_RIGHT_RAMP:
+                /*case BLUE_2SCORE_RIGHT_RAMP:
                 selectedAuto = Blue2ScoreRightRampAuto.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
                 break;
                 
