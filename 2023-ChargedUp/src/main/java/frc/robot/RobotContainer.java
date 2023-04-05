@@ -54,6 +54,7 @@ public class RobotContainer {
     private Slider slider = new Slider();
     private Wrist wrist = new Wrist();
     CommandBase selectedAuto;
+    private double speedChanger = 1.0;
 
     /* Final Robot Buttons */
     //Pilot
@@ -120,7 +121,7 @@ public class RobotContainer {
         autoChooser.addOption("Cone", autoChooserEnum.CONE);
         autoChooser.addOption("Ramp Cone", autoChooserEnum.RAMP_CONE);
         autoChooser.addOption("Ramp Cube", autoChooserEnum.RAMP_CUBE);
-        autoChooser.addOption("PID", autoChooserEnum.PID);
+        //autoChooser.addOption("PID", autoChooserEnum.PID);
         /*
         autoChooser.addOption("Blue 2 Score Right", autoChooserEnum.BLUE_2SCORE_RIGHT);
         autoChooser.addOption("Blue 2 Score Right Ramp", autoChooserEnum.BLUE_2SCORE_RIGHT_RAMP);
@@ -132,31 +133,10 @@ public class RobotContainer {
         autoChooser.addOption("Blue 3 Score Left", autoChooserEnum.BLUE_3SCORE_LEFT);
         autoChooser.addOption("Blue 3 Score Left Ramp", autoChooserEnum.BLUE_3SCORE_LEFT_RAMP);
         */
-        autoChooser.addOption("District Test", autoChooserEnum.DISTRICT_TEST);
+        //autoChooser.addOption("District Test", autoChooserEnum.DISTRICT_TEST);
 
-        //pilot controlling swerve
-        if (slowBtn.getAsBoolean() == true) {
-            swerve.setDefaultCommand(
-            new TeleopSwerve(
-                swerve, 
-                () -> pilot.getLeftY() * Constants.SlowBtnSpeed, 
-                () -> pilot.getLeftX() * Constants.SlowBtnSpeed, 
-                () -> pilot.getRightX() * Constants.SlowBtnSpeed, 
-                () -> Constants.Swerve.robotcentric //pass in true for robotcentric false for fieldcentric
-            )
-        );
-        } else {
-            swerve.setDefaultCommand(
-                new TeleopSwerve(
-                    swerve, 
-                    () -> pilot.getLeftY(), 
-                    () -> pilot.getLeftX(), 
-                    () -> pilot.getRightX(), 
-                    () -> Constants.Swerve.robotcentric //pass in true for robotcentric false for fieldcentric
-                )
-            );
-        }
         configureButtonBindings();
+
     }
 
     /**
@@ -172,6 +152,8 @@ public class RobotContainer {
         intakeBtn.whileTrue(new Intake(hand));
         outtakeBtn.whileTrue(new Outtake(hand));
         shootCubeBtn.whileTrue(new ShootCube(hand));
+        slowBtn.whileTrue(new InstantCommand(() -> speedChanger = Constants.SlowBtnSpeed));
+        slowBtn.whileFalse(new InstantCommand(() -> speedChanger = 1.0));
         
         rampBtn.whileTrue(new SequentialCommandGroup(
             new DriveOverRamp(swerve, true),
@@ -285,5 +267,16 @@ public class RobotContainer {
 
     public void periodic()
     {
+        //pilot controlling swerve
+        swerve.setDefaultCommand(
+            new TeleopSwerve(
+                swerve, 
+                () -> pilot.getLeftY() * speedChanger, 
+                () -> pilot.getLeftX() * speedChanger, 
+                () -> pilot.getRightX() * speedChanger, 
+                () -> Constants.Swerve.robotcentric //pass in true for robotcentric false for fieldcentric
+            )
+        );
+        //SmartDashboard.putBoolean("slowBtn", slowBtn.getAsBoolean());
     }
 }
