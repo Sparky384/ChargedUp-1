@@ -5,14 +5,15 @@ import frc.robot.Constants;
 import frc.robot.subsystems.Slider;
 
 
-public class MoveSlider extends CommandBase {
+public class SingleSlide extends CommandBase {
 
     private Slider sliderSubsystem; 
     private double sliderDistance;
     private Timer timer;
     private double delay;
+    private boolean executed;
 
-    public MoveSlider(Slider slider, double initDistance, double delay) {
+    public SingleSlide(Slider slider, double initDistance, double delay) {
         sliderDistance = initDistance;
         sliderSubsystem = slider;
         this.delay = delay;
@@ -26,11 +27,15 @@ public class MoveSlider extends CommandBase {
         timer.stop();
         timer.reset();
         timer.start();
+        executed = false;
     }
 
     public void execute() {
-        if (timer.hasElapsed(delay))
-            sliderSubsystem.move(sliderDistance); 
+        if (timer.hasElapsed(delay) && executed == false){
+            sliderSubsystem.move(sliderDistance);
+            executed = true;
+        }
+
     }
 
     public boolean isFinished(){

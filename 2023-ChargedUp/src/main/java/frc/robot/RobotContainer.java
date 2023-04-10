@@ -29,6 +29,7 @@ import frc.robot.commands.DriveFunctionality.TeleopSwerve;
 import frc.robot.commands.ElevatorFunctionality.ManualElevator;
 import frc.robot.commands.ElevatorFunctionality.MoveElevator;
 import frc.robot.commands.SliderFunctionality.MoveSlider;
+import frc.robot.commands.SliderFunctionality.SingleSlide;
 import frc.robot.commands.WristFunctionality.Intake;
 import frc.robot.commands.WristFunctionality.Outtake;
 import frc.robot.commands.WristFunctionality.RotateWrist;
@@ -54,7 +55,8 @@ public class RobotContainer {
     private Slider slider = new Slider();
     private Wrist wrist = new Wrist();
     CommandBase selectedAuto;
-    private double speedChanger = 1.0;
+    private double speedChangerTurn = 1.0; //is percent
+    private double speedChanger = 1.0; //is percent
 
     /* Final Robot Buttons */
     //Pilot
@@ -95,8 +97,7 @@ public class RobotContainer {
         RAMP_CUBE,
         BLUE_2SCORE_RIGHT,
         //BLUE_2SCORE_RIGHT_RAMP,
-        DISTRICT_TEST,
-        PID,
+        //DISTRICT_TEST,
         BLUE_2SCORE_LEFT,
         //BLUE_2SCORE_LEFT_RAMP,
         //BLUE_3SCORE_RIGHT,
@@ -121,13 +122,12 @@ public class RobotContainer {
         autoChooser.addOption("Cone", autoChooserEnum.CONE);
         autoChooser.addOption("Ramp Cone", autoChooserEnum.RAMP_CONE);
         autoChooser.addOption("Ramp Cube", autoChooserEnum.RAMP_CUBE);
-        //autoChooser.addOption("PID", autoChooserEnum.PID);
+        
+        autoChooser.addOption("2 Score Right", autoChooserEnum.BLUE_2SCORE_RIGHT);
+        //autoChooser.addOption("Blue 2 Score Right Ramp", autoChooserEnum.BLUE_2SCORE_RIGHT_RAMP);
+        autoChooser.addOption("2 Score Left", autoChooserEnum.BLUE_2SCORE_LEFT);
+        //autoChooser.addOption("Blue 2 Score Left Ramp", autoChooserEnum.BLUE_2SCORE_LEFT_RAMP);
         /*
-        autoChooser.addOption("Blue 2 Score Right", autoChooserEnum.BLUE_2SCORE_RIGHT);
-        autoChooser.addOption("Blue 2 Score Right Ramp", autoChooserEnum.BLUE_2SCORE_RIGHT_RAMP);
-        autoChooser.addOption("Blue 2 Score Left", autoChooserEnum.BLUE_2SCORE_LEFT);
-        autoChooser.addOption("Blue 2 Score Left Ramp", autoChooserEnum.BLUE_2SCORE_LEFT_RAMP);
-
         autoChooser.addOption("Blue 3 Score Right", autoChooserEnum.BLUE_3SCORE_RIGHT);
         autoChooser.addOption("Blue 3 Score Right Ramp", autoChooserEnum.BLUE_3SCORE_RIGHT_RAMP);
         autoChooser.addOption("Blue 3 Score Left", autoChooserEnum.BLUE_3SCORE_LEFT);
@@ -152,8 +152,8 @@ public class RobotContainer {
         intakeBtn.whileTrue(new Intake(hand));
         outtakeBtn.whileTrue(new Outtake(hand));
         shootCubeBtn.whileTrue(new ShootCube(hand));
-        slowBtn.whileTrue(new InstantCommand(() -> speedChanger = Constants.SlowBtnSpeed));
-        slowBtn.whileFalse(new InstantCommand(() -> speedChanger = 1.0));
+        slowBtn.whileTrue(new InstantCommand(() -> {speedChangerTurn = Constants.SlowBtnSpeedTurn; speedChanger = Constants.SlowBtnSpeed;}));
+        slowBtn.whileFalse(new InstantCommand(() -> {speedChangerTurn = 1.0; speedChanger = 1.0;}));
         
         rampBtn.whileTrue(new SequentialCommandGroup(
             new DriveOverRamp(swerve, true),
@@ -168,7 +168,8 @@ public class RobotContainer {
 
         //copilot
         sliderInBtn.onTrue(new MoveSlider(slider, Constants.Subsys.sliderIn, 0.0));
-        sliderOutBtn.onTrue(new MoveSlider(slider, Constants.Subsys.sliderOut, 0.0));
+        sliderOutBtn.onTrue(new MoveSlider
+        (slider, Constants.Subsys.sliderOut, 0.0));
         stopIntakeBtn.onTrue(new StopIntake(hand));
         
         stowBtn.onTrue(new ParallelCommandGroup(
@@ -221,10 +222,6 @@ public class RobotContainer {
                 selectedAuto = Score1RampCube.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
                 break;
                 
-                case PID:
-                selectedAuto = Blue2ScoreLeftManual.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
-                break;
-                
                 case BLUE_2SCORE_RIGHT:
                 selectedAuto = Blue2ScoreRightManual.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
                 break;
@@ -255,11 +252,11 @@ public class RobotContainer {
                 
                 case BLUE_3SCORE_LEFT_RAMP:
                 selectedAuto = Blue3ScoreLeftRampAuto.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
-                break; */
+                break;
 
                 case DISTRICT_TEST:
                 selectedAuto = DistrictTestAuto.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
-                break;
+                break;  */
             }
 
         return selectedAuto;
@@ -273,7 +270,7 @@ public class RobotContainer {
                 swerve, 
                 () -> pilot.getLeftY() * speedChanger, 
                 () -> pilot.getLeftX() * speedChanger, 
-                () -> pilot.getRightX() * speedChanger, 
+                () -> pilot.getRightX() * speedChangerTurn, 
                 () -> Constants.Swerve.robotcentric //pass in true for robotcentric false for fieldcentric
             )
         );

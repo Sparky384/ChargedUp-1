@@ -36,8 +36,8 @@ public class DriveToPosition extends CommandBase {
     public void initialize()
     {
         // make pid
-        xPid = new PIDController(Constants.AutoConstants.DriveToPositionXP, 0, Constants.AutoConstants.DriveToPositionXD);
-        yPid = new PIDController(Constants.AutoConstants.DriveToPositionYP, 0, Constants.AutoConstants.DriveToPositionYD);
+        xPid = new PIDController(Constants.AutoConstants.DriveToPositionXP, Constants.AutoConstants.DriveToPositionXI, Constants.AutoConstants.DriveToPositionXD);
+        yPid = new PIDController(Constants.AutoConstants.DriveToPositionYP, Constants.AutoConstants.DriveToPositionYI, Constants.AutoConstants.DriveToPositionYD);
         //set setpoint targetxy
         xPid.setSetpoint(target.getX());
         yPid.setSetpoint(target.getY());
@@ -56,7 +56,7 @@ public class DriveToPosition extends CommandBase {
         SmartDashboard.putString("curPose", Units.metersToInches(cur.getX()) + "  " + Units.metersToInches(cur.getY()));
         SmartDashboard.putString("targetPose", Units.metersToInches(target.getX()) + "  " + Units.metersToInches(target.getY()));
 
-        s_Swerve.drive(drivePose.times(Constants.Swerve.maxSpeed),
+        s_Swerve.drive(drivePose.times(Constants.AutoConstants.kPathMaxVelocity),
         0.0, 
         true, 
         true);

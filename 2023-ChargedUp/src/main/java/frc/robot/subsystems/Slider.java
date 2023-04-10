@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.REVLibError;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxPIDController;
@@ -15,9 +16,15 @@ public class Slider extends SubsystemBase{
     private RelativeEncoder m_encoder;
     private SparkMaxPIDController m_pidController;
 
+    private REVLibError status = REVLibError.kOk;
+
     public Slider(){
         motorOne = new CANSparkMax(Constants.CANPorts.slider, MotorType.kBrushless);
         motorOne.setIdleMode(IdleMode.kBrake);
+        if (motorOne.getIdleMode() == IdleMode.kBrake)
+            System.out.println("Made slider motor " + Constants.CANPorts.slider + " is in mode break");
+        else    
+            System.out.println("Made slider motor " + Constants.CANPorts.slider + " is in mode coast");
 
         m_pidController = motorOne.getPIDController();
         m_pidController.setP(Constants.PIDValues.sliderP);
@@ -33,22 +40,30 @@ public class Slider extends SubsystemBase{
     }
 
     public void stop(){ 
+        System.out.println("Slider stop");
         motorOne.stopMotor();
     }
 
     public void toggle()
     {
         if (motorOne.getIdleMode() == IdleMode.kBrake)
+        {
+            System.out.println("Toggle to coast");
             motorOne.setIdleMode(IdleMode.kCoast);
+        }
         else
+        {    
+            System.out.println("Toggle to break");
             motorOne.setIdleMode(IdleMode.kBrake);
+        }
     }
 
     public void move(double distance){
+        System.out.println("Slider to move to distance " + distance);
+        System.out.println("Slider distance in move " + getDistance());
         distance /= Constants.ConversionValues.sliderConversionFunction; //uses encoder counts.
-        m_pidController.setReference(distance, CANSparkMax.ControlType.kPosition);
-
-    }
+        status = m_pidController.setReference(distance, CANSparkMax.ControlType.kPosition);
+    }   
 
     public double getDistance() {
         double distance = m_encoder.getPosition();
@@ -57,5 +72,8 @@ public class Slider extends SubsystemBase{
     }
     public void periodic() {
         SmartDashboard.putNumber("slider position", m_encoder.getPosition());
+        SmartDashboard.putString("slide rev error status", status.name());
+        System.out.println("applied output " +  motorOne.getAppliedOutput());
+        System.out.println(status.name()); 
     }
 }

@@ -22,7 +22,8 @@ public final class Constants {
 
     public static final double elevatorSpeedLimit = 0.3;
     public static final double elevatorDownSpeedLimit = 0.0;
-    public static final double SlowBtnSpeed = 0.15; //in percent
+    public static final double SlowBtnSpeedTurn = 0.15; //in percent
+    public static final double SlowBtnSpeed = 0.20; //in percent
 
     
 
@@ -164,20 +165,22 @@ public final class Constants {
         public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
 
         /* Manual Auto Constants */
-        public static final double DriveToPositionThreshold = Units.inchesToMeters(1.0);
-        public static final double DriveToPositionXP = 0.6;
-        public static final double DriveToPositionYP = 0.6;
+        public static final double DriveToPositionThreshold = Units.inchesToMeters(1.25);
+        public static final double DriveToPositionXP = 0.634; //0.6
+        public static final double DriveToPositionYP = 0.634; //0.6
+        public static final double DriveToPositionXI = 0.0081; //.002
+        public static final double DriveToPositionYI = 0.0081; //.002
         public static final double DriveToPositionXD = 0;
         public static final double DriveToPositionYD = 0;
-        public static final double TurnToP = 0.0075;
+        public static final double TurnToP = 0.00827;
 
         /* Pathplanner Speed Constants */
-        public static final double kPathMaxAcceleration = 0.3; //1.0 was default
-        public static final double kPathMaxVelocity = 0.3; //1.0 was default   0.3
+        public static final double kPathMaxAcceleration = 0.325; //1.0 was default
+        public static final double kPathMaxVelocity = 0.325; //1.0 was default   0.3
 
         /* Intake and Outtake timers. */
         public static final double kAutoShootTimer = 0.5; //timer in seconds
-        public static final double angleThreshold = 0.5;
+        public static final double angleThreshold = 0.65;
 
 
     
@@ -236,10 +239,10 @@ public final class Constants {
         public static final double elevatorDownI = 0.0;
         public static final double elevatorDownD = 0.0;
 
-        public static final double sliderP = 0.295;
-        public static final double sliderI = 0.001;
-        public static final double sliderIZone = 0.3;
-        public static final double sliderD = 0.0;
+        public static final double sliderP = 0.39; //.295
+        public static final double sliderI = 0.001; // 0.001
+        public static final double sliderIZone = 5.0; // 0.3
+        public static final double sliderD = 0.0; // 0.0
 
         public static final double wristP = 0.02; 
         public static final double wristI = 0.0; 

@@ -23,6 +23,7 @@ public class TurnAndMove extends CommandBase {
     private double overdrive;
     private double time;
     private Timer timer;
+    private boolean hasHitAngle;
 
     public TurnAndMove(Swerve s, Pose2d tgt, double angle, double timeout) 
     {
@@ -33,6 +34,7 @@ public class TurnAndMove extends CommandBase {
         overdrive = 0.0;
         time = timeout;
         timer = new Timer();
+        hasHitAngle = false;
     }
 
     public void initialize()
@@ -40,8 +42,8 @@ public class TurnAndMove extends CommandBase {
         // DRIVE
 
         // make moving PID
-        xPid = new PIDController(Constants.AutoConstants.DriveToPositionXP, 0, Constants.AutoConstants.DriveToPositionXD);
-        yPid = new PIDController(Constants.AutoConstants.DriveToPositionYP, 0, Constants.AutoConstants.DriveToPositionYD);
+        xPid = new PIDController(Constants.AutoConstants.DriveToPositionXP, Constants.AutoConstants.DriveToPositionXI, Constants.AutoConstants.DriveToPositionXD);
+        yPid = new PIDController(Constants.AutoConstants.DriveToPositionYP, Constants.AutoConstants.DriveToPositionYI, Constants.AutoConstants.DriveToPositionYD);
         //set setpoint targetxy
         xPid.setSetpoint(target.getX());
         yPid.setSetpoint(target.getY());
@@ -108,7 +110,11 @@ public class TurnAndMove extends CommandBase {
         if (overdrive < 0 && Math.abs(curAngle) > 100 && driveAngle < 0)
             driveAngle *= -1;
 
-        s_Swerve.drive(drivePose.times(Constants.Swerve.maxSpeed),
+        if (hasHitAngle) {
+            driveAngle = 0;
+        }
+
+        s_Swerve.drive(drivePose.times(Constants.AutoConstants.kPathMaxVelocity),
             driveAngle, 
             true, 
             true);
@@ -116,10 +122,10 @@ public class TurnAndMove extends CommandBase {
 
     public double normalizeAngle(double angle) {
         
-        if (angle > 0.15 )          
-            return angle = 0.15;
-        else if (angle < -0.15)          
-            return angle = -0.15;
+        if (angle > 0.19)          
+            return angle = 0.19;
+        else if (angle < -0.19)          
+            return angle = -0.19;
         return angle;
     }
 
@@ -141,8 +147,11 @@ public class TurnAndMove extends CommandBase {
     public boolean isFinished() 
     {
         Pose2d initial = s_Swerve.getPose();
+        if (Math.abs(s_Swerve.getYaw().getDegrees() - theta) < Constants.AutoConstants.angleThreshold)
+            hasHitAngle = true;
+
         if (Math.abs(calculateDistance(initial.getX(), initial.getY(), target.getX(), target.getY())) < Constants.AutoConstants.DriveToPositionThreshold &&
-        Math.abs(s_Swerve.getYaw().getDegrees() - theta) < Constants.AutoConstants.angleThreshold) //0.0254 just being some random threshold. = to 1 inch
+            hasHitAngle) //0.0254 just being some random threshold. = to 1 inch
             return true;
         else if (timer.hasElapsed(time))
             return true;
