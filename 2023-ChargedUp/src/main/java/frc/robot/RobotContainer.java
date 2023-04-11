@@ -98,6 +98,7 @@ public class RobotContainer {
         DISTRICT_TEST,
         PID,
         BLUE_2SCORE_LEFT,
+        TURN_AND_MOVE_TEST;
         //BLUE_2SCORE_LEFT_RAMP,
         //BLUE_3SCORE_RIGHT,
         //BLUE_3SCORE_RIGHT_RAMP,
@@ -121,6 +122,7 @@ public class RobotContainer {
         autoChooser.addOption("Cone", autoChooserEnum.CONE);
         autoChooser.addOption("Ramp Cone", autoChooserEnum.RAMP_CONE);
         autoChooser.addOption("Ramp Cube", autoChooserEnum.RAMP_CUBE);
+        autoChooser.addOption("Turn and move test", autoChooserEnum.TURN_AND_MOVE_TEST);
         //autoChooser.addOption("PID", autoChooserEnum.PID);
         /*
         autoChooser.addOption("Blue 2 Score Right", autoChooserEnum.BLUE_2SCORE_RIGHT);
@@ -231,6 +233,10 @@ public class RobotContainer {
 
                 case BLUE_2SCORE_LEFT:
                 selectedAuto = Blue2ScoreLeftManual.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
+                break;
+
+                case TURN_AND_MOVE_TEST:
+                selectedAuto = TurnAndMoveTest.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
                 break;
                 
                 /*case BLUE_2SCORE_RIGHT_RAMP:

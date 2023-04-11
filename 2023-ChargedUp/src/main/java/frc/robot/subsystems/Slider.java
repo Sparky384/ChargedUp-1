@@ -47,7 +47,6 @@ public class Slider extends SubsystemBase{
     public void move(double distance){
         distance /= Constants.ConversionValues.sliderConversionFunction; //uses encoder counts.
         m_pidController.setReference(distance, CANSparkMax.ControlType.kPosition);
-
     }
 
     public double getDistance() {
