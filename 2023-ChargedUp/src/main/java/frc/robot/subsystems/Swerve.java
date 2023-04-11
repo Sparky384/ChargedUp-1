@@ -30,6 +30,7 @@ public class Swerve extends SubsystemBase {
     private final Pigeon2 gyro = new Pigeon2(Constants.Swerve.pigeonID);
     private GenericEntry gyroAngle;
     private double initRoll;
+    private boolean slowGoalChassisSpeed = false;
 
     public Swerve() {
         /* Pigeon Startup code */
@@ -158,9 +159,26 @@ public class Swerve extends SubsystemBase {
         }
     }
 
+    //401 pathplanner stuff.
     public ChassisSpeeds getVelocity(){
         return Constants.Swerve.swerveKinematics.toChassisSpeeds(getModuleStates());
     }
+
+    public void setGoalChassisSpeeds(ChassisSpeeds speeds) {
+        speeds = new ChassisSpeeds(speeds.vxMetersPerSecond * (slowGoalChassisSpeed ? 0.2 : 1), speeds.vyMetersPerSecond * (slowGoalChassisSpeed ? 0.2 : 1), speeds.omegaRadiansPerSecond * (slowGoalChassisSpeed ? 0.1 : 1));
+        SwerveModuleState[] goalModuleStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(speeds);
+        SwerveDriveKinematics.desaturateWheelSpeeds(goalModuleStates, Constants.Swerve.maxSpeed);
+        if (speeds.vxMetersPerSecond == 0 && speeds.vyMetersPerSecond == 0 && speeds.omegaRadiansPerSecond == 0) {
+            goalModuleStates = new SwerveModuleState[] {
+                new SwerveModuleState(0, SwerveModulePositions[0].angle), 
+                new SwerveModuleState(0, SwerveModulePositions[1].angle),
+                new SwerveModuleState(0, SwerveModulePositions[2].angle),
+                new SwerveModuleState(0, SwerveModulePositions[3].angle)
+            };
+        }
+        setGoalModuleStates(goalModuleStates);
+    }
+    //end 401 pathplanner stuff.
 
     @Override
     public void periodic(){
