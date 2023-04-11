@@ -191,10 +191,16 @@ public final class Constants {
          */
         /* pathplanner controller PIDs. Make sure these have "final" in them when not tuning. */
         public static final double kPPathXController = 1.0; //1.0
+        public static final double kIPathXController = 0.0;
+        public static final double kDPathXController = 0.0;
+
         public static final double kPPathYController = 1.0; //0.23
+        public static final double kIPathYController = 1.0;
+        public static final double kDPathYController = 1.0;
 
         public static final double kPPathThetaController = 0.05; //1.575  10
         public static final double kIPathThetaController = 0.0; //0.0
+        public static final double kDPathThetaController = 0.0;
 
         // for changing PIDs for Auto with Smartdashboard. remove "final" from variable. Comment ones not being used.
         /*public static void smartDashboardAutoPIDs() {

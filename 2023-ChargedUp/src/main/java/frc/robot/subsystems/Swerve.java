@@ -158,6 +158,10 @@ public class Swerve extends SubsystemBase {
         }
     }
 
+    public ChassisSpeeds getVelocity(){
+        return Constants.Swerve.swerveKinematics.toChassisSpeeds(getModuleStates());
+    }
+
     @Override
     public void periodic(){
         swerveOdometry.update(getYaw(), getModulePositions());  

@@ -110,8 +110,18 @@ public class TurnAndMove extends CommandBase {
         if (overdrive < 0 && Math.abs(curAngle) > 100 && driveAngle < 0)
             driveAngle *= -1;
 
-        if (hasHitAngle) {
-            driveAngle = 0;
+        if (theta > 178 && curAngle < -178) {
+            theta = -theta;
+            thetaPid.setSetpoint(theta);
+            changeAngle = thetaPid.calculate(curAngle);
+            driveAngle = normalizeAngle(changeAngle);
+        } 
+        else if (theta < -178 && curAngle > 178) 
+        {
+            theta = -theta;
+            thetaPid.setSetpoint(theta);
+            changeAngle = thetaPid.calculate(curAngle);
+            driveAngle = normalizeAngle(changeAngle);
         }
 
         s_Swerve.drive(drivePose.times(Constants.AutoConstants.kPathMaxVelocity),
