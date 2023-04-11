@@ -165,19 +165,21 @@ public final class Constants {
 
         /* Manual Auto Constants */
         public static final double DriveToPositionThreshold = Units.inchesToMeters(1.0);
-        public static final double DriveToPositionXP = 0.6;
-        public static final double DriveToPositionYP = 0.6;
+        public static final double DriveToPositionXP = 0.634; //0.6
+        public static final double DriveToPositionYP = 0.634; //0.6
+        public static final double DriveToPositionXI = 0.0081; //.002
+        public static final double DriveToPositionYI = 0.0081; //.002
         public static final double DriveToPositionXD = 0;
         public static final double DriveToPositionYD = 0;
-        public static final double TurnToP = 0.0075;
+        public static final double TurnToP = 0.00827;
 
         /* Pathplanner Speed Constants */
-        public static final double kPathMaxAcceleration = 0.3; //1.0 was default
-        public static final double kPathMaxVelocity = 0.3; //1.0 was default   0.3
+        public static final double kPathMaxAcceleration = 0.325; //1.0 was default
+        public static final double kPathMaxVelocity = 0.325; //1.0 was default   0.3
 
         /* Intake and Outtake timers. */
         public static final double kAutoShootTimer = 0.5; //timer in seconds
-        public static final double angleThreshold = 0.5;
+        public static final double angleThreshold = 0.65;
 
 
     
