@@ -22,7 +22,8 @@ public final class Constants {
 
     public static final double elevatorSpeedLimit = 0.3;
     public static final double elevatorDownSpeedLimit = 0.0;
-    public static final double SlowBtnSpeed = 0.15; //in percent
+    public static final double SlowBtnSpeedTurn = 0.15; //in percent
+    public static final double SlowBtnSpeed = 0.20;
 
     
 

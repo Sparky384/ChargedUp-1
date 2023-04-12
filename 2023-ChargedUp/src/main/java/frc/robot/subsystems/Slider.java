@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.REVLibError;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxPIDController;
@@ -14,6 +15,7 @@ public class Slider extends SubsystemBase{
     private CANSparkMax motorOne; 
     private RelativeEncoder m_encoder;
     private SparkMaxPIDController m_pidController;
+    private REVLibError status = REVLibError.kOk;
 
     public Slider(){
         motorOne = new CANSparkMax(Constants.CANPorts.slider, MotorType.kBrushless);
@@ -46,7 +48,7 @@ public class Slider extends SubsystemBase{
 
     public void move(double distance){
         distance /= Constants.ConversionValues.sliderConversionFunction; //uses encoder counts.
-        m_pidController.setReference(distance, CANSparkMax.ControlType.kPosition);
+        status = m_pidController.setReference(distance, CANSparkMax.ControlType.kPosition); //just added wait till test to keep or not.
     }
 
     public double getDistance() {
@@ -56,5 +58,8 @@ public class Slider extends SubsystemBase{
     }
     public void periodic() {
         SmartDashboard.putNumber("slider position", m_encoder.getPosition());
+        //SmartDashboard.putString("slide rev error status", status.name());
+        //System.out.println("applied output " +  motorOne.getAppliedOutput());
+        //System.out.println(status.name()); 
     }
 }

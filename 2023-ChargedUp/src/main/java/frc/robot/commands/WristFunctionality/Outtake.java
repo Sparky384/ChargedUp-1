@@ -20,6 +20,6 @@ public class Outtake extends CommandBase{
     }
 
     public void end(boolean interrupted) {
-        handSubsystem.keepOut();
+        handSubsystem.stop();
     }
 }

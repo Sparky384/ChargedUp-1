@@ -29,10 +29,6 @@ public class Hand extends SubsystemBase
         motor.set(0.5); 
     }
 
-    public void keepOut() {
-        motor.set(0.0);
-    }
-
     //intake for cones.
     public void rollIn()
     {

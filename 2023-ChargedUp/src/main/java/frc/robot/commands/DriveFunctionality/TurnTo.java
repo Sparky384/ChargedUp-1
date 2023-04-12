@@ -87,6 +87,20 @@ public class TurnTo extends CommandBase {
         if (overdrive < 0 && Math.abs(curAngle) > 100 && driveAngle < 0)
             driveAngle *= -1;
 
+        if (theta > 178 && curAngle < -178) {
+            theta = -theta;
+            thetaPid.setSetpoint(theta);
+            change = thetaPid.calculate(curAngle);
+            driveAngle = normalizeSpeed(change);
+        } 
+        else if (theta < -178 && curAngle > 178) 
+        {
+            theta = -theta;
+            thetaPid.setSetpoint(theta);
+            change = thetaPid.calculate(curAngle);
+            driveAngle = normalizeSpeed(change);
+        }
+
         s_Swerve.drive(new Translation2d(0, 0),
             driveAngle, 
             true, 
@@ -95,10 +109,10 @@ public class TurnTo extends CommandBase {
 
     public double normalizeSpeed(double angle) {
         
-        if (angle > 0.15 )          
-            return angle = 0.15;
-        else if (angle < -0.15)          
-            return angle = -0.15;
+        if (angle > 0.19)          
+            return angle = 0.19;
+        else if (angle < -0.19)          
+            return angle = -0.19;
         return angle;
     }
 

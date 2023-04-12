@@ -12,11 +12,12 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 import frc.robot.subsystems.*;
-import frc.robot.commands.TurnAndMove;
+import frc.robot.Constants;
 import frc.robot.commands.CommandGroups.Stow;
 import frc.robot.commands.CommandGroups.ToGround;
 import frc.robot.commands.DriveFunctionality.Drive;
 import frc.robot.commands.DriveFunctionality.DriveToPosition;
+import frc.robot.commands.DriveFunctionality.TurnAndMove;
 import frc.robot.commands.DriveFunctionality.TurnTo;
 import frc.robot.commands.WristFunctionality.*;
 
@@ -32,27 +33,27 @@ public class TurnAndMoveTest extends SequentialCommandGroup {
 
         return new SequentialCommandGroup(
             new ParallelCommandGroup(
-                new InstantCommand(() -> slider.move(0)),
+                new InstantCommand(() -> slider.move(Constants.Subsys.sliderIn)),
                 new TurnAndMove(s_Swerve, new Pose2d(new Translation2d(Units.metersToInches(-1), 0), new Rotation2d(0)), 0, 2.4)
             ),
             new ParallelCommandGroup(
-                new InstantCommand(() -> slider.move(0)),
+                new InstantCommand(() -> slider.move(Constants.Subsys.sliderIn)),
                 new TurnAndMove(s_Swerve, new Pose2d(new Translation2d(Units.metersToInches(0), 0), new Rotation2d(180)), 180, 2.4)
             ),
             new ParallelCommandGroup(
-                new InstantCommand(() -> slider.move(0)),
+                new InstantCommand(() -> slider.move(Constants.Subsys.sliderIn)),
                 new TurnAndMove(s_Swerve, new Pose2d(new Translation2d(Units.metersToInches(-1), 0), new Rotation2d(0)), 0, 2.4)
             ),
             new ParallelCommandGroup(
-                new InstantCommand(() -> slider.move(0)),
+                new InstantCommand(() -> slider.move(Constants.Subsys.sliderIn)),
                 new TurnAndMove(s_Swerve, new Pose2d(new Translation2d(Units.metersToInches(0), 0), new Rotation2d(180)), 180, 2.4)
             ),
             new ParallelCommandGroup(
-                new InstantCommand(() -> slider.move(0)),
+                new InstantCommand(() -> slider.move(Constants.Subsys.sliderIn)),
                 new TurnAndMove(s_Swerve, new Pose2d(new Translation2d(Units.metersToInches(-1), 0), new Rotation2d(0)), 0, 2.4)
             ),
             new ParallelCommandGroup(
-                new InstantCommand(() -> slider.move(0)),
+                new InstantCommand(() -> slider.move(Constants.Subsys.sliderIn)),
                 new TurnAndMove(s_Swerve, new Pose2d(new Translation2d(Units.metersToInches(0), 0), new Rotation2d(180)), -180, 2.4)
             )
         );

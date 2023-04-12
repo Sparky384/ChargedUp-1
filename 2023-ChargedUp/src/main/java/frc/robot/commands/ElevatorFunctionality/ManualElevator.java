@@ -1,10 +1,15 @@
 package frc.robot.commands.ElevatorFunctionality;
 
+import java.util.function.DoubleSupplier;
+
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
+import frc.robot.subsystems.Elevator;
 
 public class ManualElevator extends CommandBase{
-
-    /*private Elevator s_Elevator;
+/*
+    private Elevator s_Elevator;
     private DoubleSupplier translationSup; // Should be controller stick X
 
     public ManualElevator(Elevator elevator, DoubleSupplier translationSup)
@@ -39,5 +44,5 @@ public class ManualElevator extends CommandBase{
     // Not too fast
     // Have min and max
     // We don't know starting height
-*/
+    */
 }

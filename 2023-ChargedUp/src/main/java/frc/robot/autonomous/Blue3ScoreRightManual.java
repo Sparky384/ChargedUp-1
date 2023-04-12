@@ -19,7 +19,7 @@ import frc.robot.commands.DriveFunctionality.TurnAndMove;
 import frc.robot.commands.DriveFunctionality.TurnTo;
 import frc.robot.commands.WristFunctionality.*;
 
-public class Blue2ScoreRightManual extends SequentialCommandGroup{
+public class Blue3ScoreRightManual extends SequentialCommandGroup{
     private static Swerve s_Swerve;
     private static Hand s_Hand;
 
@@ -51,7 +51,33 @@ public class Blue2ScoreRightManual extends SequentialCommandGroup{
                 ToMid.getToMid(elevator, slider, wrist),
                 new DriveToPosition(s_Swerve, new Pose2d(new Translation2d(0, 0), new Rotation2d(0)), 1.1)
             ),
-            new IntakeAuto(hand)
-            );
+            new IntakeAuto(hand), //where 2 score ends.
+
+            //3 score begins. Nothing is finalized.
+            /* drive past ramp and prepare to move to piece.*/
+            new DriveToPosition(s_Swerve, new Pose2d(new Translation2d(-43.307, 13.38), new Rotation2d(0)), 1.15), // 1.2
+            new DriveToPosition(s_Swerve, new Pose2d(new Translation2d(-111.417, 13.38), new Rotation2d(0)), 1.6), // 1.7
+            new TurnAndMove(s_Swerve, new Pose2d(new Translation2d(-163.384, 4.33), new Rotation2d(0)), 0, 2.15),
+            new ParallelCommandGroup(
+                new DriveToPosition(s_Swerve, new Pose2d(new Translation2d(-163.384, -43.67), new Rotation2d(0)), 1.6), //-7.33 is not final.
+                ToGroundAutoCube.getToGround(elevator, slider, wrist)),
+            /* drive to pickup piece. */
+            new ParallelRaceGroup(
+                new DriveToPosition(s_Swerve, new Pose2d(new Translation2d(-214.133, -43.67), new Rotation2d(0)), 1.4),
+                new Outtake(hand)
+            ),
+            /* drive back to score. */
+            Stow.getStowCommand(elevator, slider, wrist), //may be able to make a parallel command group here.
+            new TurnAndMove(s_Swerve, new Pose2d(new Translation2d(-163.384, 4.33), new Rotation2d(0)), 179, 2.25),
+            new DriveToPosition(s_Swerve, new Pose2d(new Translation2d(-111.417, 13.38), new Rotation2d(0)), 1.7),
+            new DriveToPosition(s_Swerve, new Pose2d(new Translation2d(-43.307, 13.38), new Rotation2d(0)), 1.15),
+            /* score piece. */
+            new ParallelCommandGroup(
+                ToMid.getToMid(elevator, slider, wrist),
+                new DriveToPosition(s_Swerve, new Pose2d(new Translation2d(0, 0), new Rotation2d(0)), 1.1)
+            ),
+            new IntakeAuto(hand) //end of 3 score.
+        ); 
+
     }
 }

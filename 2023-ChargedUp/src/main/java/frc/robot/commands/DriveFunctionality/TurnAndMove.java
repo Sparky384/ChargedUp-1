@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.DriveFunctionality;
 import javax.xml.crypto.dsig.Transform;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -23,7 +23,6 @@ public class TurnAndMove extends CommandBase {
     private double overdrive;
     private double time;
     private Timer timer;
-    private boolean hasHitAngle;
 
     public TurnAndMove(Swerve s, Pose2d tgt, double angle, double timeout) 
     {
@@ -34,7 +33,6 @@ public class TurnAndMove extends CommandBase {
         overdrive = 0.0;
         time = timeout;
         timer = new Timer();
-        hasHitAngle = false;
     }
 
     public void initialize()
