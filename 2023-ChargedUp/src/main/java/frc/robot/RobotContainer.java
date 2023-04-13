@@ -94,6 +94,7 @@ public class RobotContainer {
         RAMP_CONE,
         RAMP_CUBE,
         RAMP_CUBE_PICKUP,
+        RAMP_PICKUP_TEST,
         BLUE_2SCORE_RIGHT,
         BLUE_2SCORE_LEFT,
         BLUE_3SCORE_RIGHT,
@@ -117,6 +118,7 @@ public class RobotContainer {
         autoChooser.addOption("Ramp Cone", autoChooserEnum.RAMP_CONE);
         autoChooser.addOption("Ramp Cube", autoChooserEnum.RAMP_CUBE);
         autoChooser.addOption("Ramp Cube and Pickup **TESTING**", autoChooserEnum.RAMP_CUBE_PICKUP);
+        autoChooser.addOption("Ramp Pickup using Distance **TESTING**", autoChooserEnum.RAMP_CUBE_PICKUP);
         autoChooser.addOption("2 Score Right", autoChooserEnum.BLUE_2SCORE_RIGHT);
         autoChooser.addOption("2 Score Left", autoChooserEnum.BLUE_2SCORE_LEFT);
         autoChooser.addOption("3 Score Right **TESTING**", autoChooserEnum.BLUE_3SCORE_RIGHT);
@@ -210,6 +212,10 @@ public class RobotContainer {
                 
                 case RAMP_CUBE_PICKUP:
                 selectedAuto = Score1RampCubePickup.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
+                break;
+                
+                case RAMP_PICKUP_TEST:
+                selectedAuto = RampPickupTest.followTrajectoryCommand(swerve, elevator, slider, wrist, hand);
                 break;
 
                 case BLUE_2SCORE_RIGHT:

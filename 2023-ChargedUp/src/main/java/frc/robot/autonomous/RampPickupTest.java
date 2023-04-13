@@ -1,6 +1,10 @@
 package frc.robot.autonomous;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
@@ -14,7 +18,7 @@ import frc.robot.commands.CommandGroups.Stow;
 import frc.robot.commands.CommandGroups.ToGroundAutoCube;
 import frc.robot.subsystems.*;
 
-public class Score1RampCubePickup extends SequentialCommandGroup {
+public class RampPickupTest extends SequentialCommandGroup {
     private static Swerve s_Swerve;
     private static Hand s_Hand;
 
@@ -27,11 +31,11 @@ public class Score1RampCubePickup extends SequentialCommandGroup {
 
         return new SequentialCommandGroup(
             new IntakeAuto(s_Hand),
-            new Drive(s_Swerve, -0.40, 0, 3),
+            new DriveToPosition(s_Swerve, new Pose2d(new Translation2d(Units.metersToInches(3.81), 0), new Rotation2d(0)), 0),
             new Pause(1.25), //may be able to take out I don't know yet.
             new ParallelCommandGroup(
                 ToGroundAutoCube.getToGround(elevator, slider, wrist), 
-                new TurnTo(s_Swerve, 30, 1)
+                new TurnTo(s_Swerve, 15, 1)
             ),
             new ParallelRaceGroup( //using race group because Outtake can't normally end.
                 new Outtake(hand), 
