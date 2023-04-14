@@ -52,10 +52,5 @@ public final class CTREConfigs {
         swerveCanCoderConfig.sensorDirection = Constants.Swerve.canCoderInvert;
         swerveCanCoderConfig.initializationStrategy = SensorInitializationStrategy.BootToAbsolutePosition;
         swerveCanCoderConfig.sensorTimeBase = SensorTimeBase.PerSecond;
-
-        /* Wrist Motor Configuration */
-        wristMotorConfig.slot0.kP = Constants.PIDValues.wristP;
-        wristMotorConfig.slot0.kI = Constants.PIDValues.wristI;
-        wristMotorConfig.slot0.kD = Constants.PIDValues.wristD;
     }
 }

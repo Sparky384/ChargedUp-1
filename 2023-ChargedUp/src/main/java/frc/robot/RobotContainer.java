@@ -123,6 +123,7 @@ public class RobotContainer {
         autoChooser.addOption("2 Score Left", autoChooserEnum.BLUE_2SCORE_LEFT);
         autoChooser.addOption("3 Score Right **TESTING**", autoChooserEnum.BLUE_3SCORE_RIGHT);
         autoChooser.addOption("3 Score Left **TESTING**", autoChooserEnum.BLUE_3SCORE_LEFT);
+        
 
         configureButtonBindings();
 
@@ -152,7 +153,7 @@ public class RobotContainer {
         rampBtn2.onTrue(new DriveOverRamp(swerve, false));
         wristHighBtn.onTrue(wrist.wristMotionMagic(Constants.Subsys.wristHigh));
         wristMidBtn.onTrue(wrist.wristMotionMagic(Constants.Subsys.wristMid));
-        wristLowBtn.onTrue(wrist.wristMotionMagic(Constants.Subsys.wristGround));
+        wristLowBtn.onTrue(wrist.wristMotionMagic(Constants.Subsys.wristGround)); /*remember to put back to wristGround. */
         //setAngle.onTrue(new InstantCommand(() -> swerve.setAngle(180))); was testing command keeping in case we want to test it again.
 
         //copilot

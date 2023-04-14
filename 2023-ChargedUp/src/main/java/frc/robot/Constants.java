@@ -244,9 +244,10 @@ public final class Constants {
         public static final double sliderIZone = 0.3;
         public static final double sliderD = 0.0;
 
-        public static final double wristP = 0.02; 
-        public static final double wristI = 0.0; 
-        public static final double wristD = 0.0;
+        public static final double wristP = 1.2; //1.2 after recent change: 1.7
+        public static final double wristI = 0.00005; //0.00005 before recent change: 0.0
+        public static final double wristIZone = 0.02; //0.02 before recent change: 0.0
+        public static final double wristD = 3.2; //3.2 after recent change: 3.3
 
         public static final double handP = 0.0;
         public static final double handI = 0.0;

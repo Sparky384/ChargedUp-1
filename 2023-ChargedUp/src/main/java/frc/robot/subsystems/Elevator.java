@@ -9,6 +9,7 @@ import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.sensors.CANCoder;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -16,7 +17,8 @@ import frc.robot.Constants;
 //The method addRequirements(Subsystem...) in the type CommandBase is not applicable for the arguments (Elevator)Java(67108979)
 public class Elevator extends SubsystemBase {
     private WPI_TalonFX motorOne; 
-    private WPI_TalonFX motorTwo; 
+    private WPI_TalonFX motorTwo;
+    private boolean elevatorMoving; 
     //private Timer pidTimer;
 
 
@@ -70,21 +72,22 @@ public class Elevator extends SubsystemBase {
         /* if true elevator's going down, if false elevator's going up. */
         double feed;
         if (finalPosition < motorOne.getSelectedSensorPosition()) 
-        {
+        { 
             feed = Constants.Subsys.elevatorArbitraryFeedForward * 0;
             motorOne.selectProfileSlot(1, 0);
-            motorOne.set(ControlMode.PercentOutput, 0.0); 
-            return runOnce(() -> {});
+            motorOne.set(ControlMode.PercentOutput, 0.0);
+            elevatorMoving = true; 
+            return runOnce(() -> {elevatorMoving = false;});
         }
         else
         {
             motorOne.setNeutralMode(NeutralMode.Brake);
             feed = Constants.Subsys.elevatorArbitraryFeedForward;
             motorOne.selectProfileSlot(0, 0);
-            return runOnce(() -> motorOne.set(TalonFXControlMode.MotionMagic, finalPosition, DemandType.ArbitraryFeedForward, feed))
+            return runOnce(() -> {elevatorMoving = true; motorOne.set(TalonFXControlMode.MotionMagic, finalPosition, DemandType.ArbitraryFeedForward, feed);})
             .andThen(Commands.waitUntil(() -> motorOne.getActiveTrajectoryPosition() < finalPosition + Constants.Subsys.elevatorThreshold 
             && motorOne.getActiveTrajectoryPosition() > finalPosition - Constants.Subsys.elevatorThreshold).withTimeout(3))
-            .andThen(runOnce(() -> motorOne.set(TalonFXControlMode.PercentOutput, Constants.Subsys.elevatorArbitraryFeedForward)));
+            .andThen(runOnce(() -> {motorOne.set(TalonFXControlMode.PercentOutput, Constants.Subsys.elevatorArbitraryFeedForward); elevatorMoving = false;}));
         } 
     }
 
@@ -110,7 +113,8 @@ public class Elevator extends SubsystemBase {
 
 
     public void periodic() {
-        
+        //SmartDashboard.putBoolean("elevatorMoving", elevatorMoving);
+        //SmartDashboard.putNumber("elevatorPosition", motorOne.getActiveTrajectoryPosition());
     }
 }
 
