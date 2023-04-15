@@ -1,10 +1,6 @@
 package frc.robot;
 
-import com.ctre.phoenix.platform.can.AutocacheState;
-
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -15,9 +11,17 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-
-import frc.robot.autonomous.*;
-import frc.robot.commands.*;
+import frc.robot.autonomous.Blue2ScoreLeftManual;
+import frc.robot.autonomous.Blue2ScoreRightManual;
+import frc.robot.autonomous.Blue3ScoreLeftManual;
+import frc.robot.autonomous.Blue3ScoreRightManual;
+import frc.robot.autonomous.Cone;
+import frc.robot.autonomous.LeftCube1;
+import frc.robot.autonomous.RampPickupTest;
+import frc.robot.autonomous.RightCube;
+import frc.robot.autonomous.Score1RampCube;
+import frc.robot.autonomous.Score1RampCubePickup;
+import frc.robot.autonomous.ScoreRamp;
 import frc.robot.commands.CommandGroups.ToFeeder;
 import frc.robot.commands.CommandGroups.ToGround;
 import frc.robot.commands.CommandGroups.ToHigh;
@@ -26,14 +30,17 @@ import frc.robot.commands.CommandGroups.ToMid;
 import frc.robot.commands.DriveFunctionality.DriveOverRamp;
 import frc.robot.commands.DriveFunctionality.GyroStabalize;
 import frc.robot.commands.DriveFunctionality.TeleopSwerve;
-import frc.robot.commands.ElevatorFunctionality.ManualElevator;
 import frc.robot.commands.SliderFunctionality.MoveSlider;
-import frc.robot.commands.SliderFunctionality.SingleSlide;
 import frc.robot.commands.WristFunctionality.Intake;
 import frc.robot.commands.WristFunctionality.Outtake;
 import frc.robot.commands.WristFunctionality.ShootCube;
 import frc.robot.commands.WristFunctionality.StopIntake;
-import frc.robot.subsystems.*;
+import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Hand;
+import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.Slider;
+import frc.robot.subsystems.Swerve;
+import frc.robot.subsystems.Wrist;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -55,6 +62,7 @@ public class RobotContainer {
     CommandBase selectedAuto;
     private double speedChangerTurn = 1.0; //is percent
     private double speedChanger = 1.0; //is percent
+    private boolean inSlow;
 
     /* Final Robot Buttons */
     //Pilot
@@ -142,8 +150,12 @@ public class RobotContainer {
         intakeBtn.whileTrue(new Intake(hand));
         outtakeBtn.whileTrue(new Outtake(hand));
         shootCubeBtn.whileTrue(new ShootCube(hand));
-        slowBtn.whileTrue(new InstantCommand(() -> {speedChangerTurn = Constants.SlowBtnSpeedTurn; speedChanger = Constants.SlowBtnSpeed;}));
-        slowBtn.whileFalse(new InstantCommand(() -> {speedChangerTurn = 1.0; speedChanger = 1.0;}));
+        slowBtn.onTrue(new InstantCommand(() -> { if (speedChanger == Constants.SlowBtnSpeed) {
+            speedChangerTurn = 1.0; speedChanger = 1.0; inSlow = false;
+        } else {
+            speedChangerTurn = Constants.SlowBtnSpeedTurn; speedChanger = Constants.SlowBtnSpeed; inSlow = true;}})); 
+        //slowBtn.whileTrue(new InstantCommand(() -> {speedChangerTurn = Constants.SlowBtnSpeedTurn; speedChanger = Constants.SlowBtnSpeed; inSlow = true;}));
+        //slowBtn.whileFalse(new InstantCommand(() -> {speedChangerTurn = 1.0; speedChanger = 1.0; inSlow = false;}));
         
         rampBtn.whileTrue(new SequentialCommandGroup(
             new DriveOverRamp(swerve, true),
@@ -251,5 +263,6 @@ public class RobotContainer {
                 () -> Constants.Swerve.robotcentric //pass in true for robotcentric false for fieldcentric
             )
         );
+        SmartDashboard.putBoolean("inSlow", inSlow);
     }
 }

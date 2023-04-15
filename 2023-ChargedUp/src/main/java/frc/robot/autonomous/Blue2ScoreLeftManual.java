@@ -34,7 +34,7 @@ public class Blue2ScoreLeftManual extends SequentialCommandGroup{
             new DriveToPosition(s_Swerve, new Pose2d(new Translation2d(-43.307, -13.38), new Rotation2d(0)), 1.15),
             new DriveToPosition(s_Swerve, new Pose2d(new Translation2d(-111.417, -13.38), new Rotation2d(0)), 1.6),
             new ParallelCommandGroup(
-                new TurnAndMove(s_Swerve, new Pose2d(new Translation2d(-163.384, 4.33), new Rotation2d(0)), 0, 2.15), // 2.4
+                new TurnAndMove(s_Swerve, new Pose2d(new Translation2d(-163.384, -4.33), new Rotation2d(0)), 0, 2.15), // 2.4
                 ToGroundAutoCube.getToGround(elevator, slider, wrist)),
             /* drive to pickup piece. */
             new ParallelRaceGroup(
@@ -42,8 +42,10 @@ public class Blue2ScoreLeftManual extends SequentialCommandGroup{
                 new Outtake(hand)
             ),
             /* drive back to score. */
-            Stow.getStowCommand(elevator, slider, wrist), //may be able to make a parallel command group here.
-            new TurnAndMove(s_Swerve, new Pose2d(new Translation2d(-163.384, -4.33), new Rotation2d(0)), -179, 2.25),
+            new ParallelCommandGroup(
+                Stow.getStowCommand(elevator, slider, wrist), new TurnAndMove(s_Swerve, new Pose2d(new Translation2d(-163.384, -4.33), 
+                new Rotation2d(0)), -179, 2.25)
+            ),
             new DriveToPosition(s_Swerve, new Pose2d(new Translation2d(-111.417, -13.38), new Rotation2d(0)), 1.7),
             new DriveToPosition(s_Swerve, new Pose2d(new Translation2d(-43.307, -13.38), new Rotation2d(0)), 1.15),
             /* score piece. */

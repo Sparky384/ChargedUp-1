@@ -44,7 +44,7 @@ public class Blue2ScoreRightManual extends SequentialCommandGroup{
             /* drive back to score. */
             new ParallelCommandGroup(
                 Stow.getStowCommand(elevator, slider, wrist), 
-                new TurnAndMove(s_Swerve, new Pose2d(new Translation2d(-163.384, 4.33), new Rotation2d(0)), 179, 2.25)
+                new TurnAndMove(s_Swerve, new Pose2d(new Translation2d(-163.384, 4.33), new Rotation2d(0)), 165, 2.25)
             ),
             new DriveToPosition(s_Swerve, new Pose2d(new Translation2d(-111.417, 13.38), new Rotation2d(0)), 1.7),
             new DriveToPosition(s_Swerve, new Pose2d(new Translation2d(-43.307, 13.38), new Rotation2d(0)), 1.15),
