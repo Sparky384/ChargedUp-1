@@ -34,19 +34,25 @@ public class Slider extends SubsystemBase{
         m_encoder.setPosition(0);
     }
 
-    public void stop(){ 
+    public void stop(){
+        System.out.println("SliderSubsys Stop"); 
         motorOne.stopMotor();
     }
 
     public void toggle()
     {
-        if (motorOne.getIdleMode() == IdleMode.kBrake)
+        if (motorOne.getIdleMode() == IdleMode.kBrake) {
+            System.out.println("SliderSubsys Toggle to Coast");
             motorOne.setIdleMode(IdleMode.kCoast);
-        else
+        } else {
+            System.out.println("SliderSubsys Toggle to Brake");
             motorOne.setIdleMode(IdleMode.kBrake);
+        }
     }
 
-    public void move(double distance){
+    public void move(double distance) {
+        System.out.println("SliderSubsys move to distance" + distance);
+        System.out.println("SliderSubsys current distance" + getDistance());
         distance /= Constants.ConversionValues.sliderConversionFunction; //uses encoder counts.
         status = m_pidController.setReference(distance, CANSparkMax.ControlType.kPosition); //just added wait till test to keep or not.
     }

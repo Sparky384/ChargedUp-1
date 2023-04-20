@@ -34,11 +34,11 @@ public class Blue2ScoreLeftManual extends SequentialCommandGroup{
             new DriveToPosition(s_Swerve, new Pose2d(new Translation2d(-43.307, -13.38), new Rotation2d(0)), 1.15),
             new DriveToPosition(s_Swerve, new Pose2d(new Translation2d(-111.417, -13.38), new Rotation2d(0)), 1.6),
             new ParallelCommandGroup(
-                new TurnAndMove(s_Swerve, new Pose2d(new Translation2d(-163.384, -4.33), new Rotation2d(0)), 0, 2.15), // 2.4
-                ToGroundAutoCube.getToGround(elevator, slider, wrist)),
+                new TurnAndMove(s_Swerve, new Pose2d(new Translation2d(-163.384, -8.33), new Rotation2d(0)), 0, 2.15), // 2.4
+                ToGround.getToGround(elevator, slider, wrist)),
             /* drive to pickup piece. */
             new ParallelRaceGroup(
-                new DriveToPosition(s_Swerve, new Pose2d(new Translation2d(-214.133, -4.33), new Rotation2d(0)), 1.4),
+                new DriveToPosition(s_Swerve, new Pose2d(new Translation2d(-214.133, -8.33), new Rotation2d(0)), 1.4),
                 new Outtake(hand)
             ),
             /* drive back to score. */
@@ -51,7 +51,7 @@ public class Blue2ScoreLeftManual extends SequentialCommandGroup{
             /* score piece. */
             new ParallelCommandGroup(
                 ToMid.getToMid(elevator, slider, wrist),
-                new DriveToPosition(s_Swerve, new Pose2d(new Translation2d(0, 0), new Rotation2d(0)), 1.1)
+                new DriveToPosition(s_Swerve, new Pose2d(new Translation2d(0, -14.00), new Rotation2d(0)), 1.1)
             ),
             new IntakeAuto(hand)
             );

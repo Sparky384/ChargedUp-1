@@ -35,7 +35,7 @@ public class Blue2ScoreRightManual extends SequentialCommandGroup{
             new DriveToPosition(s_Swerve, new Pose2d(new Translation2d(-111.417, 13.38), new Rotation2d(0)), 1.6), // 1.7
             new ParallelCommandGroup(
                 new TurnAndMove(s_Swerve, new Pose2d(new Translation2d(-163.384, 4.33), new Rotation2d(0)), 0, 2.15), // 2.4
-                ToGroundAutoCube.getToGround(elevator, slider, wrist)),
+                ToGround.getToGround(elevator, slider, wrist)),
             /* drive to pickup piece. */
             new ParallelRaceGroup(
                 new DriveToPosition(s_Swerve, new Pose2d(new Translation2d(-214.133, 4.33), new Rotation2d(0)), 1.4),

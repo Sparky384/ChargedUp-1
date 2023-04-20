@@ -21,18 +21,22 @@ public class MoveSlider extends CommandBase {
     }
 
     public void initialize() {
+        System.out.println("MoveSlider Init");
         timer.stop();
         timer.reset();
         timer.start();
     }
 
     public void execute() {
-        if (timer.hasElapsed(delay))
-            sliderSubsystem.move(sliderDistance); 
+        if (timer.hasElapsed(delay)) {
+            sliderSubsystem.move(sliderDistance);
+            System.out.println("MoveSlider Executing"); 
+        }
     }
 
     public boolean isFinished(){
         if (Math.abs(sliderSubsystem.getDistance() - sliderDistance) < Constants.sliderThreshold){
+            System.out.println("MoveSlider Finished");
             return true; 
         } else {
             return false;
@@ -40,6 +44,7 @@ public class MoveSlider extends CommandBase {
     }
     @Override
     public void end(boolean interruped){
+        System.out.println("MoveSlider interrupted");
         sliderSubsystem.stop();
     }
 }
